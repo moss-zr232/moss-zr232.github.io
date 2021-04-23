@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>SQL注入基础</title>
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <a id="cover"></a>
+    <div id="header">
+    <div class="header">
+        <div class="vertical">
+            <div class="inner">
+                <h1 class="header-subtitle">SQL注入基础</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-23
+                        </span>
+                        
+                            <span id="/2021/04/23/sql基础知识/" class="leancloud_visitors" data-flag-title="SQL注入基础">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/23/sql基础知识/"></span>
+                        </span>  
+                    </p>                 
+                </div>
+            </div>
+        </div>
+        <canvas id="articleHeaderCanvas"></canvas>
+    </div>
+</div>
+    <div id="container">
+    <div id="content">
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <p>SQL注入是一种常见的WEB安全漏洞，攻击者利用这个漏洞，可以访问或修改数据，或者利用潜在的数据库漏洞进行攻击。</p>
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>针对SQL注入的攻击行为可描述为通过用户可控参数中注入SQL语句，破坏原有的SQL结构，达到编写程序时意料之外结果的攻击行为。其成因可以归结为以两个原因叠加造成的：<br>1、程序编写者在处理程序和数据库交互时，使用字符串拼接的方式构造SQL语句。<br>2、未对用户可控参数进行足够的过滤便将参数内容拼接进入到SQL语句中。</p>
+<h2 id="注入点可能存在的位置"><a href="#注入点可能存在的位置" class="headerlink" title="注入点可能存在的位置"></a>注入点可能存在的位置</h2><p>根据SQL注入漏洞的原理，在用户“可控参数”中注入SQL语法，也就是说WEB应用在获取用户数据的地方，只要带入数据库查询，都会存在SQL注入的可能，这些地方通常包含:<br>@GET 数据<br>@POST 数据<br>@HTTP 头部 （HTTP 请求报文其他字段）<br>@Cookie 数据<br>。。。</p>
+<h2 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h2><p>攻击者利用SQL注入漏洞，可以获取数据库中的多种信息（例如：管理员后台密码），从而脱取数据库中的内容（脱库）。在特别情况下还可以修改数据库内容或者插入内容到数据库，如果数据库权限分配存在问题，或者数据库本身存在缺陷，那么攻击者可以通过SQL注入漏洞直接获取webshell或者服务器系统权限。<br>      mof|udf</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>SQL注入漏洞根据不同的标准，有不同的分类。但是从数据类型分类来看，SQL注入分为数字型和字符型。<br>数字型注入就是说注入点的数据，拼接到SQL语句中是以数字型出现的，即数据两边没有被单引号、双引号包括。<br>字符型注入正好相反。</p>
+<p>根据注入手法分类，大致可分为以下几类<br>@UNION query SQL injection （可联合查询注入）<br>@error-based SQL injection （报错型注入）<br>@boolean-based blind SQL injection （布尔型注入）<br>@time-based blind SQL injection （基于时间延迟注入）<br>@stacked queries SQL injection （可多语句查询注入）</p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>mysql数据库的注释大概有以下几种</p>
+<p>– （杠杠空格）<br>/* …… */<br>/*！…….. */ 内联查询</p>
+<h2 id="mysql元数据库数据库information-schema"><a href="#mysql元数据库数据库information-schema" class="headerlink" title="mysql元数据库数据库information_schema"></a>mysql元数据库数据库information_schema</h2><p><img src="/.io//sql1.png" alt="图片"></p>
+<h2 id="Mysql常用函数与参数"><a href="#Mysql常用函数与参数" class="headerlink" title="Mysql常用函数与参数"></a>Mysql常用函数与参数</h2><p>= | &gt; | &gt;= | &lt;= | &lt;&gt;  比较运算符<br>and | or             逻辑运算符<br>version()                mysql数据库版本<br>database()            当前数据库名<br>user()                用户名<br>current_user()         当前用户名<br>System_user()            系统用户名<br>@@datadir            数据库路径<br>@@version_compile_os     操作系统版本<br>Length()                返回字符串的长度<br>Substring()            截取字符串<br>Substr()        substr()与mid()相同，都为截取字符串<br>Mid()     1、截取字符串 2、截取起始位置，从1开始计数  3、截取长度<br>举例：mid(‘hello’,1,3)，从第1位开始截取3位，输出位hel<br>Left()<br>Char()        解ASCII码<br>Replace()<br>语法<br>REPLACE(string_expression,,string_pattern,string_replacement )<br>参数<br>string_expression 要搜索的字符串表达式。string_expression 可以是字符或二进制数据类型。<br>string_pattern 是要查找的子字符串。string_pattern 可以是字符或二进制数据类型。string_pattern不能是空字符串 （”）。<br>string_replacement 替换字符串。string_replacement 可以是字符或二进制数据类型。</p>
+<p>Left()        从左侧开始取指定字符个数的字符串<br>concat()        没有分隔符的连接字符串<br>concat_ws()        含有分割符的连接字符串<br>group_conat()        连接一个组的字符串<br>ord( )            返回ASCII 码<br>ascii()<br>hex()            将字符串转换为十六进制<br>unhex()            hex 的反向操作<br>md5( )             返回MD5 值<br>floor(x)            返回不大于x 的最大整数<br>round( )            返回参数x 接近的整数<br>rand()            返回0-1 之间的随机浮点数<br>load_file()        读取文件，并返回文件内容作为一个字符串<br>s leep()            睡眠时间为指定的秒数<br>if(true,t,f)        if 判断<br>count()        计算查询结果的行数<br>find_in_set()        返回字符串在字符串列表中的位置<br>benchmark()        指定语句执行的次数<br>name_const ()        返回表作为结果 </p>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/23/sql%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" target="_blank">SQL注入基础</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">-基础知识</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
+            
+                <a href="/2021/04/23/hello-world/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/04/23/hello-world/" title="发布于 2021-04-23 11:50">Hello World</a>
+                <br>
+            
+            
+                <a href="/2021/04/22/markdown%E8%AF%AD%E6%B3%95/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/22/markdown%E8%AF%AD%E6%B3%95/" title="发布于 2021-04-22 09:05">markdown语法</a>
+            
+        </div>
+    </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
+</div>
+
+    </div>
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar"></div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span></span></div>        
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul></ul> 
+            </div> 
+            <div class="menu-link"></div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js"></script>
+        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+    
+    
+    <div class="wrap-right"></div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : 'moss-zr232',
+        GitHubRepositories : 'Hexo-LiveForCode',
+
+        BlogUser      : 'moss',
+        BlogAvatar    : '/image/touxiang.jpg',
+        BlogStartDate : '2020-01-01',
+
+        WebsiteTitleBlur         : '(◍´꒳`◍) 啊，你这是去哪了，快回来学习',
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : '(*´∇｀*) 欢迎回来!',
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/logo.png',
+
+        ProgressBar: {
+            id       : 'topProgressBar',
+            color    : '#77B6FF',
+            height   : '2px',
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound: {
+                tension  : 16,
+                friction : 5
+            },
+            spinner: {
+                id     : 'spinner',
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : '#F0F0F0',
+                    stroke     : '#272633',
+                    base       : '',
+                    child      : '#272633'
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : 'rgba(255, 255, 255, .2)',
+            clearOffset : 0.3
+        },
+
+        ArticleHeaderAnimationRendered : false,
+        ArticleHeaderAnimation         : {
+            triW                  : 14,
+            triH                  : 20,
+            neighbours            : [
+                
+                    'side',
+                
+                    'top',
+                
+                    'bottom',
+                
+            ],
+            speedTrailAppear      : 0.1,
+            speedTrailDisappear   : 0.1,
+            speedTriOpen          : 1,
+            trailMaxLength        : 30,
+            trailIntervalCreation : 100,
+            delayBeforeDisappear  : 2,
+            colors                : [
+                
+                    '#96EDA6',
+                
+                    '#5BC6A9',
+                
+                    '#38668C',
+                
+                    '#374D84',
+                
+                    '#BED5CB',
+                
+                    '#62ADC6',
+                
+                    '#8EE5DE',
+                
+                    '#304E7B',
+                
+            ]
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : '60%',
+            colorBrightness  : '50%',
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : 'random',
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpg',
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpeg',
+            
+        ],
+        HomeBannerText  : '',
+
+        ArticleHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/article.jpg',
+            
+        ],
+
+        OtherBannerText : '',
+
+        MenuList : [
+            
+                {
+                    name   : '首页',
+                    href   : '/',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '标签',
+                    href   : '/tag',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '分类',
+                    href   : '/category',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '归档',
+                    href   : '/archive',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '赞赏',
+                    href   : '/donate',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '关于',
+                    href   : '/about',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '订阅',
+                    href   : '/atom.xml',    
+                    target : '_blank',
+                    class  : ''
+                },
+            
+                {
+                    name   : '搜索',
+                    href   : '',    
+                    target : '',
+                    class  : 'search'
+                },
+            
+                {
+                    name   : '留言板',
+                    href   : '/comment',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '友情链接',
+                    href   : '/friend',    
+                    target : '',
+                    class  : ''
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        icon : 'icon-weibo', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-wechat', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-qq', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-github', 
+                        url  : 'https://github.com/moss-zr232'
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : {
+            icon    : 'like-fill',
+            left    : '人生若只如初见',
+            right   : '何事秋风悲画扇'
+        },
+        ThemeInfo   : true,
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                'Based on cnblogs theme SimpleMemory.',
+                            
+                                '',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'SimpleMemory Author:',
+                            
+                                'BNDong',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'Theme:',
+                            
+                                'LiveForCode',
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : '',
+
+        Donate : {
+            paypal  : '',
+            bitcoin : '',
+            alipay  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/alipay.png',
+            wechat  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/wechat.png'
+        },
+
+        Code : {
+            style : 'normal'
+        },  
+
+        Search : {
+            applicationID : '010C3EANT8',
+            apiKey        : 'c7abab9f11b79102b9aff7fe6d41447d',
+            indexName     : 'Notes',
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : '搜索',
+                empty       : '未发现与 「${query}」 相关的内容',
+                stats       : '${hits} 条相关条目，使用了 ${time} 毫秒',
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : '.comments-content',
+            appId          : 'srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz',
+            appKey         : '8uVSP1q6UlALVC5igYfIfv2h',
+            placeholder    : '你是我一生只会遇见一次的惊喜...',
+            avatar         : 'mm',
+            meta           : 'nick,mail,link',
+            requiredFields : 'nick,mail',
+            pageSize       : 5,
+            lang           : 'zh-cn',
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : '.toc',
+            contentSelector       : '.article-body',
+            headingSelector       : 'h1, h2, h3, h4, h5',
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : '.toc',
+            positionFixedClass    : 'toc-fixed',
+            fixedSidebarOffset    : '',
+        },
+
+        Require : {
+            baseUrl     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/',
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : 'Meting'
+        },
+        APlayer : {
+            container : '.aplayer',
+            fixed     : true,
+            autoplay  : false,
+            loop      : 'all',
+            order     : 'random',
+            preload   : 'auto',
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : 'aLIEz',
+                        artist : 'mizuki（瑞葵）',
+                        cover  : '/music/cover/aLIEz.jpg',
+                        url    : '/music/song/aLIEz.mp3',
+                        lrc    : '/music/lrc/aLIEz.lrc'
+                    },
+                
+                    {
+                        name   : 'Endless Tears',
+                        artist : 'CLIFF EDGE',
+                        cover  : '/music/cover/Endless Tears.jpg',
+                        url    : '/music/song/Endless Tears.mp3',
+                        lrc    : '/music/lrc/Endless Tears.lrc'
+                    },
+                
+                    {
+                        name   : 'Miracle',
+                        artist : 'Cascada',
+                        cover  : '/music/cover/Miracle.jpg',
+                        url    : '/music/song/Miracle.mp3',
+                        lrc    : '/music/lrc/Miracle.lrc'
+                    },
+                
+                    {
+                        name   : 'Roll The Dice',
+                        artist : '高珊',
+                        cover  : '/music/cover/Roll The Dice.jpg',
+                        url    : '/music/song/Roll The Dice.mp3',
+                        lrc    : '/music/lrc/Roll The Dice.lrc'
+                    },
+                
+                    {
+                        name   : 'See You Again',
+                        artist : 'Charlie Puth, Wiz Khalifa',
+                        cover  : '/music/cover/See You Again.jpg',
+                        url    : '/music/song/See You Again.mp3',
+                        lrc    : '/music/lrc/See You Again.lrc'
+                    },
+                
+                    {
+                        name   : 'Traveling Light',
+                        artist : 'Joel Hanson, Sara Groves',
+                        cover  : '/music/cover/Traveling Light.jpg',
+                        url    : '/music/song/Traveling Light.mp3',
+                        lrc    : '/music/lrc/Traveling Light.lrc'
+                    },
+                
+                    {
+                        name   : '痴心绝对',
+                        artist : '李圣杰',
+                        cover  : '/music/cover/痴心绝对.jpg',
+                        url    : '/music/song/痴心绝对.mp3',
+                        lrc    : '/music/lrc/痴心绝对.lrc'
+                    },
+                
+                    {
+                        name   : '好想大声说爱你',
+                        artist : 'BAAD（バード）',
+                        cover  : '/music/cover/好想大声说爱你.jpg',
+                        url    : '/music/song/好想大声说爱你.mp3',
+                        lrc    : '/music/lrc/好想大声说爱你.lrc'
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : '3778678', 
+            lrcshow  : false, 
+            server   : 'netease', 
+            type     : 'playlist', 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : 'all', 
+            order    : 'random', 
+            preload  : 'auto', 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        LazyLoad : {
+            default : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/lazyload.svg'
+        },
+  
+        Style : {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css',
+            archive          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css',
+            donate           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/donate.css',
+            fancybox         : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/jquery.fancybox.css',
+            footer           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/footer.css',
+            iconfont         : 'https://at.alicdn.com/t/font_1546312_l3yohatebw.css',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css',
+            menuBubble       : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/menu-bubble.css',
+            page             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css',
+            post             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css',
+            search           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css',
+            tocbot           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/tocbot.css',
+            normal           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css',
+            night            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/night.css',
+            clipboard        : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/clipboard.css'
+        },
+
+        Script: {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js',
+            config           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.config.js',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js',
+            instantSearch    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js',
+            jQuery           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js',
+            loading          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/loading.js',
+            meting           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js',
+            iscroll          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js',
+            require          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.min.js'
+        },
+
+        Font: {
+            LongCang   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css',
+            Monda      : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css',
+            NotoSansSC : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css',
+            Playball   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css',
+            PTMono     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css',
+            RobotoSlab : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css',
+            Rosario    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css',
+            UbuntuMono : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css'
+        },
+
+        Suffix : {
+            about : '简单地活着, 肆意又精彩.'
+        },
+            
+        Theme : {
+            url  : 'https://github.com/first19326/Hexo-LiveForCode',
+            name : 'Hexo - Live For Code'
+        }  
+    };
+</script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js"></script>
+</body>
+</html>
