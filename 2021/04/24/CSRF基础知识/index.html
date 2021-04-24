@@ -6,8 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    
-    <title>分类</title>
+    <title>CSRF基础知识</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -18,12 +17,13 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
     
         <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
     
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
@@ -31,10 +31,21 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">分类</h1>
+                <h1 class="header-subtitle">CSRF基础知识</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-24
+                        </span>
+                        
+                            <span id="/2021/04/24/CSRF基础知识/" class="leancloud_visitors" data-flag-title="CSRF基础知识">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/24/CSRF基础知识/"></span>
+                        </span>  
+                    </p>                 
                 </div>
             </div>
         </div>
@@ -43,14 +54,91 @@
 </div>
     <div id="container">
     <div id="content">
-        <div class="categories">
-    <div class="categories-title">
-        目前共计 11 个分类
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h1 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h1><p>跨站请求伪造<br>CSRF是一种挟持用户在当前已登录的web应用程序上执行非本意的操作的攻击方法。跟跨站脚本（XSS）相比，XSS利用的是用户对指定网站的信任，CSRF利用的是用户对指定网站的信任，CSRF利用的是网站对用户网页浏览器的信任。</p>
+<p>CSRF攻击着重点在伪造更改状态的请求，而不是盗取数据，因为攻击者无法查看对伪造请求的响应。</p>
+<h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>CSRF是一种欺骗受害者提交恶意请求的攻击。它继承了受害者的身份和特权，代表受害者执行非本意、恶意的操作。<br>对于大多数站点，浏览器请求自动发送与站点关联的所有凭据，例如用户的会话cookie，IP地址，windows域凭据等。因此，如果用户当前已对该站点进行了身份验证，则该站点将无法区分受害者发送的伪造请求和受害者发送的合法请求。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>CSRF攻击目标是能够更改服务器状态或数据的业务或功能，例如更改受害者的邮箱地址，密码或购买商品。强制受害者查询数据，对于攻击者来说没什么用，因为无法获得服务器响应。因此，CSRF攻击针对引起状态变化的请求。<br>有时可以将CSRF攻击存储在易受攻击的站点上。这些漏洞被称为“存储的CSRF漏洞”。这可以通过简单地在接受HTML的字段中存储IMG或IFRAME标记，或通过更复杂的跨站点脚本攻击来实现。如果攻击可以在站点中存储CSRF攻击，则攻击的严重性被放大。特别是，受到攻击的可能性增加，因为受害者比互联网上的某个随即页面更有可能查看包含攻击的页面。</p>
+<h2 id="CSRF攻击"><a href="#CSRF攻击" class="headerlink" title="CSRF攻击"></a>CSRF攻击</h2><p>如何触发？<br><a href="转账链接">百万大奖，等你来拿</a><br><img src="/image/bndong.gif"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&#39;.&#x2F;i.jpg&#39;&gt;&lt;br&#x2F;&gt;</span><br><span class="line">&lt;img src&#x3D;&#39;url&#39; alt&#x3D;&#39;百万大奖给你&#39;&gt;</span><br></pre></td></tr></table></figure>
+<p>也就是说，该页面通过<img>标签发送一个get请求，这个get请求，正是用户发起转账业务的请求。</p>
+<h2 id="CSRF的类别"><a href="#CSRF的类别" class="headerlink" title="CSRF的类别"></a>CSRF的类别</h2><p>以上场景中是利用<img>标签发送的get请求。那么是不是把关键操作使用POST请求，就能够防御CSRF漏洞了呢？肯定不是啊</p>
+<h4 id="POST方式"><a href="#POST方式" class="headerlink" title="POST方式"></a>POST方式</h4><p>即使转账操作使用POST方式，攻击者也可以通过构造表单的方式来伪造请求，核心代码如下。<br><img src="/image/CSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%861.png"><br>实战：与XSS的结合添加后台账号，攻击者可以通过XSS来触发CSRF攻击。因为可以利用JS来发送请求。<br><img src="/image/CSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%862.png"></p>
+<h2 id="CSRF的防御"><a href="#CSRF的防御" class="headerlink" title="CSRF的防御"></a>CSRF的防御</h2><h3 id="无效的防御"><a href="#无效的防御" class="headerlink" title="无效的防御"></a>无效的防御</h3><p>很多防御方式都没有办法解决CSRF的问题。</p>
+<ol>
+<li><p>使用秘密cookie<br>所有的cookie，即使是秘密的cookie，也会随着每个请求一起提交。无论最终用户是否被欺骗提交请求，都将提交所有身份验证令牌。</p>
+</li>
+<li><p>仅接受POST请求<br>可以开发应用程序以仅接受用于执行业务逻辑的POST请求。误解是由于攻击者无法构建恶意链接，因此无法执行CSRF攻击。这是不对的。有许多方法可以让攻击者欺骗受害者提交伪造的POST请求，例如在隐藏值的攻击者网站中托管的简单表单。此表单可以由JS自动触发，也可以由认为表单会执行其他操作的受害者触发。</p>
+</li>
+<li><p>多步交易<br>多步交易不足以预防CSRF。只要攻击者可以预测或推断完整的事务的每个步骤，就可以实现CSRF。</p>
+</li>
+<li><p>URL重写<br>这可能被视为一种有用的csrf预防技术，因为攻击者无法猜测受害者的会话ID。但是，用户的会话ID在URL中公开。所以不建议通过引入一个安全漏洞来修复一个安全漏洞。</p>
+</li>
+<li><p>HTTPS<br>HTTPS本身无法抵御CSRF。但是HTTPS应被视为任何防御措施值得信赖的先决条件。</p>
+</li>
+</ol>
+<h3 id="有效防御"><a href="#有效防御" class="headerlink" title="有效防御"></a>有效防御</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1. 验证referer字段</span><br><span class="line">根据HTTP协议，在HTTP头中有一个字段叫referer，他记录了该HTTP请求的来源地址。在通常情况下，访问一个安全受限页面的请求必须来自同一网站。比如某银行转账是通过用户访问[https:&#x2F;&#x2F;122.122.122.122&#x2F;...........]页面完成，用户必须先登入，并且访问，[https:&#x2F;&#x2F;122.122.122.122&#x2F;bank&#x2F;index.php]，然后通过点击页面上的按钮来触发转账事件。当用户提交请求时，该转账请求的referer值就会是转账按钮所在页面的URL。而如果攻击者要对银行网站实施CSRF攻击，他只能请求在自己的网站构造请求，当用户通过攻击者的网站发送请求到银行时，该请求的referer是指向攻击者的网站。因此，要防御CSRF攻击，银行网站只需要对于每一个转账请求验证其referer值，如果是以122.122.122.122的地址或域名，则说明该请求是来自银行网站自己的请求，是合法的。如果referer是其他网站的话，就有可能是CSRF攻击，则拒绝该请求。但是referer字段支持客户端自定义。</span><br><span class="line"></span><br><span class="line">2. 添加token验证</span><br><span class="line">CSRF攻击之所以能够成功，是因为攻击者可以伪造用户的请求，该请求中所有的用户验证信息都存在于cookie中，因此攻击者可以在不知道这些验证信息的情况下直接利用用户自己的cookie来通过安全验证。由此可知，抵御CSRF攻击的关键在于：在请求中放入攻击者所不能伪造的信息，并且该信息不存在于cookie之中。介于此，系统开发者可以在HTTP请求中以参数的形式加入一个随机产生的token（随机字符串）并在服务器端建立一个拦截器来验证这个token，如果请求中没有token或者token的内容不正确，则认为可能是CSRF攻击而拒绝该请求。</span><br><span class="line"></span><br><span class="line">3. 二次验证</span><br><span class="line">就是在转账等关键操作之前提供当前用户的密码或者验证码。二次验证可以有效防御CSRF攻击。</span><br><span class="line">4. 用户养成良好的习惯</span><br></pre></td></tr></table></figure>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/24/CSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" target="_blank">CSRF基础知识</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：等花开，等风来
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
     </div>
-    <div class="categories-content">
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/category/WP-ctfshow/">-WP -ctfshow</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/markdown%E8%AF%AD%E6%B3%95/">-markdown语法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-CSRF/">-web安全 -CSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5/">-web安全 -PHP代码注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-SSRF/">-web安全 -SSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-XSS/">-web安全 -XSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">-web安全 -反序列化漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/">-web安全 -命令注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/">-web安全 -文件上传漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">-web安全 -文件包含</a><span class="category-list-count">1</span></li></ul>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/web%E5%AE%89%E5%85%A8-CSRF/">-web安全 -CSRF</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">-基础知识</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
+            
+                <a href="/2021/04/24/SSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/04/24/SSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 10:38">SSRF基础知识</a>
+                <br>
+            
+            
+                <a href="/2021/04/24/XSS%E5%9F%BA%E7%A1%80/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/24/XSS%E5%9F%BA%E7%A1%80/" title="发布于 2021-04-24 10:13">XSS基础</a>
+            
+        </div>
     </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
 </div>
+
     </div>
 </div>
     <div id="footer"></div>

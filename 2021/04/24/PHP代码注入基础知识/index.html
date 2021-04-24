@@ -6,8 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    
-    <title>分类</title>
+    <title>PHP代码注入基础知识</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -18,12 +17,13 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
     
         <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
     
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
@@ -31,10 +31,21 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">分类</h1>
+                <h1 class="header-subtitle">PHP代码注入基础知识</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-24
+                        </span>
+                        
+                            <span id="/2021/04/24/PHP代码注入基础知识/" class="leancloud_visitors" data-flag-title="PHP代码注入基础知识">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/24/PHP代码注入基础知识/"></span>
+                        </span>  
+                    </p>                 
                 </div>
             </div>
         </div>
@@ -43,14 +54,79 @@
 </div>
     <div id="container">
     <div id="content">
-        <div class="categories">
-    <div class="categories-title">
-        目前共计 11 个分类
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <p>RCE        远程代码执行</p>
+<h1 id="原理以及成因"><a href="#原理以及成因" class="headerlink" title="原理以及成因"></a>原理以及成因</h1><p>PHP 代码执行（注入）（web方面）是指应用程序过滤不严，用户可以通过请求将代码注入到应用中执行。代码执行（注入）类似于SQL 注入漏洞，SQLi 是将SQL语句注入到数据库中执行，而代码执行则是可以把代码注入到应用中最终由服务器运行它。这样的漏洞如果没有特殊的过滤，相当于直接有一个Web后门的存在。</p>
+<ol>
+<li>程序中含有可以执行PHP代码的函数或者语言结构</li>
+<li>传入第一点参数，客户端可控，直接修改或者影响<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$str&#x3D;”phpinfo();”;</span><br><span class="line">eval($str);</span><br><span class="line">?&gt;</span><br><span class="line">&lt;?php</span><br><span class="line">$str&#x3D;”echo md5(123456);”;</span><br><span class="line">eval($str);</span><br><span class="line">?&gt;</span><br><span class="line">&lt;?php</span><br><span class="line">@$str&#x3D;$_GET[‘’code];</span><br><span class="line">eval($str);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h1>Web应用如果存在代码执行漏洞是一件非常可怕的事情，就像一个人没有穿衣服，赤裸裸的暴露在光天化日之下。可以通过代码执行漏洞继承Web用户权限，执行任意代码。如果具有服务器没有正确配置，Web用户权限比较高的话，我们可以读写目标服务器任意文件内容，甚至控制整个网站以及服务器。本课程中以PHP 为例子来说明，代码执行漏洞。PHP中有很多函数和语句都会造成PHP 代码执行漏洞。<h1 id="相关函数和语句"><a href="#相关函数和语句" class="headerlink" title="相关函数和语句"></a>相关函数和语句</h1></li>
+</ol>
+<ul>
+<li>eval()<br>eval() 会将字符串当作php 代码执行。测试代码如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&#39;code&#39;]))&#123;</span><br><span class="line">$code&#x3D;$_GET[&#39;code&#39;]; </span><br><span class="line">eval($code);</span><br><span class="line">&#125;else&#123;</span><br><span class="line">echo &quot;PLease submit code!&lt;br &#x2F;&gt;?code&#x3D;phpinfo();&quot;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br><span class="line">提交变量【?code&#x3D;phpinfo();】</span><br><span class="line">&lt;?Php</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+未完成….</li>
+</ul>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/24/PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" target="_blank">PHP代码注入基础知识</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：等花开，等风来
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
     </div>
-    <div class="categories-content">
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/category/WP-ctfshow/">-WP -ctfshow</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/markdown%E8%AF%AD%E6%B3%95/">-markdown语法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-CSRF/">-web安全 -CSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5/">-web安全 -PHP代码注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-SSRF/">-web安全 -SSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-XSS/">-web安全 -XSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">-web安全 -反序列化漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/">-web安全 -命令注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/">-web安全 -文件上传漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">-web安全 -文件包含</a><span class="category-list-count">1</span></li></ul>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/web%E5%AE%89%E5%85%A8-PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5/">-web安全 -PHP代码注入</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">-基础知识</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
+            
+                <a href="/2021/04/24/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/04/24/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 10:45">命令注入基础知识</a>
+                <br>
+            
+            
+                <a href="/2021/04/24/SSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/24/SSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 10:38">SSRF基础知识</a>
+            
+        </div>
     </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
 </div>
+
     </div>
 </div>
     <div id="footer"></div>

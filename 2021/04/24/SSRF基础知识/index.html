@@ -6,8 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    
-    <title>分类</title>
+    <title>SSRF基础知识</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -18,12 +17,13 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
     
         <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
     
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
@@ -31,10 +31,21 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">分类</h1>
+                <h1 class="header-subtitle">SSRF基础知识</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-24
+                        </span>
+                        
+                            <span id="/2021/04/24/SSRF基础知识/" class="leancloud_visitors" data-flag-title="SSRF基础知识">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/24/SSRF基础知识/"></span>
+                        </span>  
+                    </p>                 
                 </div>
             </div>
         </div>
@@ -43,14 +54,111 @@
 </div>
     <div id="container">
     <div id="content">
-        <div class="categories">
-    <div class="categories-title">
-        目前共计 11 个分类
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>互联网上的很多web应用提供了从其他服务器/本地获取数据的功能。使用用户指定的URL，web应用可以获取图片、文本资源（下载或读取）。如百度识图。<br>用户可以从本地或URL的方式获取图片资源，交给百度识图处理。如果提交的是URL地址，该应用就会通过URL寻找图片资源。如果web应用开放了类似与百度识图这样的功能，并且对用户提供的URL和远端服务器返回的信息没有进行合适的验证或者过滤，就可能存在“请求伪造”的缺陷。<br>请求伪造，就是攻击者伪造正常请求，以达到攻击的目的，是常见的web安全漏洞之一。如果“请求伪造”发生在服务器端，那么这个漏洞就叫做“服务端请求伪造漏洞”，SSRF。</p>
+<p>SSRF，是一种攻击者发起的伪造由服务端发起请求的一种攻击，也是常见的web安全漏洞之一。</p>
+<h1 id="SSRF危害"><a href="#SSRF危害" class="headerlink" title="SSRF危害"></a>SSRF危害</h1><ol>
+<li>端口扫描</li>
+<li>内网web应用指纹识别</li>
+<li>攻击内网web应用</li>
+<li>读取本地文件</li>
+</ol>
+<h1 id="SSRF常见代码实现"><a href="#SSRF常见代码实现" class="headerlink" title="SSRF常见代码实现"></a>SSRF常见代码实现</h1><p>在服务器端实现通过URL从服务器（外部或者内部）获取资源功能的方法有很多，此处使用的是PHP语言和curl扩展实现该功能。<br>通过phpinfo()函数查看对url扩展的支持，现在大部分wamp套件都支持curl扩展。<br>服务端代码如下<br><img src="/image/SSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%861.png"><br>将以上代码保存成文件[ssrf_curl.php]。该段代码实现了从服务器获取资源的基本功能，提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[?url&#x3D;http:&#x2F;&#x2F;www.baidu.com]</span><br></pre></td></tr></table></figure>
+<p>页面就会载入百度首页的资源<br>同时，获取的资源文件会保存在[./curled]中，并以发起请求时间的unix时间戳命名。</p>
+<h1 id="SSRF利用"><a href="#SSRF利用" class="headerlink" title="SSRF利用"></a>SSRF利用</h1><pre><code>1.访问正常文件
+    访问正常的文件，提交参数[?url=http://www.baidu.com/robots.txt]
+2.端口扫描
+    当访问未开放端口，脚本会显示空白或者报错。
+    提交参数    [?url=dict://127.0.0.1:1234]
+    dict是字典协议
+    当访问开放端口时，脚本会显示banner信息。
+3.读取系统本地文件
+    利用file协议可以任意读取系统本地文件，提交参数
+    [?url=file://c:\windows\system32\drivers\etc\hosts]
+4.内网web应用指纹识别
+识别内网应用使用的框架，平台，模块以及cms可以为后续的渗透测试提供很多帮助。大多数web应用框架都有一些独特的文件和目录。通过这些文件可以识别出应用的类型，甚至详细版本。根据这些信息就可以针对性的搜集漏洞进行攻击。
+比如可以通过访问下列文件来判断phpMyAdmin是否安装以及详细版本。
+[?url=http://localhost/phpmyadmin/README]
+5.攻击内网应用
+    内网的安全通常都很薄弱，溢出、弱口令等一般都是存在的。通过ssrf攻击，可以实现对内网的访问，从而可以攻击内网的应用或者本地机器，获得shell，这里的应用包括服务、web应用等。
+    仅仅通过get方法可以攻击的web应用有很多，比如struts2命令执行等。
+</code></pre>
+<h1 id="SSRF漏洞的挖掘"><a href="#SSRF漏洞的挖掘" class="headerlink" title="SSRF漏洞的挖掘"></a>SSRF漏洞的挖掘</h1><pre><code>对外发起网络请求的地方都可能存在SSRF漏洞，列举图片加载下载，分享页面，在线翻译，未公开的api（从远程服务器请求资源文件处理，编码处理，属性信息处理等）。
+gopher协议
+</code></pre>
+<h1 id="SSRF防御"><a href="#SSRF防御" class="headerlink" title="SSRF防御"></a>SSRF防御</h1><pre><code>1.限制协议
+仅允许http和https请求
+2.限制IP
+避免应用被用来获取内网数据，攻击内网
+3.限制端口
+限制请求的端口为http常用的端口，比如，80，443，8080，8090
+4.过滤返回信息
+验证远程服务器对请求的响应是比较简单的方法。
+5.统一错误信息
+免用户可以根据错误信息来判断远端服务器的端口状态
+</code></pre>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/24/SSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" target="_blank">SSRF基础知识</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：等花开，等风来
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
     </div>
-    <div class="categories-content">
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/category/WP-ctfshow/">-WP -ctfshow</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/markdown%E8%AF%AD%E6%B3%95/">-markdown语法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-CSRF/">-web安全 -CSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5/">-web安全 -PHP代码注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-SSRF/">-web安全 -SSRF</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-XSS/">-web安全 -XSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">-web安全 -反序列化漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/">-web安全 -命令注入</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/">-web安全 -文件上传漏洞</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">-web安全 -文件包含</a><span class="category-list-count">1</span></li></ul>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/web%E5%AE%89%E5%85%A8-SSRF/">-web安全 -SSRF</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tag/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">-基础知识</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
+            
+                <a href="/2021/04/24/PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/04/24/PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 10:43">PHP代码注入基础知识</a>
+                <br>
+            
+            
+                <a href="/2021/04/24/CSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/24/CSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 10:30">CSRF基础知识</a>
+            
+        </div>
     </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
 </div>
+
     </div>
 </div>
     <div id="footer"></div>
