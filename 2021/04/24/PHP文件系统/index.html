@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>Live For Code</title>
+    <title>PHP文件系统</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -17,144 +17,147 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
-    <div class="header" >
+    <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-title"></h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
-                <!--
-                <h1 class="header-subtitle"></h1>
-                <p class="header-subinfo"></p>
-                -->
+                <h1 class="header-subtitle">PHP文件系统</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-24
+                        </span>
+                        
+                            <span id="/2021/04/24/PHP文件系统/" class="leancloud_visitors" data-flag-title="PHP文件系统">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/24/PHP文件系统/"></span>
+                        </span>  
+                    </p>                 
+                </div>
             </div>
         </div>
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <span class="hidden">Scroll Down</span>
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
+        <canvas id="articleHeaderCanvas"></canvas>
     </div>
 </div>
     <div id="container">
     <div id="content">
-        <div class="articles">
-    
-        <div class="article">
-            <div class="article-title">
-                <a href="/2021/04/24/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a>
-                
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h1 id="查看文件和目录"><a href="#查看文件和目录" class="headerlink" title="查看文件和目录"></a>查看文件和目录</h1><h2 id="查看文件名称"><a href="#查看文件名称" class="headerlink" title="查看文件名称"></a>查看文件名称</h2><p>使用basename()函数可以返回路径中的文件名称，语法格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string basename(string $path [,string $suffix])</span><br></pre></td></tr></table></figure>
+<p>$path定义要检查的路径；$suffix定义文件扩展名，为可选参数，用于过滤扩展名，如果定义了该参数，则函数将过滤掉扩展名，进返回文件名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$path &#x3D; &quot;\example\ph10\01\index.html&quot;;</span><br><span class="line">echo basename($path) . &quot;&lt;br&gt;&quot;;</span><br><span class="line">echo basename($path,&quot;.html&quot;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看文件目录"><a href="#查看文件目录" class="headerlink" title="查看文件目录"></a>查看文件目录</h2><p>使用dirname()函数可以返回路径中的目录部分，语法格式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string dirname(string $path)</span><br></pre></td></tr></table></figure>
+<p>其中$path为文件全路径</p>
+<h2 id="查看文件的绝对路径"><a href="#查看文件的绝对路径" class="headerlink" title="查看文件的绝对路径"></a>查看文件的绝对路径</h2><p>使用realpath()函数可以返回文件的绝对路径。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string realpath(string $path)</span><br></pre></td></tr></table></figure>
+
+<h1 id="目录处理"><a href="#目录处理" class="headerlink" title="目录处理"></a>目录处理</h1><h2 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h2><p>使用mkdir()函数可以创建目录，语法格式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool mkdir(string $path[,int $mode[,bool $recursive[,resource $context]]])</span><br></pre></td></tr></table></figure>
+<p>参数分别表示：要创建的目录，定义目录权限，是否是递归模式，定义文件句柄的环境</p>
+<h2 id="打开-关闭目录"><a href="#打开-关闭目录" class="headerlink" title="打开/关闭目录"></a>打开/关闭目录</h2><p>使用opendir()函数和closedir()函数。</p>
+<p>opendir()函数，可以通过在函数名称前面添加”@”符号来隐藏opendir()的错误输出。</p>
+<p>void closedir([resource $dir_handle])</p>
+<h2 id="浏览目录"><a href="#浏览目录" class="headerlink" title="浏览目录"></a>浏览目录</h2><p>PHP使用scandir()函数来浏览目录中的文件，语法格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">array scandir(string $directory[,int sorting_order])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$dir &#x3D; &quot;D:&#x2F;phpEnv&#x2F;www&#x2F;example&#x2F;ph10&#x2F;05&#x2F;images&#x2F;&quot;;         &#x2F;&#x2F;定义要浏览的目录</span><br><span class="line">$a &#x3D; scandir($dir);                                     &#x2F;&#x2F; 以升序排序 - 默认</span><br><span class="line">$b &#x3D; scandir($dir,1);                                   &#x2F;&#x2F; 以降序排序</span><br><span class="line">print_r($a) ;</span><br><span class="line">echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">print_r($b);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他常用的目录操作函数"><a href="#其他常用的目录操作函数" class="headerlink" title="其他常用的目录操作函数"></a>其他常用的目录操作函数</h2><table>
+<thead>
+<tr>
+<th align="left">函数原型</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">getcwd()</td>
+<td align="left">返回当前工作目录</td>
+</tr>
+<tr>
+<td align="left">rmdir($dirname)</td>
+<td align="left">删除指定目录，前提是该目录为空</td>
+</tr>
+<tr>
+<td align="left">chdir($directory)</td>
+<td align="left">改变当前目录为directory</td>
+</tr>
+<tr>
+<td align="left">readdir($handle)</td>
+<td align="left">返回目录中下一个文件的文件名，使用该函数时，目录必须是使用opendir()函数打开的</td>
+</tr>
+<tr>
+<td align="left">rewinddir($handle)</td>
+<td align="left">将指定的目录重新指定到目录开头</td>
+</tr>
+</tbody></table>
+<h1 id="PHP文件处理"><a href="#PHP文件处理" class="headerlink" title="PHP文件处理"></a>PHP文件处理</h1><h2 id="打开-关闭文件"><a href="#打开-关闭文件" class="headerlink" title="打开/关闭文件"></a>打开/关闭文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">resource fopen(string $filename,string $mode [,bool $use_include_path])</span><br><span class="line">filename是要打开的包含路径的文件名</span><br><span class="line">mode的取值，就去百度搜一下，懒得写了</span><br><span class="line"></span><br><span class="line">bool fclose(resource $file)</span><br></pre></td></tr></table></figure>
+
+<h2 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h2><h3 id="读取整个文件"><a href="#读取整个文件" class="headerlink" title="读取整个文件"></a>读取整个文件</h3><p>*1.readfile()函数<br>    readfile()函数常用于读取整个文件，将其写入到输出缓冲区。<br>    int readfile(string $filename)</p>
+<p>*2.file()函数<br>    file()函数也可用于读取整个文件，它是将文件内容按行读入一个数组中，数组的每一项对应文件的一行。<br>    array file(string $filename)</p>
+<p>*3.file_get_contents()函数<br>    file()函数也可用于读取整个文件，它是将文件内容读入到一个字符串。<br>    array file(string $filename)</p>
+<h3 id="读取文件中任意长度的字符串"><a href="#读取文件中任意长度的字符串" class="headerlink" title="读取文件中任意长度的字符串"></a>读取文件中任意长度的字符串</h3><p>fread()函数<br>string fread(resource $file,int $length)</p>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
             </div>
-            <div class="article-abstract">
-                
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/24/PHP%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" target="_blank">PHP文件系统</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：等花开，等风来
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
             </div>
-            <div class="clear"></div>
-            <div class="article-info">
-                <span>
-                    <i class="iconfont icon-time"></i> 发表时间：2021-04-24
-                </span>
-                
-                    <span id="/2021/04/24/SQL注入/" class="leancloud_visitors" data-flag-title="SQL注入">
-                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                    </span>
-                
-                <span>
-                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/24/SQL注入/"></span>
-                </span>
-            </div>
-            <div class="clear"></div>     
+            <div style="clear: both;"></div>
         </div>
-    
-        <div class="article">
-            <div class="article-title">
-                <a href="/2021/04/23/ctfshow-web%E5%85%A5%E9%97%A8/">ctfshow-web入门</a>
+    </div>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/%E8%AF%AD%E8%A8%80-PHP/">-语言 -PHP</a>
                 
             </div>
-            <div class="article-abstract">
-                
-            </div>
-            <div class="clear"></div>
-            <div class="article-info">
-                <span>
-                    <i class="iconfont icon-time"></i> 发表时间：2021-04-23
-                </span>
-                
-                    <span id="/2021/04/23/ctfshow-web入门/" class="leancloud_visitors" data-flag-title="ctfshow-web入门">
-                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                    </span>
-                
-                <span>
-                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/23/ctfshow-web入门/"></span>
-                </span>
-            </div>
-            <div class="clear"></div>     
+        
+        
+        <div class="article-prev-next">
+            
+            
+                <a href="/2021/04/24/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/24/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-24 11:03">反序列化漏洞基础知识</a>
+            
         </div>
+    </div>
     
-        <div class="article">
-            <div class="article-title">
-                <a href="/2021/04/23/sql%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">SQL注入基础</a>
-                
-            </div>
-            <div class="article-abstract">
-                
-            </div>
-            <div class="clear"></div>
-            <div class="article-info">
-                <span>
-                    <i class="iconfont icon-time"></i> 发表时间：2021-04-23
-                </span>
-                
-                    <span id="/2021/04/23/sql基础知识/" class="leancloud_visitors" data-flag-title="SQL注入基础">
-                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                    </span>
-                
-                <span>
-                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/23/sql基础知识/"></span>
-                </span>
-            </div>
-            <div class="clear"></div>     
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
         </div>
-    
-        <div class="article">
-            <div class="article-title">
-                <a href="/2021/04/22/markdown%E8%AF%AD%E6%B3%95/">markdown语法</a>
-                
-            </div>
-            <div class="article-abstract">
-                
-            </div>
-            <div class="clear"></div>
-            <div class="article-info">
-                <span>
-                    <i class="iconfont icon-time"></i> 发表时间：2021-04-22
-                </span>
-                
-                    <span id="/2021/04/22/markdown语法/" class="leancloud_visitors" data-flag-title="markdown语法">
-                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                    </span>
-                
-                <span>
-                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/22/markdown语法/"></span>
-                </span>
-            </div>
-            <div class="clear"></div>     
+        <div class="comments-content">
         </div>
-    
-    
-        <div class="pagination-bottom">
-            <div class="pagination">
-                
-                    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-                
-            </div>
-        </div>
-    
+    </div>
+
 </div>
 
     </div>
