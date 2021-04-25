@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>归档</title>
+    <title>SQL注入之oracle,mongoDB等注入</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -17,119 +17,106 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
-    <div class="header" >
+    <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-title"></h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
-                <!--
-                <h1 class="header-subtitle"></h1>
-                <p class="header-subinfo"></p>
-                -->
+                <h1 class="header-subtitle">SQL注入之oracle,mongoDB等注入</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-25
+                        </span>
+                        
+                            <span id="/2021/04/25/SQL注入之oracle-mongoDB等注入/" class="leancloud_visitors" data-flag-title="SQL注入之oracle,mongoDB等注入">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/25/SQL注入之oracle-mongoDB等注入/"></span>
+                        </span>  
+                    </p>                 
+                </div>
             </div>
         </div>
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <span class="hidden">Scroll Down</span>
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
+        <canvas id="articleHeaderCanvas"></canvas>
     </div>
 </div>
     <div id="container">
     <div id="content">
-          
-    <div class="articles-year">
-        <h2>2021</h2>
-        <ul class="list">
-            
-                <li>
-                    <span class="date">2021/04/25</span>
-                    <a href="/2021/04/25/SQL%E6%B3%A8%E5%85%A5%E4%B9%8Boracle-mongoDB%E7%AD%89%E6%B3%A8%E5%85%A5/" title="SQL注入之oracle,mongoDB等注入">    
-                        <span>SQL注入之oracle,mongoDB等注入</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2021/04/24</span>
-                    <a href="/2021/04/24/PHP%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" title="PHP文件系统">    
-                        <span>PHP文件系统</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2021/04/24</span>
-                    <a href="/2021/04/24/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="反序列化漏洞基础知识">    
-                        <span>反序列化漏洞基础知识</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2021/04/24</span>
-                    <a href="/2021/04/24/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="文件包含基础知识">    
-                        <span>文件包含基础知识</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2021/04/24</span>
-                    <a href="/2021/04/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="文件上传漏洞基础知识">    
-                        <span>文件上传漏洞基础知识</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2021/04/24</span>
-                    <a href="/2021/04/24/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="命令注入基础知识">    
-                        <span>命令注入基础知识</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2021/04/24</span>
-                    <a href="/2021/04/24/PHP%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="PHP代码注入基础知识">    
-                        <span>PHP代码注入基础知识</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2021/04/24</span>
-                    <a href="/2021/04/24/SSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="SSRF基础知识">    
-                        <span>SSRF基础知识</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2021/04/24</span>
-                    <a href="/2021/04/24/CSRF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="CSRF基础知识">    
-                        <span>CSRF基础知识</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2021/04/24</span>
-                    <a href="/2021/04/24/XSS%E5%9F%BA%E7%A1%80/" title="XSS基础">    
-                        <span>XSS基础</span>
-                    </a>
-                </li>
-            
-        </ul>
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h1 id="安全渗透常见分类"><a href="#安全渗透常见分类" class="headerlink" title="安全渗透常见分类"></a>安全渗透常见分类</h1><ol>
+<li>web数据库安全（sql注入漏洞）</li>
+<li>web应用服务器安全（文件上传漏洞，文件包含漏洞）</li>
+<li>web客户端安全（XSS跨站攻击） </li>
+</ol>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/25/SQL%E6%B3%A8%E5%85%A5%E4%B9%8Boracle-mongoDB%E7%AD%89%E6%B3%A8%E5%85%A5/" target="_blank">SQL注入之oracle,mongoDB等注入</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：等花开，等风来
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
     </div>
-
-
-    <div class="pagination-bottom">
-        <div class="pagination">
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tag/sql/">-sql</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
             
-                <a href="/archive/2021/page/2/">下一页</a>
+            
+                <a href="/2021/04/24/PHP%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/24/PHP%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" title="发布于 2021-04-24 12:12">PHP文件系统</a>
             
         </div>
     </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
+</div>
 
     </div>
 </div>
