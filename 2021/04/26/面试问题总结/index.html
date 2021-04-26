@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>面试问题总结</title>
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <a id="cover"></a>
+    <div id="header">
+    <div class="header">
+        <div class="vertical">
+            <div class="inner">
+                <h1 class="header-subtitle">面试问题总结</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-26
+                        </span>
+                        
+                            <span id="/2021/04/26/面试问题总结/" class="leancloud_visitors" data-flag-title="面试问题总结">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/26/面试问题总结/"></span>
+                        </span>  
+                    </p>                 
+                </div>
+            </div>
+        </div>
+        <canvas id="articleHeaderCanvas"></canvas>
+    </div>
+</div>
+    <div id="container">
+    <div id="content">
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <p>端口号对应的服务汇总</p>
+<p>1 tcpmux TCP 端口服务多路复用</p>
+<p>5 rje 远程作业入口</p>
+<p>7 echo Echo 服务</p>
+<p>9 discard 用于连接测试的空服务</p>
+<p>11 systat 用于列举连接了的端口的系统状态</p>
+<p>13 daytime 给请求主机发送日期和时间</p>
+<p>17 qotd 给连接了的主机发送每日格言</p>
+<p>18 msp 消息发送协议</p>
+<p>19 chargen 字符生成服务；发送无止境的字符流</p>
+<p>20 ftp-data FTP 数据端口</p>
+<p>21 ftp 文件传输协议（FTP）端口；有时被文件服务协议（FSP）使用</p>
+<p>22 ssh 安全 Shell（SSH）服务</p>
+<p>23 telnet         Telnet 服务</p>
+<p>25 smtp 简单邮件传输协议（SMTP）</p>
+<p>37 time 时间协议</p>
+<p>39 rlp 资源定位协议</p>
+<p>42 nameserver 互联网名称服务</p>
+<p>43 nicname WHOIS 目录服务</p>
+<p>49 tacacs 用于基于 TCP/IP 验证和访问的终端访问控制器访问控制系统</p>
+<p>50 re-mail-ck 远程邮件检查协议</p>
+<p>53 domain 域名服务（如 BIND）</p>
+<p>63 whois++ WHOIS++，被扩展了的 WHOIS 服务</p>
+<p>67 bootps 引导协议（BOOTP）服务；还被动态主机配置协议（DHCP）服务使用</p>
+<p>68 bootpc Bootstrap（BOOTP）客户；还被动态主机配置协议（DHCP）客户使用</p>
+<p>69 tftp 小文件传输协议（TFTP）</p>
+<p>70 gopher Gopher 互联网文档搜寻和检索</p>
+<p>71 netrjs-1 远程作业服务</p>
+<p>72 netrjs-2 远程作业服务</p>
+<p>73 netrjs-3 远程作业服务</p>
+<p>73 netrjs-4 远程作业服务</p>
+<p>79 finger 用于用户联系信息的 Finger 服务</p>
+<p>80 http 用于万维网（WWW<br>前端篇</p>
+<h2 id="1、什么是同源策略？（不是特别理解）"><a href="#1、什么是同源策略？（不是特别理解）" class="headerlink" title="1、什么是同源策略？（不是特别理解）"></a>1、什么是同源策略？（不是特别理解）</h2><p>我自己的答案：同源策略是一种约定，它是浏览器最核心也是最基本的安全功能，如果缺少同源策略，浏览器的正常功能可能都会受影响。同源是指，域名、协议、端口相同。只有跟本机浏览器处于同源的脚本才会被执行。</p>
+<p>扩展：非同源受到的限制：cookie，session不能读取，dom无法获得，ajax请求不能发送</p>
+<p>别人的答案：同源策略是检查页面跟本机浏览器是否处于同源，只有跟本机浏览器处于同源的脚本才会被执行，如果非同源，那么在请求数据时，浏览器会在控制台中报一个异常，提示拒绝访问。</p>
+<h2 id="2、windows系统的安全键是什么？"><a href="#2、windows系统的安全键是什么？" class="headerlink" title="2、windows系统的安全键是什么？"></a>2、windows系统的安全键是什么？</h2><p>Ctrl+alt+delete（机器默认接收此指令后立即在中断所有进程，激活重新登入页面提示输入用户名和密码）</p>
+<h2 id="3、通用渗透测试框架10个"><a href="#3、通用渗透测试框架10个" class="headerlink" title="3、通用渗透测试框架10个"></a>3、通用渗透测试框架10个</h2><p>范围界定<br>需要考虑的经典因素：<br>测试对象是什么？<br>应采取何种测试方法？<br>有哪些在测试过程中需要满足的条件？<br>需要多久才能完成测试？<br>此次测试应达到什么样的任务目标？</p>
+<p>信息收集<br>搜集的信息主要包括DNS服务器、路由关系、whois数据库、电子邮件地址、电话号码、个人信息以及用户账户，收集的信息越多，渗透测试成功的概率越高。<br>目标识别<br>这个阶段的主要任务是识别目标网络的状态，操作系统和网络架构，该阶段工作旨在完整地展现目标网络里各种联网设备或技术的完整关系，以帮助测试人员在接下来的工作里枚举网络里的各种服务。</p>
+<p>服务枚举</p>
+<p>这一阶段会根据前面各个阶段的成果，进一步找出目标系统中所有开放的端口。一但找到所有开放端口，就可以通过这些端口来列出目标系统上运行的服务，主机上开发的端口都有相应的服务程序。对这些信息进行深度分析之后，可进一步发掘目标网络基础设施中可能存在的漏洞。</p>
+<p>简单来说，就是，找到所有开放端口，列出这些端口在目标系统上运行的服务，然后发掘可能存在的漏洞</p>
+<p>漏洞映射<br>根据已经发现的开发端口和服务程序，查找和分析目标系统中存在的漏洞</p>
+<p>社会工程学</p>
+<p>漏洞利用<br>发现目标系统漏洞之后，就可以使用已有的漏洞利用程序对目标系统进行渗透，审计人员可以把客户端漏洞利用程序和社会工程学结合，进而控制目标系统，这个阶段的主要任务是控制目标系统</p>
+<p>权限提升</p>
+<p>访问维护</p>
+<p>文档报告</p>
+<h2 id="4、在登录界面要考虑的安全问题。"><a href="#4、在登录界面要考虑的安全问题。" class="headerlink" title="4、在登录界面要考虑的安全问题。"></a>4、在登录界面要考虑的安全问题。</h2><p>传输：使用https进行传输，对传输内容进行加密，杜绝http明文传输</p>
+<p>密码：强制用户使用有一定强度并复杂的密码，防止出现123456这样的弱口令 ，密码不要明文存储在数据库，要进行加密处理。用户名和密码不要单方面提示，不管是用户名还是密码错误都提示“用户名或密码错误”，防止攻击者进行尝试。</p>
+<p>sql防护：前端进行禁止用户输入导致sql注入的字符，后端也要进行sql注入的防护</p>
+<p>异地登录：保存每次用户登录信息日志，当出现异地登录时，进行提醒</p>
+<p>cookie防护：不要在cookie中保存账号密码，要将过期时间，ip等考虑进去，cookie要设置成http only，防止脚本获取</p>
+<p>（如果cookie中设置了HttpOnly属性，那么通过js脚本将无法读取到cookie信息，这样能有效的防止XSS攻击，窃取cookie内容，加了cookie的安全性）</p>
+<p>设置会话有效期：比如登录后10分钟不操作进登录失效</p>
+<p>加验证码：防止黑客进行撞库攻击</p>
+<p>采用单点登入</p>
+<h2 id="5、如何确定用户是否登录"><a href="#5、如何确定用户是否登录" class="headerlink" title="5、如何确定用户是否登录"></a>5、如何确定用户是否登录</h2><p>当用户输入正确的用户名和密码时，在服务器端创建一个session保存，并设置过期时间。如果用户选择保存密码，将cookie保存在浏览器端。每次用户向后台进行请求时，进行状态验证，如果存在session，则继续进行操作，并刷新session的有效时间，如果不存在session，则判断cookie是否正确，如果正确则，完成自动登录，否则返回登录界面。</p>
+<h2 id="6、session和cookie的区别是什么？"><a href="#6、session和cookie的区别是什么？" class="headerlink" title="6、session和cookie的区别是什么？"></a>6、session和cookie的区别是什么？</h2><p>cookie存放在浏览器端，session存放在服务器端<br>cookie不是很安全，别人可以分析存放在本地的cookie进行cookie欺骗，考虑到安全性，账号密码等信息应该保存在session端<br>session会在一定时间内保存在服务器端，当访问增多时，会影响服务器的性能。<br>单个cookie保存的数据不能超过4k</p>
+<h2 id="7、cookie参数，security干什么的"><a href="#7、cookie参数，security干什么的" class="headerlink" title="7、cookie参数，security干什么的"></a>7、cookie参数，security干什么的</h2><p>HttpOnly：防止cookie被偷<br>https：防止cookie在网络中被偷<br>Secure：阻止cookie在非https下传输，很多全站https时会漏掉<br>Path：区分cookie的标识，安全上作用不大，和浏览器同源冲突</p>
+<h2 id="8、Cookie的P3P性质"><a href="#8、Cookie的P3P性质" class="headerlink" title="8、Cookie的P3P性质"></a>8、Cookie的P3P性质</h2><p>HTTP响应头的p3字段是W3C公布的一项隐私保护推荐标准，该字段用于标识是否允许目标网站的cookie被另一个域通过加载目标网站而设置或发送，仅IE执行了该策略。</p>
+<h2 id="9、如何使前端referer为空"><a href="#9、如何使前端referer为空" class="headerlink" title="9、如何使前端referer为空"></a>9、如何使前端referer为空</h2><p>通过地址栏输入，从书签里面选择或者浏览器的插件burpsuite修改</p>
+<h2 id="10、文件上传和下载有什么了解？"><a href="#10、文件上传和下载有什么了解？" class="headerlink" title="10、文件上传和下载有什么了解？"></a>10、文件上传和下载有什么了解？</h2><h2 id="11、拿到一个待检测的站，你觉得应该先做什么？"><a href="#11、拿到一个待检测的站，你觉得应该先做什么？" class="headerlink" title="11、拿到一个待检测的站，你觉得应该先做什么？"></a>11、拿到一个待检测的站，你觉得应该先做什么？</h2><p>1)信息收集</p>
+<pre><code>1，获取域名的whois信息,获取注册者邮箱姓名电话等。
+
+2，查询服务器旁站以及子域名站点，因为主站一般比较难，所以先看看旁站有没有通用性的cms或者其他漏洞。
+
+3，查看服务器操作系统版本，web中间件，看看是否存在已知的漏洞，比如IIS，APACHE,NGINX的解析漏洞
+
+4，查看IP，进行IP地址端口扫描，对响应的端口进行漏洞探测，比如 rsync,心脏出血，mysql,ftp,ssh弱口令等。
+
+5，扫描网站目录结构，看看是否可以遍历目录，或者敏感文件泄漏，比如php探针
+
+6，google hack 进一步探测网站的信息，后台，敏感文件
+</code></pre>
+<p>2）漏洞扫描</p>
+<pre><code>开始检测漏洞，如XSS,XSRF,sql注入，代码执行，命令执行，越权访问，目录读取，任意文件读取，下载，文件包含，
+
+远程命令执行，弱口令，上传，编辑器漏洞，暴力破解等
+</code></pre>
+<p>3）漏洞利用</p>
+<pre><code>利用以上的方式拿到webshell，或者其他权限
+</code></pre>
+<p>4）权限提升</p>
+<pre><code>提权服务器，比如windows下mysql的udf提权，serv-u提权，windows低版本的漏洞，如iis6,pr,巴西烤肉，linux脏牛漏洞，linux内核版本漏洞提权，linux下的mysql system提权以及oracle低权限提权
+</code></pre>
+<ol start="5">
+<li>日志清理</li>
+</ol>
+<p>6）总结报告及修复方案</p>
+<h2 id="9、判断出网站的CMS对渗透有什么意义？"><a href="#9、判断出网站的CMS对渗透有什么意义？" class="headerlink" title="9、判断出网站的CMS对渗透有什么意义？"></a>9、判断出网站的CMS对渗透有什么意义？</h2><p>查找网上已曝光的程序漏洞。<br>如果开源，还能下载相对应的源码进行代码审计。</p>
+<h2 id="10、一个成熟并且相对安全的CMS，渗透时扫目录的意义？"><a href="#10、一个成熟并且相对安全的CMS，渗透时扫目录的意义？" class="headerlink" title="10、一个成熟并且相对安全的CMS，渗透时扫目录的意义？"></a>10、一个成熟并且相对安全的CMS，渗透时扫目录的意义？</h2><p>敏感文件、二级目录扫描<br>站长的误操作比如：网站备份的压缩文件、说明.txt、二级目录可能存放着其他站点</p>
+<h2 id="11、常见的网站服务器容器"><a href="#11、常见的网站服务器容器" class="headerlink" title="11、常见的网站服务器容器"></a>11、常见的网站服务器容器</h2><p>IIS、Apache、nginx、Lighttpd、Tomcat</p>
+<h2 id="12、目前已知哪些版本的容器有解析漏洞，具体举例。"><a href="#12、目前已知哪些版本的容器有解析漏洞，具体举例。" class="headerlink" title="12、目前已知哪些版本的容器有解析漏洞，具体举例。"></a>12、目前已知哪些版本的容器有解析漏洞，具体举例。</h2><p>IIS 6.0<br>/xx.asp/xx.jpg “xx.asp”是文件夹名</p>
+<p>IIS 7.0/7.5<br>默认Fast-CGI开启，直接在url中图片地址后面输入/1.php，会把正常图片当成php解析</p>
+<p>Nginx<br>版本小于等于0.8.37，利用方法和IIS 7.0/7.5一样，Fast-CGI关闭情况下也可利用。<br>空字节代码 xxx.jpg.php</p>
+<p>Apache<br>上传的文件命名为：test.php.x1.x2.x3，Apache是从右往左判断后缀</p>
+<p>lighttpd<br>xx.jpg/xx.php，不全</p>
+<h2 id="13、如何手工快速判断目标站是windows还是linux服务器？"><a href="#13、如何手工快速判断目标站是windows还是linux服务器？" class="headerlink" title="13、如何手工快速判断目标站是windows还是linux服务器？"></a>13、如何手工快速判断目标站是windows还是linux服务器？</h2><p>linux大小写敏感,windows大小写不敏感。</p>
+<h2 id="14、为什么一个mysql数据库的站，只有一个80端口开放"><a href="#14、为什么一个mysql数据库的站，只有一个80端口开放" class="headerlink" title="14、为什么一个mysql数据库的站，只有一个80端口开放"></a>14、为什么一个mysql数据库的站，只有一个80端口开放</h2><p>更改了端口，没扫描出来<br>站库分离<br>3306端口不对外开放（mysql的默认端口）</p>
+<h2 id="15、3389无法连接的几种情况"><a href="#15、3389无法连接的几种情况" class="headerlink" title="15、3389无法连接的几种情况"></a>15、3389无法连接的几种情况</h2><p>没开放3389端口（win2000/2003 server远程桌面的服务端口）<br>端口被修改<br>防护拦截<br>处于内网（需要进行端口转发）</p>
+<h2 id="16、如何突破注入时字符被转义"><a href="#16、如何突破注入时字符被转义" class="headerlink" title="16、如何突破注入时字符被转义"></a>16、如何突破注入时字符被转义</h2><p>宽字符注入    <a target="_blank" rel="noopener" href="https://www.cnblogs.com/bmjoker/p/9134830.html">https://www.cnblogs.com/bmjoker/p/9134830.html</a><br>hex编码绕过</p>
+<h2 id="15、在某后台新闻界面看到编辑器，应该先做什么？"><a href="#15、在某后台新闻界面看到编辑器，应该先做什么？" class="headerlink" title="15、在某后台新闻界面看到编辑器，应该先做什么？"></a>15、在某后台新闻界面看到编辑器，应该先做什么？</h2><p>查看编辑器的名称，然后搜索公开的漏洞</p>
+<h2 id="16、拿到一个webshell发现网站根目录下有-htaccess文件，我们能做什么？"><a href="#16、拿到一个webshell发现网站根目录下有-htaccess文件，我们能做什么？" class="headerlink" title="16、拿到一个webshell发现网站根目录下有.htaccess文件，我们能做什么？"></a>16、拿到一个webshell发现网站根目录下有.htaccess文件，我们能做什么？</h2><p>隐藏木马<br>插入<br>&lt;FilesMatch “xxx.jpg”&gt; SetHandler application/x-httpd-php </FilesMatch><br>.jpg文件就会被解析成.php文件<br>然后再去搜一下，补充</p>
+<h2 id="17、注入漏洞只能查账号密码？"><a href="#17、注入漏洞只能查账号密码？" class="headerlink" title="17、注入漏洞只能查账号密码？"></a>17、注入漏洞只能查账号密码？</h2><p>只要权限广，拖库脱到来</p>
+<h2 id="18、安全狗会追踪变量，从而发现出是一句话木马吗？"><a href="#18、安全狗会追踪变量，从而发现出是一句话木马吗？" class="headerlink" title="18、安全狗会追踪变量，从而发现出是一句话木马吗？"></a>18、安全狗会追踪变量，从而发现出是一句话木马吗？</h2><p>是根据特征码，所以很好绕过，只要思路宽，绕狗绕到欢，但这应该不会是一成不变的。<br>安全狗具体能干吗？自己查</p>
+<h2 id="19、access扫除后缀为asp的数据库文件，访问乱码，如何实现到本地利用？"><a href="#19、access扫除后缀为asp的数据库文件，访问乱码，如何实现到本地利用？" class="headerlink" title="19、access扫除后缀为asp的数据库文件，访问乱码，如何实现到本地利用？"></a>19、access扫除后缀为asp的数据库文件，访问乱码，如何实现到本地利用？</h2><p>迅雷下载，直接改后缀为.mdb</p>
+<h2 id="20、提权时选择可读写目录，为何尽量不用带空格的目录？"><a href="#20、提权时选择可读写目录，为何尽量不用带空格的目录？" class="headerlink" title="20、提权时选择可读写目录，为何尽量不用带空格的目录？"></a>20、提权时选择可读写目录，为何尽量不用带空格的目录？</h2><p>因为exp执行多半需要空格界定参数</p>
+<p>提权还要去好好学一下，exp,poc</p>
+<h2 id="21、某服务器有站点A-B为何在A的后台添加test用户，访问B的后台。发现也添加上了test用户？"><a href="#21、某服务器有站点A-B为何在A的后台添加test用户，访问B的后台。发现也添加上了test用户？" class="headerlink" title="21、某服务器有站点A,B为何在A的后台添加test用户，访问B的后台。发现也添加上了test用户？"></a>21、某服务器有站点A,B为何在A的后台添加test用户，访问B的后台。发现也添加上了test用户？</h2><p>同数据库</p>
+<h2 id="22、注入时可以不使用and或or或xor，直接order-by开始注入吗？"><a href="#22、注入时可以不使用and或or或xor，直接order-by开始注入吗？" class="headerlink" title="22、注入时可以不使用and或or或xor，直接order by开始注入吗？"></a>22、注入时可以不使用and或or或xor，直接order by开始注入吗？</h2><p>And/or/xor ，前面的1=1、1=2步骤只是为了判断是否为注入点，如果已经确定是注入点那就可以省那些步骤了</p>
+<h2 id="23、某个防注入系统，在注入时会提示：？不理解题目想表达什么"><a href="#23、某个防注入系统，在注入时会提示：？不理解题目想表达什么" class="headerlink" title="23、某个防注入系统，在注入时会提示：？不理解题目想表达什么"></a>23、某个防注入系统，在注入时会提示：？不理解题目想表达什么</h2><h2 id="24、如何利用这个防注入系统拿shell？这个是什么"><a href="#24、如何利用这个防注入系统拿shell？这个是什么" class="headerlink" title="24、如何利用这个防注入系统拿shell？这个是什么"></a>24、如何利用这个防注入系统拿shell？这个是什么</h2><p>在URL里面直接提交一句话，这样网站就把你的一句话也记录进数据库文件了这个时候可以尝试寻找网站的配置文件，直接上蚁剑/菜刀链接。</p>
+<h2 id="25、上传大马后访问乱码时，有哪些解决方法？"><a href="#25、上传大马后访问乱码时，有哪些解决方法？" class="headerlink" title="25、上传大马后访问乱码时，有哪些解决方法？"></a>25、上传大马后访问乱码时，有哪些解决方法？</h2><p>浏览器中改编码</p>
+<h2 id="26、审查上传点的元素有什么意义？"><a href="#26、审查上传点的元素有什么意义？" class="headerlink" title="26、审查上传点的元素有什么意义？"></a>26、审查上传点的元素有什么意义？</h2><p>有些站点的上传文件类型的限制是在前端实现的，这时只要增加上传类型就能突破限制了。</p>
+<h2 id="27、目标站禁止注册用户，找回密码处随便输入用户名提示：“此用户不存在”，你觉得这里怎样利用？"><a href="#27、目标站禁止注册用户，找回密码处随便输入用户名提示：“此用户不存在”，你觉得这里怎样利用？" class="headerlink" title="27、目标站禁止注册用户，找回密码处随便输入用户名提示：“此用户不存在”，你觉得这里怎样利用？"></a>27、目标站禁止注册用户，找回密码处随便输入用户名提示：“此用户不存在”，你觉得这里怎样利用？</h2><p>先爆破用户名，再利用被爆破出来的用户名爆破密码/</p>
+<p>有些站点，在登入处也会这样提示，所有和数据库有交互的地方都有可能注入。</p>
+<h2 id="28、目标站发现某txt的下载地址为http-www-test-com-down-down-php-file-upwdown-1-txt，你有什么思路？"><a href="#28、目标站发现某txt的下载地址为http-www-test-com-down-down-php-file-upwdown-1-txt，你有什么思路？" class="headerlink" title="28、目标站发现某txt的下载地址为http://www.test.com/down/down.php?file=/upwdown/1.txt，你有什么思路？"></a>28、目标站发现某txt的下载地址为<a target="_blank" rel="noopener" href="http://www.test.com/down/down.php?file=/upwdown/1.txt%EF%BC%8C%E4%BD%A0%E6%9C%89%E4%BB%80%E4%B9%88%E6%80%9D%E8%B7%AF%EF%BC%9F">http://www.test.com/down/down.php?file=/upwdown/1.txt，你有什么思路？</a></h2><p>这就是下载漏洞，在file=后面尝试输入index.php下载他的首页文件，然后在首页文件里继续查找网站的其他配置文件，可以找出网站的数据库密码和数据库的地址。</p>
+<h2 id="29、甲给你一个目标站，并且告诉你根目录下存在-abc-目录，并且此目录下存在编辑器和admin目录。请问你的想法是？"><a href="#29、甲给你一个目标站，并且告诉你根目录下存在-abc-目录，并且此目录下存在编辑器和admin目录。请问你的想法是？" class="headerlink" title="29、甲给你一个目标站，并且告诉你根目录下存在/abc/目录，并且此目录下存在编辑器和admin目录。请问你的想法是？"></a>29、甲给你一个目标站，并且告诉你根目录下存在/abc/目录，并且此目录下存在编辑器和admin目录。请问你的想法是？</h2><p>直接在网站二级目录/abc/下扫描敏感文件及目录</p>
+<h2 id="30、在有shell的情况下，如何使用XSS实现对目标站的长久控制？"><a href="#30、在有shell的情况下，如何使用XSS实现对目标站的长久控制？" class="headerlink" title="30、在有shell的情况下，如何使用XSS实现对目标站的长久控制？"></a>30、在有shell的情况下，如何使用XSS实现对目标站的长久控制？</h2><p>后台登入处加一段记录登录账号密码的js，并且判断是否成功，如果登入成功，就把账号密码记录到一个生僻的路径的文件中或者直接发到自己的网站文件中。（此方法适合有价值并且需要深入控制权限的网络）。</p>
+<p>在登录后才可以访问的文件中插入XSS脚本</p>
+<h2 id="31、后台修改管理员密码处，原密码显示为-。你觉得该怎样实现读出这个用户的密码？"><a href="#31、后台修改管理员密码处，原密码显示为-。你觉得该怎样实现读出这个用户的密码？" class="headerlink" title="31、后台修改管理员密码处，原密码显示为*。你觉得该怎样实现读出这个用户的密码？"></a>31、后台修改管理员密码处，原密码显示为*。你觉得该怎样实现读出这个用户的密码？</h2><p>审查元素，把密码处的password属性改成text就明文显示了</p>
+<h2 id="32、目标站无防护，上传图片可以正常访问，上传脚本格式则403-什么原因？"><a href="#32、目标站无防护，上传图片可以正常访问，上传脚本格式则403-什么原因？" class="headerlink" title="32、目标站无防护，上传图片可以正常访问，上传脚本格式则403.什么原因？"></a>32、目标站无防护，上传图片可以正常访问，上传脚本格式则403.什么原因？</h2><p>有可能web服务器配置把上传目录写死了不执行相应脚本，尝试改后缀名等方式绕过</p>
+<h2 id="33、审查元素得知网站所使用的防护软件，你觉得怎么做到的？"><a href="#33、审查元素得知网站所使用的防护软件，你觉得怎么做到的？" class="headerlink" title="33、审查元素得知网站所使用的防护软件，你觉得怎么做到的？"></a>33、审查元素得知网站所使用的防护软件，你觉得怎么做到的？</h2><p>在敏感操作被拦截，通过界面信息无法具体判断是什么防护的时候，F12看HTML体部 比如护卫神就可以在名称那看到<hws>内容<hws>。</p>
+<h2 id="34、在win2003服务器中建立以一个-zhongzi文件夹用意何为？"><a href="#34、在win2003服务器中建立以一个-zhongzi文件夹用意何为？" class="headerlink" title="34、在win2003服务器中建立以一个.zhongzi文件夹用意何为？"></a>34、在win2003服务器中建立以一个.zhongzi文件夹用意何为？</h2><p>掩藏文件夹，为了不让管理员发现你传上去的工具</p>
+<h2 id="35、sql注入有以下两个测试选项，选一个并且阐述不选另一个的理由："><a href="#35、sql注入有以下两个测试选项，选一个并且阐述不选另一个的理由：" class="headerlink" title="35、sql注入有以下两个测试选项，选一个并且阐述不选另一个的理由："></a>35、sql注入有以下两个测试选项，选一个并且阐述不选另一个的理由：</h2><p>A.demo.jsp?id=1+2  B.demo.jsp?id=2-1<br>选B，在URL编码中+代表空格，可能会造成混淆</p>
+<h2 id="38、以下链接存在sql注入漏洞，对于这个变形注入，你有什么思路？"><a href="#38、以下链接存在sql注入漏洞，对于这个变形注入，你有什么思路？" class="headerlink" title="38、以下链接存在sql注入漏洞，对于这个变形注入，你有什么思路？"></a>38、以下链接存在sql注入漏洞，对于这个变形注入，你有什么思路？</h2><p>Demo.do?DATA=AjAxNg==</p>
+<p>DATA有可能经过了base64编码再传入服务器，所以我们也要对参数进行base64编码才能正确完成测试。</p>
+<h2 id="36、发现demo-jsp-uid-110注入点，你有哪几种思路获取webshell，那种是优选？"><a href="#36、发现demo-jsp-uid-110注入点，你有哪几种思路获取webshell，那种是优选？" class="headerlink" title="36、发现demo.jsp?uid=110注入点，你有哪几种思路获取webshell，那种是优选？"></a>36、发现demo.jsp?uid=110注入点，你有哪几种思路获取webshell，那种是优选？</h2><p>有写入权限的，构造联合查询语句使用using INTO OUTFILE ，可以将查询的输出重定向到系统的文件中，这样去写入webshell使用sqlmap  –os-shell原理和上面一种相同，来直接获得一个shell，这样效率更高，通过构造联合查询语句得到网站管理员的账户和密码，然后扫后台登录后台，再在后台通过改包上传等方法上传shell</p>
+<h2 id="37、CSRF和XSS和XEE有什么区别，以及修复方式？"><a href="#37、CSRF和XSS和XEE有什么区别，以及修复方式？" class="headerlink" title="37、CSRF和XSS和XEE有什么区别，以及修复方式？"></a>37、CSRF和XSS和XEE有什么区别，以及修复方式？</h2><p>XSS是跨站脚本攻击，用户提交的数据中可以构造代码来执行，从而实现窃取用户信息等攻击。<br>修复方式：对字符实体进行转义、使用HTTP Only来禁止javascript读取cookie值、输入时校验、浏览器与web应用端采用相同的字符编码。</p>
+<p>CSRF是跨站请求脚本攻击，XSS是实现CSRF的诸多手段中的一种，是由于没有在关键操作执行时进行是否由用户自愿发起的确认。<br>修复方式：筛选出需要防范CSRF的页面，然后嵌入token、再次输入密码、检验referer</p>
+<p>XXE是XML外部实体注入攻击，XML中可以通过调用实体来请求本地或远程内容，和远程文件保护类似，会引起相关安全问题，例如敏感文件读取。<br>修复方式：XML解析库在调用时格外禁止对外部实体的解析。</p>
+<h2 id="38、CSRF、SSRF和重放攻击有什么区别？"><a href="#38、CSRF、SSRF和重放攻击有什么区别？" class="headerlink" title="38、CSRF、SSRF和重放攻击有什么区别？"></a>38、CSRF、SSRF和重放攻击有什么区别？</h2><p>CSRF是跨站请求伪造攻击，由客户端发起<br>SSRF是服务器端请求伪造，由服务器发起<br>重放攻击是将截获的数据包进行重放，达到身份认证等目的</p>
+<h2 id="39、XSS能用来做什么"><a href="#39、XSS能用来做什么" class="headerlink" title="39、XSS能用来做什么"></a>39、XSS能用来做什么</h2><p>网络钓鱼、窃取用户cookie、弹广告刷流量、具备改页面信息、删除文章、获取客户端信息，传播蠕虫</p>
+<h2 id="40、CSRF有何危害？"><a href="#40、CSRF有何危害？" class="headerlink" title="40、CSRF有何危害？"></a>40、CSRF有何危害？</h2><p>篡改目标网站上的用户数据 盗取用户隐私数据 传播CSRF蠕虫</p>
+<h2 id="41、如何防止CSRF？"><a href="#41、如何防止CSRF？" class="headerlink" title="41、如何防止CSRF？"></a>41、如何防止CSRF？</h2><p>1）验证referer<br>2）验证token<br><a target="_blank" rel="noopener" href="https://cnodejs.org/topic/5533dd6e9138f09b629674fd">https://cnodejs.org/topic/5533dd6e9138f09b629674fd</a></p>
+<h2 id="42、XSS的三种类型，防御方法？"><a href="#42、XSS的三种类型，防御方法？" class="headerlink" title="42、XSS的三种类型，防御方法？"></a>42、XSS的三种类型，防御方法？</h2><p>反射型，存储型，DOM XSS；<br>防御方法还得看所在业务，从网络层、主机层、web层、数据库，通过CDN都有过滤常见一些攻击手段，但不能有CDN就以为可以了，添加CDN只是让攻击成本增加，开启HttpOnly，以防确实存在避免cookie被获取，CSP策略、再就是语言中提供的函数对输入过滤，以及输出编码以及ModSecurity类防火墙。</p>
+<h2 id="43、存储型XSS原理？"><a href="#43、存储型XSS原理？" class="headerlink" title="43、存储型XSS原理？"></a>43、存储型XSS原理？</h2><p>如网站留言板，把插入的记录存储到数据库，插入的代码会一直留在页面上，当其他用户访问时会从数据库中读取并触发漏洞。</p>
+<h2 id="44、你怎么理解XSS攻击？"><a href="#44、你怎么理解XSS攻击？" class="headerlink" title="44、你怎么理解XSS攻击？"></a>44、你怎么理解XSS攻击？</h2><p>是一种被动型，在不知道的情况下触发类似无感型，在渗透很多情况下平常<br>的渗透手段取得目标的信息，而XSS就能轻松取得，类似QQ邮箱你不可能渗透这么大的互联网就算可以时间成本都非常高，XSS比较有针对性。</p>
+<h2 id="45、如何快速发现XSS位置？"><a href="#45、如何快速发现XSS位置？" class="headerlink" title="45、如何快速发现XSS位置？"></a>45、如何快速发现XSS位置？</h2><p>各种输入的点，名称、上传、留言、可交互的地方，一切输入都是有害的</p>
+<h2 id="46、DOM-XSS原理-防范"><a href="#46、DOM-XSS原理-防范" class="headerlink" title="46、DOM XSS原理/防范"></a>46、DOM XSS原理/防范</h2><p>DOM型XSS并不需要服务器解析响应的直接参与触发XSS靠的是浏览器<br>DOM解析DOM-Based XSS漏洞是基于文档对象模型Document Object Model,DOM的一种漏洞。<br>Cument.getElementById(“a”).innerHTML=”yyyyyy”;<br>在输入点过滤敏感关键字</p>
+<h2 id="47、DOM型XSS与反射型XSS区别？"><a href="#47、DOM型XSS与反射型XSS区别？" class="headerlink" title="47、DOM型XSS与反射型XSS区别？"></a>47、DOM型XSS与反射型XSS区别？</h2><p>DOM型就是JS中的Document对象HTML注入，直接浏览器处理。</p>
+<h2 id="48、如果SRC上报了一个XSS漏洞，payload已经写入页面，但未给出具体位置，如何快速介入？（不太懂）"><a href="#48、如果SRC上报了一个XSS漏洞，payload已经写入页面，但未给出具体位置，如何快速介入？（不太懂）" class="headerlink" title="48、如果SRC上报了一个XSS漏洞，payload已经写入页面，但未给出具体位置，如何快速介入？（不太懂）"></a>48、如果SRC上报了一个XSS漏洞，payload已经写入页面，但未给出具体位置，如何快速介入？（不太懂）</h2><p>看是什么类型的XSS，XSS反射型看提交的地址，指的参数是哪个位置，通过这个页面进行fuzzing测试。如果是存储型页面查找关键字。</p>
+<h2 id="49、XSS-CSRF-CRLF比较容易弄混，说说三者的原理，防御方法、CSRF跨站请求伪造，构造已知的所有参数让对方访问"><a href="#49、XSS-CSRF-CRLF比较容易弄混，说说三者的原理，防御方法、CSRF跨站请求伪造，构造已知的所有参数让对方访问" class="headerlink" title="49、XSS,CSRF,CRLF比较容易弄混，说说三者的原理，防御方法、CSRF跨站请求伪造，构造已知的所有参数让对方访问"></a>49、XSS,CSRF,CRLF比较容易弄混，说说三者的原理，防御方法、CSRF跨站请求伪造，构造已知的所有参数让对方访问</h2><p>结合37看<br>CRLF原理：http拆分攻击，CRLF是“回车+换行”（\r\n）的简称。<br>在http协议中，HTTP Header与http body是用两个CRLF分隔的，浏览器就是根据这两个CRLF来取出http内容并显示出来。所以，一旦我们能够控制HTTP消息头中的字符，注入一些恶意的换行，这样我们就能注入一些会话cookie或者HTML代码。</p>
+<h2 id="50、csrf-如何不带referer访问"><a href="#50、csrf-如何不带referer访问" class="headerlink" title="50、csrf 如何不带referer访问"></a>50、csrf 如何不带referer访问</h2><p>通过地址栏，手动输入；从书签里面选择；通过实现设定好的手势。上面说的这三种都是用户自己去操作，因此不算CSRF。<br>跨协议间提交请求。常见的协议：ftp://,http://,https://,file://,javascript:,data:.最简单的情况就是我们在本地打开一个HTML页面，这个时候浏览器地址栏是file://开头的，如果这个HTML页面向任何http站点提交请求的话，这些请求的Referer都是空的。那么我们接下来可以利用data:协议来构造一个自动提交的CSRF攻击。当然这个协议是IE不支持的，我们可以换用javascript:</p>
+<h2 id="51、Xss-worm原理（不知道是什么）"><a href="#51、Xss-worm原理（不知道是什么）" class="headerlink" title="51、Xss worm原理（不知道是什么）"></a>51、Xss worm原理（不知道是什么）</h2><p>攻击者发现目标网站存在XSS漏洞，并且可以编写XSS蠕虫。利用一个宿主（如博客空间）作为传播源头进行XSS攻击。</p>
+<h2 id="52、说出至少三种业务逻辑漏洞，以及修复方式？"><a href="#52、说出至少三种业务逻辑漏洞，以及修复方式？" class="headerlink" title="52、说出至少三种业务逻辑漏洞，以及修复方式？"></a>52、说出至少三种业务逻辑漏洞，以及修复方式？</h2><p>我的答案：<br>1、登录处<br>1）可以暴力破解用户名或密码<br>2）session没有清空</p>
+<p>2、业务办理处<br>1）水平越权<br>2）篡改手机号<br>3、验证码处</p>
+<p>4、支付处</p>
+<p>5、密码找回处</p>
+<p>别人的答案：<br>密码找回漏洞中存在<br>1）密码允许暴力破解<br>2）存在通用型找回凭证<br>3）可以跳过验证步骤<br>4）找回凭证可以拦包获取<br>等方式来通过厂商提供的密码找回功能来得到密码</p>
+<p>身份认证漏洞中最常见的是<br>1）会话固定<br>2）cookie仿冒<br>只要得到session或cookie即可伪造用户身份。</p>
+<p>验证码漏洞中存在<br>1）验证码允许暴力破解<br>2）验证码可以通过javascript或者改包的方法来进行绕过</p>
+<h2 id="53、给你一个网站你是如何来渗透测试的？在获取书面授权的前提下"><a href="#53、给你一个网站你是如何来渗透测试的？在获取书面授权的前提下" class="headerlink" title="53、给你一个网站你是如何来渗透测试的？在获取书面授权的前提下"></a>53、给你一个网站你是如何来渗透测试的？在获取书面授权的前提下</h2><p>应该和第8题一样</p>
+<h2 id="54、圈出下面会话中可能存在问题的项，并标注可能会存在的问题？"><a href="#54、圈出下面会话中可能存在问题的项，并标注可能会存在的问题？" class="headerlink" title="54、圈出下面会话中可能存在问题的项，并标注可能会存在的问题？"></a>54、圈出下面会话中可能存在问题的项，并标注可能会存在的问题？</h2><p>get /ecskins/demo.jsp?uid=2016031900&amp;keyword=”hello world”</p>
+<p>HTTP/1.1Host:***.com:82User-Agent:Mozilla/</p>
+<p>5.0 Firefox/40Accept:text/css,/;q=0.1</p>
+<p>Accept-Language:zh-CN;zh;q=0.8;en-US;q=0.5,en;q=0.3</p>
+<p>Referer:http://*******.com/eciop/orderForCC/</p>
+<p>cgtListForCC.htm?zone=11370601&amp;v=145902</p>
+<p>Cookie:myguid1234567890=1349db5fe50c372c3d995709f54c273d;</p>
+<p>uniqueserid=session_OGRMIFIYJHAH5_HZRQOZAMHJ;</p>
+<p>st_uid=N90PLYHLZGJXI-NX01VPUF46W;</p>
+<p>status=True</p>
+<p>Connection:keep-alive</p>
+<p>有写入权限的，构造联合查询语句使用using INTO OUTFILE，可以将查询的输出重定向到系统的文件中，这样去写入 WebShell 使用 sqlmap –os-shell 原理和上面一种相同，来直接获得一个 Shell，这样效率更高 通过构造联合查询语句得到网站管理员的账户和密码，然后扫后台登录后台，再在后台通过改包上传等方法上传 Shell</p>
+<h2 id="55、sqlmap，怎么对一个注入点注入？"><a href="#55、sqlmap，怎么对一个注入点注入？" class="headerlink" title="55、sqlmap，怎么对一个注入点注入？"></a>55、sqlmap，怎么对一个注入点注入？</h2><p>1）如果是get型号，直接，sqlmap -u “注入点网址”<br>2）如果是post型注入点，可以sqlmap -u “注入点网址” –data=”post的参数”<br>3）如果是cookie，X-Forwarded-For等，可以访问的时候，用burpsuite抓包，注入处用号（？）替换，放到文件里，然后sqlmap -r“文件地址”</p>
+<h2 id="56、nmap-扫描的几种方式"><a href="#56、nmap-扫描的几种方式" class="headerlink" title="56、nmap,扫描的几种方式"></a>56、nmap,扫描的几种方式</h2><p>1、全连接扫描  nmap -sT<br>2、半开放SYN扫描  nmap -sS<br>3、隐藏扫描 nmap -sA<br>4、FIN扫描  nmap -sF<br>5、TCP Xmac扫描  nmap -sX<br>6、TCP NULL扫描 nmap -sN<br>7、UDP扫描 nmap -sU<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46128614/article/details/104970134">https://blog.csdn.net/weixin_46128614/article/details/104970134</a></p>
+<h2 id="57、sql注入的几种类型？"><a href="#57、sql注入的几种类型？" class="headerlink" title="57、sql注入的几种类型？"></a>57、sql注入的几种类型？</h2><p>1）报错注入<br>2）bool型注入<br>3）延时注入<br>4）宽字节注入</p>
+<h2 id="58、报错注入的函数有哪些？10个"><a href="#58、报错注入的函数有哪些？10个" class="headerlink" title="58、报错注入的函数有哪些？10个"></a>58、报错注入的函数有哪些？10个</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cyjmosthandsome/article/details/87947136">https://blog.csdn.net/cyjmosthandsome/article/details/87947136</a><br>上面这个好啊<br>1）and extractvalue(1, concat(0x7e,(select @@version),0x7e)))<br>2）通过floor报错 向下取整<br>3）updatexml(1, concat(0x7e,(secect @@version),0x7e),1)<br>4）exp()select from test where id=1 and exp(~(select * from(select user())a));<br>下面的几种归为一类<br>5）geometrycollection()<br>select from test where id=1 and geometrycollection((select from(selectfrom(select user())a)b));<br>6）multipoint()<br>select from test where id=1 and multipoint((select from(select from(select user())a)b));<br>7）polygon()<br>select from test where id=1 and polygon((select from(select from(select user())a)b));<br>8）multipolygon()<br>select from test where id=1 and multipolygon((select from(select from(select user())a)b));<br>9）linestring()<br>select from test where id=1 and linestring((select from(select from(select user())a)b));<br>10）multilinestring()<br>select from test where id=1 and multilinestring((select from(select from(select user())a)b)); 10）.</p>
+<h2 id="47、延时注入如何来判断"><a href="#47、延时注入如何来判断" class="headerlink" title="47、延时注入如何来判断"></a>47、延时注入如何来判断</h2><p>if(ascii(substr(“hello”,1,1))=104,sleep(5),1)</p>
+<h2 id="48、如何拿一个网站的webshell？"><a href="#48、如何拿一个网站的webshell？" class="headerlink" title="48、如何拿一个网站的webshell？"></a>48、如何拿一个网站的webshell？</h2><p>上传，后台编辑模板，sql注入写文件，命令执行，代码执行，一些已经爆出的cms漏洞，比如dedecms后台可以直接建立脚本文件，wordpress上传插件包含脚本文件zip压缩包等。</p>
+<h2 id="49、sql注入写文件都有哪些函数？"><a href="#49、sql注入写文件都有哪些函数？" class="headerlink" title="49、sql注入写文件都有哪些函数？"></a>49、sql注入写文件都有哪些函数？</h2><p>Select ‘一句话木马’ into outfile ‘路径’<br>Select ‘一句话木马’ into dumpfile ‘路径’<br>Select ‘<?php eval($_POST[1]) ?>’ into dumpfile ‘d:\wwwroot\baidu.com\nvhack.php’;</p>
+<h2 id="50、如何防止CSRF？"><a href="#50、如何防止CSRF？" class="headerlink" title="50、如何防止CSRF？"></a>50、如何防止CSRF？</h2><p>1）验证referer<br>2）验证token<br>再去搜一搜</p>
+<h2 id="50、owasp漏洞都有哪些？（好好背）"><a href="#50、owasp漏洞都有哪些？（好好背）" class="headerlink" title="50、owasp漏洞都有哪些？（好好背）"></a>50、owasp漏洞都有哪些？（好好背）</h2><p>注入漏洞<br>失效的身份认证和会话管理<br>跨站脚本攻击XSS<br>直接引用不安全的对象<br>安全配置错误<br>敏感信息泄露<br>缺少功能级的访问控制<br>跨站请求伪造CSRF<br>使用含有已知漏洞的组件<br>未验证的重定向和转发</p>
+<h2 id="51、sql注入的防护方法？"><a href="#51、sql注入的防护方法？" class="headerlink" title="51、sql注入的防护方法？"></a>51、sql注入的防护方法？</h2><p>1）使用安全的API<br>2）对输出的特殊字符进行escape转义处理<br>3）使用白名单来规范输入验证方法<br>4）对客户端输入进行控制，不允许输入SQL注入相关的特殊字符<br>5）服务器在提交数据库进行SQL查询之前，对特殊字符进行过滤、转义、替换、删除。</p>
+<h2 id="52、代码执行，文件读取，命令执行的函数都有哪些？"><a href="#52、代码执行，文件读取，命令执行的函数都有哪些？" class="headerlink" title="52、代码执行，文件读取，命令执行的函数都有哪些？"></a>52、代码执行，文件读取，命令执行的函数都有哪些？</h2><p>1）代码执行<br>eval,preg_replace+/e,assert,call_user_func,call_user_func_array,create_funcation<br>2)文件读取<br>file_get_contents(),highlight_file(),read<br>file(),fread(),fgets(),fgetss(),parse_ini_file(),show_source(),file()等<br>3）命令执行<br>system(),exec(),shell_exec(),passthru(),pcntl_exec(),popen(),proc_open()</p>
+<h2 id="53、img标签除了onerror属性外，并且src属性的后缀名，必须以-jpg结尾，怎么获取管理员路径。"><a href="#53、img标签除了onerror属性外，并且src属性的后缀名，必须以-jpg结尾，怎么获取管理员路径。" class="headerlink" title="53、img标签除了onerror属性外，并且src属性的后缀名，必须以.jpg结尾，怎么获取管理员路径。"></a>53、img标签除了onerror属性外，并且src属性的后缀名，必须以.jpg结尾，怎么获取管理员路径。</h2><p>远程服务器修改apache配置文件，配置.jpg文件以php方式来解析<br>Addtype application/x-httpd-php .jpg<br><img src=http://xss.tv/1.jpg>会以php方式来解析</p>
+<h2 id="54、为什么aspx木马权限比asp大？"><a href="#54、为什么aspx木马权限比asp大？" class="headerlink" title="54、为什么aspx木马权限比asp大？"></a>54、为什么aspx木马权限比asp大？</h2><p>aspx使用的是 .net 技术。IIS中默认不支持，ASP只是脚本语言而已。入侵的时候asp的木马一般是guest权限   aspx木马一般是users权限</p>
+<h2 id="55、如何绕过waf？"><a href="#55、如何绕过waf？" class="headerlink" title="55、如何绕过waf？"></a>55、如何绕过waf？</h2><p>大小写转换<br>干扰字符/<em>！</em>/<br>编码 base64  hex  unicode  url  ascii<br>复参数</p>
+<h2 id="56、如何向服务器写入webshell？"><a href="#56、如何向服务器写入webshell？" class="headerlink" title="56、如何向服务器写入webshell？"></a>56、如何向服务器写入webshell？</h2><p>各种上传漏洞<br>mysql具有写入权限，用sql语句写入shell<br>http put方法</p>
+<h2 id="57、渗透测试中常见的端口"><a href="#57、渗透测试中常见的端口" class="headerlink" title="57、渗透测试中常见的端口"></a>57、渗透测试中常见的端口</h2><p>a、web类（web漏洞/敏感目录）第三方通用组件漏洞struts thinkphp jboss ganglia zabbix</p>
+<p>80        Web<br>80-89  web<br>8000-9090 web</p>
+<p>b、数据库类（扫描弱口令）<br>1433MSSQL<br>1521Oracle<br>3306Mysql<br>5432Postgresql</p>
+<p>c、特殊服务类（未授权/命令执行/漏洞）<br>443    SSL心脏滴血<br>873    rsync未授权<br>5984couchDB  <a target="_blank" rel="noopener" href="http://xxx:5984/_utils">http://xxx:5984/_utils</a><br>6379redis未授权<br>7001，7002    weblogic默认弱口令，反序列<br>9200，9300    </p>
+<p>d、常用端口（扫描弱口令/端口爆破）<br>21ftp<br>22Ssh<br>23Telnet<br>2601、2604    zebra路由，默认密码zebra<br>3389远程桌面</p>
+<p>渗透篇</p>
+<h2 id="58、php-java反序列化漏洞的原理？解决方案？"><a href="#58、php-java反序列化漏洞的原理？解决方案？" class="headerlink" title="58、php/java反序列化漏洞的原理？解决方案？"></a>58、php/java反序列化漏洞的原理？解决方案？</h2><h2 id="59、如果一台服务器被入侵后，你会如何做应急响应？"><a href="#59、如果一台服务器被入侵后，你会如何做应急响应？" class="headerlink" title="59、如果一台服务器被入侵后，你会如何做应急响应？"></a>59、如果一台服务器被入侵后，你会如何做应急响应？</h2><p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/baozhourui/article/details/88096809?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161702048616780265441749%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=161702048616780265441749&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-88096809.pc_search_result_before_js&amp;utm_term=%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95">https://blog.csdn.net/baozhourui/article/details/88096809?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161702048616780265441749%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=161702048616780265441749&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-88096809.pc_search_result_before_js&amp;utm_term=%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41210745/article/details/102855064?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-3.control&amp;dist_request_id=1328740.40082.16170204904356397&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-3.control">https://blog.csdn.net/qq_41210745/article/details/102855064?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-3.control&amp;dist_request_id=1328740.40082.16170204904356397&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-3.control</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qqchaozai/article/details/102515046?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&amp;dist_request_id=1328740.41071.16170212906115113&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control">https://blog.csdn.net/qqchaozai/article/details/102515046?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&amp;dist_request_id=1328740.41071.16170212906115113&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/baozhourui/article/details/88096809?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.control&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.control">https://blog.csdn.net/baozhourui/article/details/88096809?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.control&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.control</a></p>
+<p>.腾讯面试题，附带答案：<br><a target="_blank" rel="noopener" href="http://blog.csdn.net/qq_29277155/article/details/51628939">http://blog.csdn.net/qq_29277155/article/details/51628939</a></p>
+<p>面试题，附带答案：<br><a target="_blank" rel="noopener" href="http://blog.csdn.net/tan6600/article/details/51966849">http://blog.csdn.net/tan6600/article/details/51966849</a></p>
+<p>一套实用的渗透测试岗位面试题，你会吗？<br><a target="_blank" rel="noopener" href="http://www.51testing.com/html/83/n-3716283.html">http://www.51testing.com/html/83/n-3716283.html</a></p>
+<p>linux常见命令<br><a target="_blank" rel="noopener" href="http://baijiahao.baidu.com/s?id=1600811597383089586&amp;wfr=spider&amp;for=pc">http://baijiahao.baidu.com/s?id=1600811597383089586&amp;wfr=spider&amp;for=pc</a></p>
+<p>这个太强了<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/RuoLi_s/article/details/113357486?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.control&amp;dist_request_id=1328741.41289.16170228183446165&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.control">https://blog.csdn.net/RuoLi_s/article/details/113357486?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.control&amp;dist_request_id=1328741.41289.16170228183446165&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.control</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/252731.html">https://www.freebuf.com/articles/web/252731.html</a></p>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/26/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" target="_blank">面试问题总结</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：等花开，等风来
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">-面试问题总结</a>
+                
+            </div>
+        
+        
+        <div class="article-prev-next">
+            
+            
+                <a href="/2021/04/26/OWASP-TOP10/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/26/OWASP-TOP10/" title="发布于 2021-04-26 04:31">OWASP TOP10</a>
+            
+        </div>
+    </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
+</div>
+
+    </div>
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar"></div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span></span></div>        
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul></ul> 
+            </div> 
+            <div class="menu-link"></div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js"></script>
+        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+    
+    
+    <div class="wrap-right"></div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : 'moss-zr232',
+        GitHubRepositories : 'Hexo-LiveForCode',
+
+        BlogUser      : 'moss',
+        BlogAvatar    : '/image/touxiang.jpg',
+        BlogStartDate : '2020-01-01',
+
+        WebsiteTitleBlur         : '(◍´꒳`◍) 啊，快回来学习!',
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : '(*´∇｀*) 欢迎回来!',
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/logo.png',
+
+        ProgressBar: {
+            id       : 'topProgressBar',
+            color    : '#77B6FF',
+            height   : '2px',
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound: {
+                tension  : 16,
+                friction : 5
+            },
+            spinner: {
+                id     : 'spinner',
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : '#F0F0F0',
+                    stroke     : '#272633',
+                    base       : '',
+                    child      : '#272633'
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : 'rgba(255, 255, 255, .2)',
+            clearOffset : 0.3
+        },
+
+        ArticleHeaderAnimationRendered : false,
+        ArticleHeaderAnimation         : {
+            triW                  : 14,
+            triH                  : 20,
+            neighbours            : [
+                
+                    'side',
+                
+                    'top',
+                
+                    'bottom',
+                
+            ],
+            speedTrailAppear      : 0.1,
+            speedTrailDisappear   : 0.1,
+            speedTriOpen          : 1,
+            trailMaxLength        : 30,
+            trailIntervalCreation : 100,
+            delayBeforeDisappear  : 2,
+            colors                : [
+                
+                    '#96EDA6',
+                
+                    '#5BC6A9',
+                
+                    '#38668C',
+                
+                    '#374D84',
+                
+                    '#BED5CB',
+                
+                    '#62ADC6',
+                
+                    '#8EE5DE',
+                
+                    '#304E7B',
+                
+            ]
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : '60%',
+            colorBrightness  : '50%',
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : 'random',
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpg',
+            
+                '/image/beijing1.jpg',
+            
+        ],
+        HomeBannerText  : '',
+
+        ArticleHeaderImage : [
+            
+                '/image/beijing1.jpg',
+            
+                '/image/beijing2.jpg',
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/article.jpg',
+            
+        ],
+
+        OtherBannerText : '',
+
+        MenuList : [
+            
+                {
+                    name   : '首页',
+                    href   : '/',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '标签',
+                    href   : '/tag',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '分类',
+                    href   : '/category',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '归档',
+                    href   : '/archive',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '赞赏',
+                    href   : '/donate',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '关于',
+                    href   : '/about',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '订阅',
+                    href   : '/atom.xml',    
+                    target : '_blank',
+                    class  : ''
+                },
+            
+                {
+                    name   : '搜索',
+                    href   : '',    
+                    target : '',
+                    class  : 'search'
+                },
+            
+                {
+                    name   : '留言板',
+                    href   : '/comment',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '友情链接',
+                    href   : '/friend',    
+                    target : '',
+                    class  : ''
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        icon : 'icon-weibo', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-wechat', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-qq', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-github', 
+                        url  : ''
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : {
+            icon    : 'like-fill',
+            left    : '人生若只如初见',
+            right   : '何事秋风悲画扇'
+        },
+        ThemeInfo   : true,
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                'Based on cnblogs theme SimpleMemory.',
+                            
+                                '',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'SimpleMemory Author:',
+                            
+                                'moss',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'Theme:',
+                            
+                                'LiveForCode',
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : '',
+
+        Donate : {
+            paypal  : '',
+            bitcoin : '',
+            alipay  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/alipay.png',
+            wechat  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/wechat.png'
+        },
+
+        Code : {
+            style : 'normal'
+        },  
+
+        Search : {
+            applicationID : '010C3EANT8',
+            apiKey        : 'c7abab9f11b79102b9aff7fe6d41447d',
+            indexName     : 'Notes',
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : '搜索',
+                empty       : '未发现与 「${query}」 相关的内容',
+                stats       : '${hits} 条相关条目，使用了 ${time} 毫秒',
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : '.comments-content',
+            appId          : 'srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz',
+            appKey         : '8uVSP1q6UlALVC5igYfIfv2h',
+            placeholder    : '你是我一生只会遇见一次的惊喜...',
+            avatar         : 'mm',
+            meta           : 'nick,mail,link',
+            requiredFields : 'nick,mail',
+            pageSize       : 5,
+            lang           : 'zh-cn',
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : '.toc',
+            contentSelector       : '.article-body',
+            headingSelector       : 'h1, h2, h3, h4, h5',
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : '.toc',
+            positionFixedClass    : 'toc-fixed',
+            fixedSidebarOffset    : '',
+        },
+
+        Require : {
+            baseUrl     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/',
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : 'Meting'
+        },
+        APlayer : {
+            container : '.aplayer',
+            fixed     : true,
+            autoplay  : false,
+            loop      : 'all',
+            order     : 'random',
+            preload   : 'auto',
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : 'aLIEz',
+                        artist : 'mizuki（瑞葵）',
+                        cover  : '/music/cover/aLIEz.jpg',
+                        url    : '/music/song/aLIEz.mp3',
+                        lrc    : '/music/lrc/aLIEz.lrc'
+                    },
+                
+                    {
+                        name   : 'Endless Tears',
+                        artist : 'CLIFF EDGE',
+                        cover  : '/music/cover/Endless Tears.jpg',
+                        url    : '/music/song/Endless Tears.mp3',
+                        lrc    : '/music/lrc/Endless Tears.lrc'
+                    },
+                
+                    {
+                        name   : 'Miracle',
+                        artist : 'Cascada',
+                        cover  : '/music/cover/Miracle.jpg',
+                        url    : '/music/song/Miracle.mp3',
+                        lrc    : '/music/lrc/Miracle.lrc'
+                    },
+                
+                    {
+                        name   : 'Roll The Dice',
+                        artist : '高珊',
+                        cover  : '/music/cover/Roll The Dice.jpg',
+                        url    : '/music/song/Roll The Dice.mp3',
+                        lrc    : '/music/lrc/Roll The Dice.lrc'
+                    },
+                
+                    {
+                        name   : 'See You Again',
+                        artist : 'Charlie Puth, Wiz Khalifa',
+                        cover  : '/music/cover/See You Again.jpg',
+                        url    : '/music/song/See You Again.mp3',
+                        lrc    : '/music/lrc/See You Again.lrc'
+                    },
+                
+                    {
+                        name   : 'Traveling Light',
+                        artist : 'Joel Hanson, Sara Groves',
+                        cover  : '/music/cover/Traveling Light.jpg',
+                        url    : '/music/song/Traveling Light.mp3',
+                        lrc    : '/music/lrc/Traveling Light.lrc'
+                    },
+                
+                    {
+                        name   : '痴心绝对',
+                        artist : '李圣杰',
+                        cover  : '/music/cover/痴心绝对.jpg',
+                        url    : '/music/song/痴心绝对.mp3',
+                        lrc    : '/music/lrc/痴心绝对.lrc'
+                    },
+                
+                    {
+                        name   : '好想大声说爱你',
+                        artist : 'BAAD（バード）',
+                        cover  : '/music/cover/好想大声说爱你.jpg',
+                        url    : '/music/song/好想大声说爱你.mp3',
+                        lrc    : '/music/lrc/好想大声说爱你.lrc'
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : '3778678', 
+            lrcshow  : false, 
+            server   : 'netease', 
+            type     : 'playlist', 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : 'all', 
+            order    : 'random', 
+            preload  : 'auto', 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        LazyLoad : {
+            default : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/lazyload.svg'
+        },
+  
+        Style : {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css',
+            archive          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css',
+            donate           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/donate.css',
+            fancybox         : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/jquery.fancybox.css',
+            footer           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/footer.css',
+            iconfont         : 'https://at.alicdn.com/t/font_1546312_l3yohatebw.css',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css',
+            menuBubble       : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/menu-bubble.css',
+            page             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css',
+            post             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css',
+            search           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css',
+            tocbot           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/tocbot.css',
+            normal           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css',
+            night            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/night.css',
+            clipboard        : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/clipboard.css'
+        },
+
+        Script: {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js',
+            config           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.config.js',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js',
+            instantSearch    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js',
+            jQuery           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js',
+            loading          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/loading.js',
+            meting           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js',
+            iscroll          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js',
+            require          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.min.js'
+        },
+
+        Font: {
+            LongCang   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css',
+            Monda      : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css',
+            NotoSansSC : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css',
+            Playball   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css',
+            PTMono     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css',
+            RobotoSlab : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css',
+            Rosario    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css',
+            UbuntuMono : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css'
+        },
+
+        Suffix : {
+            about : '等花开，等风来'
+        },
+            
+        Theme : {
+            url  : 'https://github.com/first19326/Hexo-LiveForCode',
+            name : 'Hexo - Live For Code'
+        }  
+    };
+</script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js"></script>
+</body>
+</html>
