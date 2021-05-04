@@ -61,6 +61,10 @@
 <p>CSRF攻击着重点在伪造更改状态的请求，而不是盗取数据，因为攻击者无法查看对伪造请求的响应。</p>
 <h2 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h2><p>CSRF是一种欺骗受害者提交恶意请求的攻击。它继承了受害者的身份和特权，代表受害者执行非本意、恶意的操作。<br>对于大多数站点，浏览器请求自动发送与站点关联的所有凭据，例如用户的会话cookie，IP地址，windows域凭据等。因此，如果用户当前已对该站点进行了身份验证，则该站点将无法区分受害者发送的伪造请求和受害者发送的合法请求。</p>
 <h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>CSRF攻击目标是能够更改服务器状态或数据的业务或功能，例如更改受害者的邮箱地址，密码或购买商品。强制受害者查询数据，对于攻击者来说没什么用，因为无法获得服务器响应。因此，CSRF攻击针对引起状态变化的请求。<br>有时可以将CSRF攻击存储在易受攻击的站点上。这些漏洞被称为“存储的CSRF漏洞”。这可以通过简单地在接受HTML的字段中存储IMG或IFRAME标记，或通过更复杂的跨站点脚本攻击来实现。如果攻击可以在站点中存储CSRF攻击，则攻击的严重性被放大。特别是，受到攻击的可能性增加，因为受害者比互联网上的某个随即页面更有可能查看包含攻击的页面。</p>
+<h2 id="CSRF进阶"><a href="#CSRF进阶" class="headerlink" title="CSRF进阶"></a>CSRF进阶</h2><h3 id="浏览器的cookie策略"><a href="#浏览器的cookie策略" class="headerlink" title="浏览器的cookie策略"></a>浏览器的cookie策略</h3><p>攻击者伪造的请求之所以能过被搜狐服务器验证通过，是因为用户的浏览器成功发送了cookie的缘故</p>
+<p>浏览器所持有的cookie分为两种：一种是”session cookie”，称为”临时cookie”，一种是”third-party cookie”，也成为”本地cookie”</p>
+<p>两者的区别在于，third-party cookie是服务器在set-cookie时指定了expire时间，只有到了expire时间后cookie才会失效，所以这种cookie会保存在本地；而session cookie则没有指定expire时间，所以浏览器关闭后，session cookie就失效了。</p>
+<p>在浏览网站的过程中，若是一个网站设置了session cookie，那么在浏览器进程的生命周期内，即使浏览器新打开了tab页，session cookie也都是有效的。session cookie保存在浏览器进程的内存空间中；而third-party cookie则保存在本地。</p>
 <h2 id="CSRF攻击"><a href="#CSRF攻击" class="headerlink" title="CSRF攻击"></a>CSRF攻击</h2><p>如何触发？<br><a href="转账链接">百万大奖，等你来拿</a><br><img src="/image/bndong.gif"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&#39;.&#x2F;i.jpg&#39;&gt;&lt;br&#x2F;&gt;</span><br><span class="line">&lt;img src&#x3D;&#39;url&#39; alt&#x3D;&#39;百万大奖给你&#39;&gt;</span><br></pre></td></tr></table></figure>
 <p>也就是说，该页面通过<img>标签发送一个get请求，这个get请求，正是用户发起转账业务的请求。</p>
