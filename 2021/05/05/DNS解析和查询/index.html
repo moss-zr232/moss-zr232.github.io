@@ -69,7 +69,7 @@
 </li>
 <li><p>如果在Windows系统的DNS缓存也没有找到，那么尝试读取hosts文件（位于C:\Windows\System32\drivers\etc），看看这里面有没有该域名对应的IP地址，如果有则解析成功。</p>
 </li>
-<li><p>如果在hosts文件中也没有找到对应的条目，浏览器就会发起一个DNS的系统调用，就会向本地配置的首选DNS服务器（一般是电信运营商提供的，也可以使用像Google提供的DNS服务器）发起域名解析请求（通过的是UDP协议向DNS的53端口发起请求，这个请求是递归的请求，也就是运营商的DNS服务器必须得提供给我们该域名的IP地址），运营商的DNS服务器首先查找自身的缓存，找到对应的条目，且没有过期，则解析成功。如果没有找到对应的条目，则有运营商的DNS代我们的浏览器发起迭代DNS解析请求，它首先是会找根域的DNS的IP地址（这个DNS服务器都内置13台根域的DNS的IP地址），找打根域的DNS地址，就会向其发起请求（请问 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 这个域名的IP地址是多少啊？），根域发现这是一个顶级域com域的一个域名，于是就告诉运营商的DNS我不知道这个域名的IP地址，但是我知道com域的IP地址，你去找它去，于是运营商的DNS就得到了com域的IP地址，又向com域的IP地址发起了请求（请问 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 这个域名的IP地址是多少?）,com域这台服务器告诉运营商的DNS我不知道<a target="_blank" rel="noopener" href="http://www.linux178.com这个域名的ip地址,但是我知道linux178.com这个域的dns地址,你去找它去,于是运营商的dns又向linux178.com这个域名的dns地址(这个一般就是由域名注册商提供的,像万网,新网等)发起请求(请问/">www.linux178.com这个域名的IP地址，但是我知道linux178.com这个域的DNS地址，你去找它去，于是运营商的DNS又向linux178.com这个域名的DNS地址（这个一般就是由域名注册商提供的，像万网，新网等）发起请求（请问</a> <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 这个域名的IP地址是多少？），这个时候baidu.com域的DNS服务器一查，诶，果真在我这里，于是就把找到的结果发送给运营商的DNS服务器，这个时候运营商的DNS服务器就拿到了 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 这个域名对应的IP地址，并返回给Windows系统内核，内核又把结果返回给浏览器，终于浏览器拿到了 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 对应的IP地址，该进行一步的动作了。</p>
+<li><p>如果在hosts文件中也没有找到对应的条目，浏览器就会发起一个DNS的系统调用，就会向本地配置的首选DNS服务器（一般是电信运营商提供的，也可以使用像Google提供的DNS服务器）发起域名解析请求（通过的是UDP协议向DNS的53端口发起请求，这个请求是递归的请求，也就是运营商的DNS服务器必须得提供给我们该域名的IP地址），运营商的DNS服务器首先查找自身的缓存，找到对应的条目，且没有过期，则解析成功。如果没有找到对应的条目，则有运营商的DNS代我们的浏览器发起迭代DNS解析请求，它首先是会找根域的DNS的IP地址（这个DNS服务器都内置13台根域的DNS的IP地址），找打根域的DNS地址，就会向其发起请求（请问 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 这个域名的IP地址是多少啊？），根域发现这是一个顶级域com域的一个域名，于是就告诉运营商的DNS我不知道这个域名的IP地址，但是我知道com域的IP地址，你去找它去，于是运营商的DNS就得到了com域的IP地址，又向com域的IP地址发起了请求（请问 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 这个域名的IP地址是多少?）,com域这台服务器告诉运营商的DNS我不知道 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 这个域名的IP地址，但是我知道 baidu.com 这个域的DNS地址，你去找它去，于是运营商的DNS又向 baidu.com 这个域名的DNS地址（这个一般就是由域名注册商提供的，像万网，新网等）发起请求（请问 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 这个域名的IP地址是多少？），这个时候baidu.com域的DNS服务器一查，诶，果真在我这里，于是就把找到的结果发送给运营商的DNS服务器，这个时候运营商的DNS服务器就拿到了 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 这个域名对应的IP地址，并返回给Windows系统内核，内核又把结果返回给浏览器，终于浏览器拿到了 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 对应的IP地址，该进行一步的动作了。</p>
 </li>
 </ol>
 <h1 id="DNS递归查询和迭代查询的区别"><a href="#DNS递归查询和迭代查询的区别" class="headerlink" title="DNS递归查询和迭代查询的区别"></a>DNS递归查询和迭代查询的区别</h1><h2 id="递归查询"><a href="#递归查询" class="headerlink" title="递归查询"></a>递归查询</h2><p>递归查询是一种DNS 服务器的查询模式，在该模式下DNS 服务器接收到客户机请求，必须使用一个准确的查询结果回复客户机。如果DNS 服务器本地没有存储查询DNS 信息，那么该服务器会询问其他服务器，并将返回的查询结果提交给客户机。</p>
@@ -119,6 +119,9 @@
             </div>
         
         <div class="article-prev-next">
+            
+                <a href="/2021/05/05/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/05/05/%E4%B8%AD%E9%97%B4%E4%BB%B6/" title="发布于 2021-05-05 01:42">中间件</a>
+                <br>
             
             
                 <a href="/2021/05/04/%E7%82%B9%E5%87%BB%E5%8A%AB%E6%8C%81/" class="next-prefix">» </a> 下一篇：    <a href="/2021/05/04/%E7%82%B9%E5%87%BB%E5%8A%AB%E6%8C%81/" title="发布于 2021-05-04 08:47">点击劫持</a>
