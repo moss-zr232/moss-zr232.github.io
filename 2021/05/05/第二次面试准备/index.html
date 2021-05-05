@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>分类 - -面试问题总结</title>
+    <title>第二次面试准备</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -17,61 +17,111 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
-    <div class="header" >
+    <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-title"></h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
-                <!--
-                <h1 class="header-subtitle"></h1>
-                <p class="header-subinfo"></p>
-                -->
+                <h1 class="header-subtitle">第二次面试准备</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-05-05
+                        </span>
+                        
+                            <span id="/2021/05/05/第二次面试准备/" class="leancloud_visitors" data-flag-title="第二次面试准备">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/05/05/第二次面试准备/"></span>
+                        </span>  
+                    </p>                 
+                </div>
             </div>
         </div>
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <span class="hidden">Scroll Down</span>
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
+        <canvas id="articleHeaderCanvas"></canvas>
     </div>
 </div>
     <div id="container">
     <div id="content">
-        <div class="articles">
-    
-        <div class="article">
-            <div class="article-title">
-                <a href="/2021/04/26/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">面试问题总结</a>
-                
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h1 id="owasp-漏洞都有哪些？"><a href="#owasp-漏洞都有哪些？" class="headerlink" title="owasp 漏洞都有哪些？"></a>owasp 漏洞都有哪些？</h1><h1 id="常见的Web安全漏洞"><a href="#常见的Web安全漏洞" class="headerlink" title="常见的Web安全漏洞"></a>常见的Web安全漏洞</h1><p>SQL注入<br>XSS<br>文件遍历、文件上传、文件下载<br>垂直越权、水平越权<br>逻辑漏洞</p>
+<h1 id="SQL面试题"><a href="#SQL面试题" class="headerlink" title="SQL面试题"></a>SQL面试题</h1><h2 id="SQL注入类型"><a href="#SQL注入类型" class="headerlink" title="SQL注入类型"></a>SQL注入类型</h2><p>1、基于报错注入<br>2、基于布尔的注入，根据返回页面判断条件真假的注入<br>3、基于时间的盲注，不能根据页面返回内容判断任何信息，用条件语句查看时间延迟语句是否执行（即页面返回时间是否增加）来判断。<br>4、宽字节注入联合查询，可以使用 union 的情况下的注入。<br>5、堆查询注入，可以同时执行多条语句的执行时的注入。</p>
+<h2 id="SQL注入的原理"><a href="#SQL注入的原理" class="headerlink" title="SQL注入的原理"></a>SQL注入的原理</h2><p>通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。通常未经检查或者未经充分检查的用户输入数据或代码编写问题，意外变成了代码被执行。</p>
+<h2 id="如何进行SQL注入的防御"><a href="#如何进行SQL注入的防御" class="headerlink" title="如何进行SQL注入的防御"></a>如何进行SQL注入的防御</h2><p>1、关闭应用的错误提示<br>2、加waf<br>3、对输入进行过滤<br>4、限制输入长度<br>5、限制好数据库权限<br>6、黑白名单<br>7、数据库信息加密安全（引导到密码学方面）。不采用md5因为有彩虹表，一般是一次md5后加盐再md5</p>
+<h2 id="sqlmap，怎么对一个注入点注入？"><a href="#sqlmap，怎么对一个注入点注入？" class="headerlink" title="sqlmap，怎么对一个注入点注入？"></a>sqlmap，怎么对一个注入点注入？</h2><p>1）如果是get型号，直接，sqlmap -u “诸如点网址”.<br>2) 如果是post型诸如点，可以sqlmap -u “注入点网址” –data=“post的参数”<br>3）如果是cookie，X-Forwarded-For等，可以访问的时候，用burpsuite抓包，注入处用*号替换，放到文件里，然后sqlmap -r “文件地址”</p>
+<h2 id="sql注入写文件都有哪些函数？"><a href="#sql注入写文件都有哪些函数？" class="headerlink" title="sql注入写文件都有哪些函数？"></a>sql注入写文件都有哪些函数？</h2><p>select ‘一句话’ into outfile ‘路径’<br>select ‘一句话’ into dumpfile ‘路径’<br>select ‘<?php eval($_POST[1]) ?>’ into dumpfile ‘d:\wwwroot\baidu.com\nvhack.php’;</p>
+<h1 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h1><p>XSS是跨站脚本攻击，用户提交的数据中可以构造代码来执行，从而实现窃取用户信息等攻击。<br>修复方式：对字符实体进行转义、使用HTTP Only来禁止JavaScript读取Cookie值、输入时校验、浏览器与Web应用端采用相同的字符编码。</p>
+<h1 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h1><p>CSRF是跨站请求伪造攻击，XSS是实现CSRF的诸多手段中的一种，是由于没有在关键操作执行时进行是否由用户自愿发起的确认。<br>修复方式：筛选出需要防范CSRF的页面然后嵌入Token、再次输入密码、检验Referer.</p>
+<h1 id="XXE"><a href="#XXE" class="headerlink" title="XXE"></a>XXE</h1><p>XXE是XML外部实体注入攻击，XML中可以通过调用实体来请求本地或者远程内容，和远程文件保护类似，会引发相关安全问题，例如敏感文件读取。<br>修复方式：XML解析库在调用时严格禁止对外部实体的解析。</p>
+<h1 id="DOM-XSS与反射XSS有啥不同，给你10s，如何快速判断一个XSS是否是DOM-XSS？"><a href="#DOM-XSS与反射XSS有啥不同，给你10s，如何快速判断一个XSS是否是DOM-XSS？" class="headerlink" title="DOM XSS与反射XSS有啥不同，给你10s，如何快速判断一个XSS是否是DOM XSS？"></a>DOM XSS与反射XSS有啥不同，给你10s，如何快速判断一个XSS是否是DOM XSS？</h1><p>存储型XSS：你发送一次带XSS代码的请求，以后这个页面的返回包里都会有XSS代码；<br>反射型XSS：你发送一次带XSS代码的请求，只能在当前返回的数据包中发现XSS代码；<br>DOM型XSS：你发送一次带XSS代码的请求，在返回包里压根儿就找不到XSS代码的影子；</p>
+<h1 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h1><p>漏洞原理：利用一个可以发起网络请求的服务当作跳板来攻击内部其他服务。</p>
+<h1 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>由于程序员在对用户文件上传部分的控制不足或者处理缺陷，而导致用户可以越过其本身权限向服务器上传可执行的动态脚本文件</p>
+<h2 id="常见的上传绕过方式"><a href="#常见的上传绕过方式" class="headerlink" title="常见的上传绕过方式"></a>常见的上传绕过方式</h2><p>1、前端js验证：禁用js/burp改包<br>2、大小写<br>3、双重后缀名<br>4、过滤绕过 pphphp-&gt;php<br>5、防护<br>6、文件上传目录设置为不可执行<br>7、使用白名单判断文件上传类型 用随机数改写文件名和路径</p>
+<h1 id="文件包含漏洞"><a href="#文件包含漏洞" class="headerlink" title="文件包含漏洞"></a>文件包含漏洞</h1><h2 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h2><p>引入一段用户能控制的脚本或代码，并让服务器端执行 （1）include等函数通过动态变量的方式引入需要包含的文件； （2）用户能够控制该动态变量。</p>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><p>1、本地文件包含：能够打开并包含本地文件的漏洞<br>2、远程文件包含 ：即加载远程文件，在php.ini中开启allow_url_include、allow_url_fopen选项。开启后可以直接执行任意代码。</p>
+<h1 id="msf常用的模块"><a href="#msf常用的模块" class="headerlink" title="msf常用的模块"></a>msf常用的模块</h1><h1 id="当你输入一个网址，点击访问，会发生什么？"><a href="#当你输入一个网址，点击访问，会发生什么？" class="headerlink" title="当你输入一个网址，点击访问，会发生什么？"></a>当你输入一个网址，点击访问，会发生什么？</h1><p>1、查找DNS记录<br>查看浏览器缓存<br>查看系统缓存<br>查看路由器缓存<br>查找ISP DNS缓存<br>递归搜索。根据网址，发送一个DNS请求，UDP请求，端口为543，会请求一个DNS服务器，DNS服务器会不断递归查找这个网址的IP<br>2、建立连接<br>跟获取到的IP建立TCP连接，在TCP连接上发送HTTP报文</p>
+<p><strong>ping是使用TCP/IP协议中的ICMP协议</strong></p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xingyu860990/article/details/109295367">https://blog.csdn.net/xingyu860990/article/details/109295367</a></p>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="/image/touxiang.jpg" alt="moss">
             </div>
-            <div class="article-abstract">
-                
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：moss
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/05/05/%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87/" target="_blank">第二次面试准备</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：等花开，等风来
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
             </div>
-            <div class="clear"></div>
-            <div class="article-info">
-                <span>
-                    <i class="iconfont icon-time"></i> 发表时间：2021-04-26
-                </span>
-                
-                    <span id="/2021/04/26/面试问题总结/" class="leancloud_visitors" data-flag-title="面试问题总结">
-                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                    </span>
-                
-                <span>
-                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/26/面试问题总结/"></span>
-                </span>
-            </div>
-            <div class="clear"></div>     
+            <div style="clear: both;"></div>
         </div>
+    </div>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/category/%E9%9D%A2%E8%AF%95/">-面试</a>
+                
+            </div>
+        
+        
+        <div class="article-prev-next">
+            
+            
+                <a href="/2021/05/05/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="next-prefix">» </a> 下一篇：    <a href="/2021/05/05/%E4%B8%AD%E9%97%B4%E4%BB%B6/" title="发布于 2021-05-05 01:42">中间件</a>
+            
+        </div>
+    </div>
     
-    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
 </div>
 
     </div>
